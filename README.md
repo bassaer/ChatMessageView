@@ -1,7 +1,9 @@
 #ChatMessageView
 
 This library aims to provide an chat UI view for Android.  
-<img src="https://github.com/bassaer/ChatMessageView/blob/master/Screenshot.png" width="540px">
+
+![ChatMessageView](https://github.com/bassaer/ChatMessageView/blob/master/Screenshot.png)
+
 
 ##Feature
 
