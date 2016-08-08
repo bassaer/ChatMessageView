@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_size">50dp</dimen>
+    <dimen name="message_text_width">200dp</dimen>
+    <dimen name="message_text_size">20sp</dimen>
+    <dimen name="message_text_radius">20dp</dimen>
+    <dimen name="icon_layout_margin">12dp</dimen>
+    <dimen name="message_text_margin">12dp</dimen>
+    <dimen name="message_text_padding">10dp</dimen>
+    <dimen name="time_display_margin">100dp</dimen>
+    <dimen name="list_item_margin">16dp</dimen>
+    <dimen name="date_text_size">15sp</dimen>
+    <dimen name="date_text_side_bar_width">100dp</dimen>
+    <dimen name="data_text_side_bar_height">1dp</dimen>
+</resources>

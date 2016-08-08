@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="end"
+              android:layout_marginTop="@dimen/list_item_margin"
+              android:layout_marginBottom="@dimen/list_item_margin"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/right_message_text"
+            android:text="@string/test_text_short"
+            android:textSize="@dimen/message_text_size"
+            android:textColor="@android:color/white"
+            android:gravity="left"
+            android:layout_width="wrap_content"
+            android:maxWidth="@dimen/message_text_width"
+            android:layout_height="wrap_content"
+            android:background="@drawable/message_text_shape_right"
+            android:layout_marginTop="@dimen/message_text_margin"
+            android:layout_marginBottom="@dimen/message_text_margin"
+            android:padding="@dimen/message_text_padding"
+
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/right_user_icon"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_margin="@dimen/icon_layout_margin"
+            android:src="@drawable/face_2"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/right_time_display_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test_time_text"
+        android:layout_marginRight="@dimen/time_display_margin"/>
+
+</LinearLayout>
