@@ -3,11 +3,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <!--<ListView-->
-        <!--android:id="@+id/list_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"/>-->
-
     <jp.bassaer.chatmessageview.MessageView
         android:id="@+id/message_view"
         android:layout_width="match_parent"
