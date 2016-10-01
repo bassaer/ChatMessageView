@@ -14,9 +14,9 @@ public class MessageView extends ListView {
 
     private List<Message> mMessageList;
 
-    public MessageView(Context context, ArrayList<Message> messages) {
+    public MessageView(Context context) {
         super(context);
-        init(messages);
+        init();
     }
 
 
@@ -29,13 +29,9 @@ public class MessageView extends ListView {
     }
 
 
-    public void init(ArrayList<Message> list) {
+    public void init() {
         mMessageList = new ArrayList<>();
         setChoiceMode(ListView.CHOICE_MODE_NONE);
-
-        for(int i=0; i < list.size(); i++){
-            setMessage(list.get(i));
-        }
 
         MessageAdapter adapter = new MessageAdapter(getContext(), 0, mMessageList);
         setDividerHeight(0);
@@ -43,7 +39,7 @@ public class MessageView extends ListView {
 
     }
 
-    private void setMessage(Message message){
+    public void setMessage(Message message){
         if(mMessageList.size() == 0){
             setDateSeparator(message);
         }else{

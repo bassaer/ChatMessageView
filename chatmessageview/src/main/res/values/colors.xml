@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Based on http://www.google.com/design/spec/style/color.html -->
+
+    <!--Theme & Accent -->
+    <color name="red500">#F44336</color>
+    <color name="teal100">#B2DFDB</color>
+    <color name="teal500">#009688</color>
+    <color name="cyan900">#006064</color>
+    <color name="lightBlue500">#03A9F4</color>
+
+    <color name="green500">#4CAF50</color>
+
+
+
+    <!-- Grey scales -->
+    <color name="gray200">#EEEEEE</color>
+    <color name="gray300">#E0E0E0</color>
+    <color name="blueGray50">#ECEFF1</color>
+    <color name="blueGray200">#B0BEC5</color>
+    <color name="blueGray300">#90A4AE</color>
+    <color name="blueGray500">#607D8B</color>
+
+    <!-- Others -->
+</resources>

@@ -7,21 +7,21 @@
     
     <View
         android:background="@android:color/darker_gray"
-        android:layout_width="@dimen/date_text_side_bar_width"
-        android:layout_height="@dimen/data_text_side_bar_height"/>
+        android:layout_width="@dimen/width_small"
+        android:layout_height="@dimen/line_height"/>
 
     <TextView
         android:id="@+id/date_separate_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="@dimen/date_text_size"
-        android:layout_margin="@dimen/list_item_margin"
-        android:text="@string/test_date_cell_text"/>
+        android:textSize="@dimen/font_small"
+        android:layout_margin="@dimen/spacing_small"
+        android:text="@string/default_date_cell_text"/>
 
     <View
         android:background="@android:color/darker_gray"
-        android:layout_width="@dimen/date_text_side_bar_width"
-        android:layout_height="@dimen/data_text_side_bar_height"/>
+        android:layout_width="@dimen/width_small"
+        android:layout_height="@dimen/line_height"/>
 
 </LinearLayout>

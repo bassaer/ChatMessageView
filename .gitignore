@@ -6,3 +6,7 @@
 .DS_Store
 /build
 /captures
+libs/
+chatmessageview/libs/
+example/libs/
+example/src/main/res/drawable/

@@ -1,10 +1,19 @@
 <resources>
     <string name="app_name">ChatMessageView</string>
-    <string name="test_text_short">Hello!!</string>
-    <string name="test_text_long">
+    <string name="input_hint">Message..</string>
+    <string name="unknown">Unknown</string>
+
+
+    <!-- Default setting for demo-->
+    <string name="default_text_short">Hello!!</string>
+    <string name="default_text_long">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </string>
-    <string name="test_time_text">10:30 AM</string>
-    <string name="test_date_cell_text">2016/08/08</string>
+    <string name="default_time_text">10:30 AM</string>
+    <string name="default_date_cell_text">2016/08/08</string>
+    <string name="default_user_name_1">Michael</string>
+    <string name="default_user_name_2">Alice</string>
+
+
 </resources>

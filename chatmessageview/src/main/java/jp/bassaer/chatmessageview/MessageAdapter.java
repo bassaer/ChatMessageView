@@ -24,6 +24,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        final ViewHolder holder;
         Message message = getItem(position);
 
         if (!message.isDateCell()) {
@@ -33,31 +34,37 @@ public class MessageAdapter extends ArrayAdapter<Message> {
                 } else {
                     convertView = mLayoutInflater.inflate(R.layout.message_view_left, null);
                 }
+                holder = new ViewHolder();
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
 
-            ImageView icon;
-            TextView messageText;
-            TextView timeText;
+
 
             if (message.isRightMessage()) {
-                icon = (ImageView)convertView.findViewById(R.id.right_user_icon);
-                messageText = (TextView)convertView.findViewById(R.id.right_message_text);
-                timeText = (TextView)convertView.findViewById(R.id.right_time_display_text);
+                holder.icon = (ImageView)convertView.findViewById(R.id.right_user_icon);
+                holder.messageText = (TextView)convertView.findViewById(R.id.right_message_text);
+                holder.timeText = (TextView)convertView.findViewById(R.id.right_time_display_text);
             } else {
-                icon = (ImageView)convertView.findViewById(R.id.left_user_icon);
-                messageText = (TextView)convertView.findViewById(R.id.left_message_text);
-                timeText = (TextView)convertView.findViewById(R.id.left_time_display_text);
+                holder.icon = (ImageView)convertView.findViewById(R.id.left_user_icon);
+                holder.messageText = (TextView)convertView.findViewById(R.id.left_message_text);
+                holder.timeText = (TextView)convertView.findViewById(R.id.left_time_display_text);
             }
 
-            icon.setImageBitmap(message.getUserIcon());
-            messageText.setText(message.getMessageText());
-            timeText.setText(message.getTimeText());
+            holder.icon.setImageBitmap(message.getUserIcon());
+            holder.messageText.setText(message.getMessageText());
+            holder.timeText.setText(message.getTimeText());
         } else {
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(R.layout.date_cell, null);
+                holder = new ViewHolder();
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
-            TextView dateSeparatorText = (TextView)convertView.findViewById(R.id.date_separate_text);
-            dateSeparatorText.setText(message.getDateSeparateText());
+            holder.dateSeparatorText = (TextView)convertView.findViewById(R.id.date_separate_text);
+            holder.dateSeparatorText.setText(message.getDateSeparateText());
         }
 
         return convertView;
@@ -66,5 +73,12 @@ public class MessageAdapter extends ArrayAdapter<Message> {
     @Override
     public boolean isEnabled(int position){
         return false;
+    }
+
+    class ViewHolder {
+        ImageView icon;
+        TextView messageText;
+        TextView timeText;
+        TextView dateSeparatorText;
     }
 }

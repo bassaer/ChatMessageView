@@ -31,6 +31,49 @@ public class Message {
         initDate();
     }
 
+    public static class Builder {
+        private Message message;
+
+        public Builder() {
+            message = new Message();
+        }
+
+        public Builder setUserName(String userName) {
+            message.setUserName(userName);
+            return this;
+        }
+
+        public Builder setUserIcon(Bitmap icon) {
+            message.setUserIcon(icon);
+            return this;
+        }
+
+        public Builder setRightMessage(boolean isRight) {
+            message.setRightMessage(isRight);
+            return this;
+        }
+
+        public Builder setMessageText(String messageText) {
+            message.setMessageText(messageText);
+            return this;
+        }
+
+        public Builder setCreatedAt(Calendar calendar) {
+            message.setCreatedDate(calendar);
+            return this;
+        }
+
+        public Builder setDateCell(boolean isDateCell) {
+            message.setDateCell(isDateCell);
+            return this;
+        }
+
+        public Message build() {
+            return message;
+        }
+
+    }
+
     public void initDate(){
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
