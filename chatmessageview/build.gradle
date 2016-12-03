@@ -33,7 +33,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '1.0.0'
+            pom.version = '1.2.0'
             pom.groupId = 'jp.bassaer.chatmessageview'
             pom.artifactId = 'chatmessageview'
         }

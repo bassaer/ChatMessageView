@@ -2,5 +2,29 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">@color/cyan500</color>
+
+    <!--Theme & Accent -->
+    <color name="red500">#F44336</color>
+    <color name="teal100">#B2DFDB</color>
+    <color name="teal500">#009688</color>
+    <color name="cyan500">#00BCD4</color>
+    <color name="cyan900">#006064</color>
+    <color name="lightBlue300">#4FC3F7</color>
+    <color name="lightBlue500">#03A9F4</color>
+    <color name="deepOrange500">#FF5722</color>
+    <color name="amber500">#FFC107</color>
+
+    <color name="green500">#4CAF50</color>
+
+
+
+    <!-- Grey scales -->
+    <color name="gray200">#EEEEEE</color>
+    <color name="gray300">#E0E0E0</color>
+    <color name="blueGray50">#ECEFF1</color>
+    <color name="blueGray200">#B0BEC5</color>
+    <color name="blueGray300">#90A4AE</color>
+    <color name="blueGray500">#607D8B</color>
+    <color name="blueGray700">#455A64</color>
 </resources>

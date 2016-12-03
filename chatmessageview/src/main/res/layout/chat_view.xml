@@ -4,11 +4,22 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <jp.bassaer.chatmessageview.MessageView
-        android:id="@+id/message_view"
+    <FrameLayout
+        android:id="@+id/chat_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+
+        <jp.bassaer.chatmessageview.views.MessageView
+            android:id="@+id/message_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"/>
+
+    </FrameLayout>
+
+
 
     <LinearLayout
         android:orientation="horizontal"
@@ -29,8 +40,7 @@
             android:layout_width="@dimen/icon_normal"
             android:layout_height="@dimen/icon_normal"
             android:src="@drawable/ic_action_send"
-            android:tint="@color/lightBlue500"
-            android:background="@android:color/transparent"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             />
 
     </LinearLayout>

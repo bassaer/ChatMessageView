@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:layout_marginTop="@dimen/spacing_small"
-              android:layout_marginBottom="@dimen/spacing_normal"
+              android:paddingTop="@dimen/spacing_small"
+              android:paddingBottom="@dimen/spacing_small"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/left_user_icon"
+            android:id="@+id/user_icon"
             android:layout_width="@dimen/icon_normal"
             android:layout_height="@dimen/icon_normal"
             android:layout_margin="@dimen/spacing_tiny"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/left_message_user_name"
+                android:id="@+id/message_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_small"
@@ -38,7 +38,7 @@
                 />
 
             <TextView
-                android:id="@+id/left_message_text"
+                android:id="@+id/message_text"
                 android:text="@string/default_text_long"
                 android:textSize="@dimen/font_normal"
                 android:gravity="left"
@@ -58,7 +58,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/left_time_display_text"
+        android:id="@+id/time_display_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_time_text"

@@ -1,12 +1,10 @@
-package jp.bassaer.chatmessageview;
+package jp.bassaer.chatmessageview.models;
 
 import android.graphics.Bitmap;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
+import jp.bassaer.chatmessageview.utils.TimeUtils;
 
 /**
  * Created by nakayama on 2016/08/08.
@@ -17,7 +15,7 @@ public class Message {
     private Bitmap mUserIcon;
     private boolean isRightMessage;
     private String mMessageText;
-    private Date mCreatedDate;
+    private Calendar mCreatedAt;
     private String mTimeText;
 
 
@@ -27,7 +25,7 @@ public class Message {
     private boolean isDateCell;
 
     public Message() {
-        mCreatedDate = Calendar.getInstance().getTime();
+        mCreatedAt = Calendar.getInstance();
         initDate();
     }
 
@@ -59,7 +57,7 @@ public class Message {
         }
 
         public Builder setCreatedAt(Calendar calendar) {
-            message.setCreatedDate(calendar);
+            message.setCreatedAt(calendar);
             return this;
         }
 
@@ -75,11 +73,10 @@ public class Message {
     }
 
     public void initDate(){
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        setDateSeparateText(simpleDateFormat.format(mCreatedDate));
-        simpleDateFormat.applyPattern("HH:mm");
-        setTimeText(simpleDateFormat.format(mCreatedDate));
+        //This is shown if the before or after message was send different day
+        setDateSeparateText(TimeUtils.calendarToString(mCreatedAt, "yyyy/MM/dd"));
+        //Time text under message
+        setTimeText(TimeUtils.calendarToString(mCreatedAt, "HH:mm"));
     }
 
 
@@ -115,13 +112,12 @@ public class Message {
         mMessageText = messageText;
     }
 
-    public Date getCreatedDate() {
-        return mCreatedDate;
+    public Calendar getCreatedAt() {
+        return mCreatedAt;
     }
 
-    public void setCreatedDate(Calendar calendar) {
-
-        mCreatedDate = calendar.getTime();
+    public void setCreatedAt(Calendar calendar) {
+        mCreatedAt = calendar;
         initDate();
     }
 
@@ -150,13 +146,18 @@ public class Message {
         mDateSeparateText = dateSeparateText;
     }
 
-    public Date getCompareDate(){
-        try {
-            return DateFormat.getDateInstance().parse(getDateSeparateText());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return mCreatedDate;
+    /**
+     * Return Calendar to compare the day <br>
+     * Reset hour, min, sec, milli sec.<br>
+     * @return formatted calendar object
+     */
+    public Calendar getCompareCalendar() {
+        Calendar calendar = (Calendar) mCreatedAt.clone();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
     }
 
 }

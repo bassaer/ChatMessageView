@@ -1,1 +1,1 @@
-include ':app', ':chatmessageview'
+include ':chatmessageview', ':example'

@@ -1,4 +1,4 @@
-package jp.bassaer.chatmessageview;
+package jp.bassaer.example;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ChatMessageView.iml" filepath="$PROJECT_DIR$/ChatMessageView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/app.iml" filepath="$PROJECT_DIR$/example/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/chatmessageview/chatmessageview.iml" filepath="$PROJECT_DIR$/chatmessageview/chatmessageview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
     </modules>
   </component>
 </project>
