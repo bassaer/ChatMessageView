@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/android,intellij,java,gradle
+# Created by https://www.gitignore.io/api/android,intellij,java,maven,gradle
 
 ### Android ###
 # Built application files
@@ -102,6 +102,21 @@ fabric.properties
 # *.ipr
 
 
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Exclude maven wrapper
+!/.mvn/wrapper/maven-wrapper.jar
+
+
 ### Java ###
 
 # BlueJ files
@@ -134,13 +149,3 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
-app/
-chatmessageview/.idea/
-example/.idea/
-example/gradle/
-example/gradlew
-example/gradlew.bat
-example/local.properties
-chatmessageview/libs/
-example/libs/
-example/src/main/res/drawable/
