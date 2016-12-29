@@ -18,11 +18,95 @@ android {
     }
 }
 
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'jp.bassaer'
+version = '1.2.0'
+
+def siteUrl = 'https://github.com/bassaer/ChatMessageView'
+def gitUrl = 'https://github.com/bassaer/ChatMessageView.git'
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty('bintray_user')
+    key = properties.getProperty('bintray_api_key')
+
+    configurations = ['archives']
+
+    pkg {
+        repo = 'ChatMessageView'
+        name = project.name
+        userOrg = 'nakayama'
+        desc = 'Chat UI Library for Android'
+        websiteUrl = siteUrl
+        issueTrackerUrl = 'https://github.com/bassaer/ChatMessageView/issues'
+        vcsUrl = gitUrl
+        licenses = ['MIT']
+        labels = ['android']
+        publicDownloadNumbers = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name = project.name
+                url = siteUrl
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://opensource.org/licenses/mit-license.php'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'bassaer'
+                        name 'Tsubasa Nakayama'
+                        email 'app.nakayama@gmail.com'
+                    }
+                }
+                scm {
+                    connection = gitUrl
+                    developerConnection = gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
 }
 
 def repo = new File(rootDir, "repository")

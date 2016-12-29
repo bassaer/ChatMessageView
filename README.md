@@ -14,12 +14,8 @@ This library aims to provide an chat UI view for Android.
 ##Gradle
 
 ```
-repositories {
-    maven { url 'http://raw.github.com/bassaer/ChatMessageView/master/repository' }
-}
-
 dependencies {
-    compile 'jp.bassaer.chatmessageview:chatmessageview:1.2.0'
+    compile 'jp.bassaer:chatmessageview:1.2.0'
 }
 
 ```
