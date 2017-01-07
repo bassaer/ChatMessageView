@@ -22,6 +22,7 @@ import jp.bassaer.chatmessageview.R;
 import jp.bassaer.chatmessageview.models.Message;
 
 /**
+ * Chat view with edit view and send button
  * Created by nakayama on 2016/08/08.
  */
 public class ChatView extends LinearLayout {
@@ -110,9 +111,6 @@ public class ChatView extends LinearLayout {
                 }
             }
         });
-
-
-
 
     }
 

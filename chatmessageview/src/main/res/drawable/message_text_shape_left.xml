@@ -5,7 +5,7 @@
             <corners
                 android:radius="@dimen/view_radius_normal"/>
             <solid
-                android:color="@color/button_material_light"
+                android:color="@color/default_left_bubble_color"
                 />
         </shape>
     </item>

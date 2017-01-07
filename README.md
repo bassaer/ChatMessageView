@@ -1,6 +1,9 @@
 #ChatMessageView
 
-This library aims to provide an chat UI view for Android.  
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ChatMessageView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5032)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/bassaer/ChatMessageView/blob/master/LICENSE)
+
+This library aims to provide a chat UI view for Android.  
 
 <img src="https://github.com/bassaer/ChatMessageView/blob/master/screens.png" height="285dp">
 

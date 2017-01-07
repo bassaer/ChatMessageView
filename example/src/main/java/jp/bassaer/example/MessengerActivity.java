@@ -16,6 +16,7 @@ import jp.bassaer.chatmessageview.utils.ChatBot;
 import jp.bassaer.chatmessageview.views.ChatView;
 
 /**
+ * Simple chat example activity
  * Created by nakayama on 2016/12/03.
  */
 public class MessengerActivity extends Activity {
@@ -39,9 +40,9 @@ public class MessengerActivity extends Activity {
         mChatView = (ChatView)findViewById(R.id.chat_view);
 
         //Set UI options
-        mChatView.setRightBubbleColor(ContextCompat.getColor(this, R.color.deepOrange500));
+        mChatView.setRightBubbleColor(ContextCompat.getColor(this, R.color.green500));
         mChatView.setLeftBubbleColor(Color.WHITE);
-        mChatView.setBackgroundColor(ContextCompat.getColor(this, R.color.blueGray700));
+        mChatView.setBackgroundColor(ContextCompat.getColor(this, R.color.blueGray500));
         mChatView.setSendButtonColor(ContextCompat.getColor(this, R.color.cyan500));
         mChatView.setSendIcon(R.drawable.ic_action_send);
         mChatView.setRightMessageTextColor(Color.WHITE);

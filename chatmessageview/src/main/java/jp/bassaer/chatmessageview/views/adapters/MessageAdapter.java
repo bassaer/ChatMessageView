@@ -1,10 +1,11 @@
 package jp.bassaer.chatmessageview.views.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import jp.bassaer.chatmessageview.R;
 import jp.bassaer.chatmessageview.models.Message;
 
 /**
+ * Custom list adapter for the chat timeline
  * Created by nakayama on 2016/08/08.
  */
 public class MessageAdapter extends ArrayAdapter<Object> {
@@ -26,13 +28,13 @@ public class MessageAdapter extends ArrayAdapter<Object> {
     private ArrayList<Object> mObjects;
     private ArrayList<Object> mViewTypes = new ArrayList<>();
 
-    private GradientDrawable mLeftBubble;
-    private GradientDrawable mRightBubble;
     private int mUsernameTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
     private int mSendTimeTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
     private int mDateSeparatorColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
     private int mRightMessageTextColor = Color.WHITE;
     private int mLeftMessageTextColor = Color.BLACK;
+    private int mLeftBubbleColor;
+    private int mRightBubbleColor;
 
     public MessageAdapter(Context context, int resource, ArrayList<Object> objects) {
         super(context, resource, objects);
@@ -40,6 +42,8 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         mObjects = objects;
         mViewTypes.add(String.class);
         mViewTypes.add(Message.class);
+        mLeftBubbleColor = ContextCompat.getColor(context, R.color.default_left_bubble_color);
+        mRightBubbleColor = ContextCompat.getColor(context, R.color.default_right_bubble_color);
     }
 
     @Override
@@ -89,14 +93,12 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 } else {
                     holder = (MessageViewHolder) convertView.getTag();
                 }
-                if (mRightBubble != null) {
 
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                        holder.messageText.setBackgroundDrawable(mRightBubble);
-                    } else {
-                        holder.messageText.setBackground(mRightBubble);
-                    }
-                }
+                //Set bubble color
+                Drawable drawable = holder.messageText.getBackground();
+                ColorStateList colorStateList = ColorStateList.valueOf(mRightBubbleColor);
+                DrawableCompat.setTintList(drawable, colorStateList);
+
                 holder.icon.setImageBitmap(message.getUserIcon());
                 holder.messageText.setText(message.getMessageText());
                 holder.timeText.setText(message.getTimeText());
@@ -118,15 +120,10 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder = (MessageViewHolder) convertView.getTag();
                 }
 
-                if (mLeftBubble != null) {
-                    //Set background color
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                        //setBackgroundDrawable is deprecated after Jelly Bean
-                        holder.messageText.setBackgroundDrawable(mLeftBubble);
-                    } else {
-                        holder.messageText.setBackground(mLeftBubble);
-                    }
-                }
+                Drawable drawable = holder.messageText.getBackground();
+                ColorStateList colorStateList = ColorStateList.valueOf(mLeftBubbleColor);
+                DrawableCompat.setTintList(drawable, colorStateList);
+
 
                 holder.icon.setImageBitmap(message.getUserIcon());
                 holder.messageText.setText(message.getMessageText());
@@ -135,6 +132,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 holder.messageText.setTextColor(mLeftMessageTextColor);
                 holder.timeText.setTextColor(mSendTimeTextColor);
                 holder.userName.setTextColor(mUsernameTextColor);
+
             }
 
         }
@@ -142,15 +140,24 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         return convertView;
     }
 
-    public void setLeftBubbleColor(GradientDrawable drawable) {
-        mLeftBubble = drawable;
+    /**
+     * Set left bubble background color
+     * @param color left bubble color
+     */
+    public void setLeftBubbleColor(int color) {
+        mLeftBubbleColor = color;
         notifyDataSetChanged();
     }
 
-    public void setRightBubbleColor(GradientDrawable drawable) {
-        mRightBubble = drawable;
+    /**
+     * Set right bubble background color
+     * @param color right bubble color
+     */
+    public void setRightBubbleColor(int color) {
+        mRightBubbleColor = color;
         notifyDataSetChanged();
     }
+
 
     public void setUsernameTextColor(int usernameTextColor) {
         mUsernameTextColor = usernameTextColor;

@@ -3,17 +3,16 @@ package jp.bassaer.chatmessageview.views;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import jp.bassaer.chatmessageview.R;
 import jp.bassaer.chatmessageview.models.Message;
 import jp.bassaer.chatmessageview.views.adapters.MessageAdapter;
 
 /**
+ * Simple chat view
  * Created by nakayama on 2016/08/08.
  */
 public class MessageView extends ListView implements View.OnFocusChangeListener{
@@ -125,15 +124,11 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
     }
 
     public void setLeftBubbleColor(int color) {
-        mLeftBubble.setCornerRadius(getResources().getDimensionPixelSize(R.dimen.view_radius_normal));
-        mLeftBubble.setColor(color);
-        mMessageAdapter.setLeftBubbleColor(mLeftBubble);
+        mMessageAdapter.setLeftBubbleColor(color);
     }
 
     public void setRightBubbleColor(int color) {
-        mRightBubble.setCornerRadius(getResources().getDimensionPixelSize(R.dimen.view_radius_normal));
-        mRightBubble.setColor(color);
-        mMessageAdapter.setRightBubbleColor(mRightBubble);
+        mMessageAdapter.setRightBubbleColor(color);
     }
 
     public void setUsernameTextColor(int color) {

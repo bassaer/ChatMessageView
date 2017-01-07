@@ -5,7 +5,7 @@
             <corners
                 android:radius="@dimen/view_radius_normal"/>
             <solid
-                android:color="@color/green500" />
+                android:color="@color/default_right_bubble_color" />
         </shape>
     </item>
 </selector>

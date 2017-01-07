@@ -12,6 +12,7 @@ import jp.bassaer.chatmessageview.models.Message;
 import jp.bassaer.chatmessageview.views.MessageView;
 
 /**
+ * Simple chat UI
  * Created by nakayama on 2016/12/03.
  */
 public class SimpleChatActivity extends Activity {
