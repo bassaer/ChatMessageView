@@ -1,59 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:paddingTop="@dimen/spacing_small"
-              android:paddingBottom="@dimen/spacing_small"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/spacing_micro"
+              android:paddingTop="@dimen/spacing_micro">
+
+    <FrameLayout
+        android:id="@+id/user_icon_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_tiny"
+        >
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_icon"
-            android:layout_width="@dimen/icon_normal"
-            android:layout_height="@dimen/icon_normal"
-            android:layout_margin="@dimen/spacing_tiny"
-            android:src="@drawable/ic_action_user"
-            app:civ_fill_color="@color/blueGray300"
+        <FrameLayout
+            android:id="@+id/message_user_name_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/message_text_shape_left"
+            android:gravity="left"
+            android:maxWidth="@dimen/width_normal"
+            android:padding="@dimen/spacing_micro"
+            android:text="@string/default_text_long"
+            android:textSize="@dimen/font_normal"
+
             />
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/message_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_small"
-                android:text="@string/unknown"
-                android:textSize="@dimen/spacing_small"
-                android:lines="1"
-                android:ellipsize="end"
-                />
-
-            <TextView
-                android:id="@+id/message_text"
-                android:text="@string/default_text_long"
-                android:textSize="@dimen/font_normal"
-                android:gravity="left"
-                android:layout_width="wrap_content"
-                android:maxWidth="@dimen/width_normal"
-                android:layout_height="wrap_content"
-                android:background="@drawable/message_text_shape_left"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                android:layout_marginBottom="@dimen/spacing_tiny"
-                android:padding="@dimen/spacing_micro"
-
-                />
-
-        </LinearLayout>
-
 
     </LinearLayout>
 
@@ -61,7 +44,10 @@
         android:id="@+id/time_display_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/default_time_text"
-        android:layout_marginLeft="@dimen/spacing_huge"/>
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="@dimen/spacing_line"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:text="@string/default_time_text"/>
+
 
 </LinearLayout>

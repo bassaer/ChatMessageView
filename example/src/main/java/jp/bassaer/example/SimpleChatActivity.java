@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import jp.bassaer.chatmessageview.models.LeftMessage;
 import jp.bassaer.chatmessageview.models.Message;
+import jp.bassaer.chatmessageview.models.User;
 import jp.bassaer.chatmessageview.views.MessageView;
 
 /**
@@ -22,23 +23,32 @@ public class SimpleChatActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_chat);
 
-        Bitmap icon1 = BitmapFactory.decodeResource(getResources(), R.drawable.face_1);
-        Bitmap icon2 = BitmapFactory.decodeResource(getResources(), R.drawable.face_2);
+        //User id
+        int myId = 0;
+        //User icon
+        Bitmap myIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_2);
+        //User name
+        String myName = "Michael";
+
+        int yourId = 1;
+        Bitmap yourIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_1);
+        String yourName = "Emily";
+
+        final User me = new User(myId, myName, myIcon);
+        final User you = new User(yourId, yourName, yourIcon);
 
 
         ArrayList<Message> messages = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             Message message1 = new Message.Builder()
-                    .setUserIcon(icon1)
-                    .setUserName("Smith")
-                    .setMessageText("Smith " + i)
+                    .setUser(me)
+                    .setMessageText(me.getName() + " " + i)
                     .setRightMessage(true)
                     .build();
             Message message2 = new LeftMessage.Builder()
-                    .setUserIcon(icon2)
-                    .setUserName("Johnson")
-                    .setMessageText("Johnson " + i)
+                    .setUser(you)
+                    .setMessageText(you.getName() + " " + i)
                     .setRightMessage(false)
                     .build();
             messages.add(message1);

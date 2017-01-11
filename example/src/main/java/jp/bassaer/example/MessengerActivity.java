@@ -12,6 +12,7 @@ import android.view.View;
 import java.util.Random;
 
 import jp.bassaer.chatmessageview.models.Message;
+import jp.bassaer.chatmessageview.models.User;
 import jp.bassaer.chatmessageview.utils.ChatBot;
 import jp.bassaer.chatmessageview.views.ChatView;
 
@@ -23,23 +24,28 @@ public class MessengerActivity extends Activity {
 
     private ChatView mChatView;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messenger);
 
+        //User id
+        int myId = 0;
         //User icon
-        final Bitmap myIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_2);
+        Bitmap myIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_2);
         //User name
-        final String myName = "Michael";
+        String myName = "Michael";
 
-        final Bitmap yourIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_1);
-        final String yourName = "Emily";
+        int yourId = 1;
+        Bitmap yourIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_1);
+        String yourName = "Emily";
+
+        final User me = new User(myId, myName, myIcon);
+        final User you = new User(yourId, yourName, yourIcon);
 
         mChatView = (ChatView)findViewById(R.id.chat_view);
 
-        //Set UI options
+        //Set UI parameters if you need
         mChatView.setRightBubbleColor(ContextCompat.getColor(this, R.color.green500));
         mChatView.setLeftBubbleColor(Color.WHITE);
         mChatView.setBackgroundColor(ContextCompat.getColor(this, R.color.blueGray500));
@@ -51,6 +57,8 @@ public class MessengerActivity extends Activity {
         mChatView.setSendTimeTextColor(Color.WHITE);
         mChatView.setDateSeparatorColor(Color.WHITE);
         mChatView.setInputTextHint("new message...");
+        mChatView.setMessageMarginTop(5);
+        mChatView.setMessageMarginBottom(5);
 
         //Click Send Button
         mChatView.setOnClickSendButtonListener(new View.OnClickListener() {
@@ -58,10 +66,10 @@ public class MessengerActivity extends Activity {
             public void onClick(View view) {
                 //new message
                 Message message = new Message.Builder()
-                        .setUserIcon(myIcon)
-                        .setUserName(myName)
+                        .setUser(me)
                         .setRightMessage(true)
                         .setMessageText(mChatView.getInputText())
+                        .hideIcon(true)
                         .build();
                 //Set to chat view
                 mChatView.send(message);
@@ -70,15 +78,14 @@ public class MessengerActivity extends Activity {
 
                 //Receive message
                 final Message receivedMessage = new Message.Builder()
-                        .setUserIcon(yourIcon)
-                        .setUserName(yourName)
+                        .setUser(you)
                         .setRightMessage(false)
-                        .setMessageText(ChatBot.talk(message.getUserName(), message.getMessageText()))
+                        .setMessageText(ChatBot.talk(me.getName(), message.getMessageText()))
                         .build();
 
                 // This is a demo bot
                 // Return within 3 seconds
-                int sendDelay  = (new Random().nextInt(4) +1) * 1000;
+                int sendDelay = (new Random().nextInt(4) + 1) * 1000;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -86,6 +93,8 @@ public class MessengerActivity extends Activity {
                     }
                 }, sendDelay);
             }
+
         });
+
     }
 }

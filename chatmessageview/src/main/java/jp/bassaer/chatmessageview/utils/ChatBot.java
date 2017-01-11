@@ -10,15 +10,19 @@ public class ChatBot {
 
     public static String talk(String username, String message) {
         String receive = message.toLowerCase();
-        if (receive.indexOf("hello") != -1) {
-            return "Hello " + username+"!";
-        } else if (receive.indexOf("hey") != -1) {
+        if (receive.contains("hello")) {
+            String user = "";
+            if (username != null) {
+                user = " " + username;
+            }
+            return "Hello" + user + "!";
+        } else if (receive.contains("hey")) {
             return "Hey " + username + "!";
         } else if (receive.startsWith("do ")) {
             return "Yes, I do.";
-        } else if (receive.indexOf("time") != -1) {
+        } else if (receive.contains("time")) {
             return "It's " + TimeUtils.calendarToString(Calendar.getInstance(), null) + ".";
-        } else if (receive.indexOf("today") != -1) {
+        } else if (receive.contains("today")) {
             return "It's " + TimeUtils.calendarToString(Calendar.getInstance(), "M/d(E)");
 
         } else {

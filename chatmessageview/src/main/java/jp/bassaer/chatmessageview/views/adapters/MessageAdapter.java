@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.bassaer.chatmessageview.R;
 import jp.bassaer.chatmessageview.models.Message;
+import jp.bassaer.chatmessageview.models.User;
 
 /**
  * Custom list adapter for the chat timeline
@@ -35,6 +37,14 @@ public class MessageAdapter extends ArrayAdapter<Object> {
     private int mLeftMessageTextColor = Color.BLACK;
     private int mLeftBubbleColor;
     private int mRightBubbleColor;
+    /**
+     * Default message item margin top
+     */
+    private int mMessageTopMargin = 5;
+    /**
+     * Default message item margin bottom
+     */
+    private int mMessageBottomMargin = 5;
 
     public MessageAdapter(Context context, int resource, ArrayList<Object> objects) {
         super(context, resource, objects);
@@ -77,18 +87,19 @@ public class MessageAdapter extends ArrayAdapter<Object> {
             dateViewHolder.dateSeparatorText.setText(dateText);
             dateViewHolder.dateSeparatorText.setTextColor(mDateSeparatorColor);
         } else {
-            //Item is message
+            //Item is a message
             MessageViewHolder holder;
             Message message = (Message) item;
+            User user = message.getUser();
 
             if (message.isRightMessage()) {
                 if (convertView == null) {
                     convertView = mLayoutInflater.inflate(R.layout.message_view_right, null);
                     holder = new MessageViewHolder();
-                    holder.icon = (CircleImageView) convertView.findViewById(R.id.user_icon);
+                    holder.iconContainer = (FrameLayout) convertView.findViewById(R.id.user_icon_container);
                     holder.messageText = (TextView) convertView.findViewById(R.id.message_text);
                     holder.timeText = (TextView) convertView.findViewById(R.id.time_display_text);
-                    holder.userName = (TextView) convertView.findViewById(R.id.message_user_name);
+                    holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
                     convertView.setTag(holder);
                 } else {
                     holder = (MessageViewHolder) convertView.getTag();
@@ -99,22 +110,49 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 ColorStateList colorStateList = ColorStateList.valueOf(mRightBubbleColor);
                 DrawableCompat.setTintList(drawable, colorStateList);
 
-                holder.icon.setImageBitmap(message.getUserIcon());
+                //Remove view in each container
+                holder.iconContainer.removeAllViews();
+                holder.usernameContainer.removeAllViews();
+
+                if (user.getName() != null && message.getUsernameVisibility()) {
+                    View usernameView = mLayoutInflater.inflate(R.layout.user_name_right, holder.usernameContainer);
+                    holder.username = (TextView) usernameView.findViewById(R.id.message_user_name);
+                    holder.username.setText(user.getName());
+                    holder.username.setTextColor(mUsernameTextColor);
+                }
+
+                // if false, icon is not shown.
+                if (!message.isIconHided()) {
+                    View iconView = mLayoutInflater.inflate(R.layout.user_icon_right, holder.iconContainer);
+                    holder.icon = (CircleImageView) iconView.findViewById(R.id.user_icon);
+                    if (message.getIconVisibility()) {
+                        //if false, set default icon.
+                        if (user.getIcon() != null) {
+                            holder.icon.setImageBitmap(user.getIcon());
+                        }
+                    } else {
+                        //Show nothing
+                        holder.icon.setVisibility(View.INVISIBLE);
+                    }
+
+                }
+
                 holder.messageText.setText(message.getMessageText());
                 holder.timeText.setText(message.getTimeText());
-                holder.userName.setText(message.getUserName());
                 holder.messageText.setTextColor(mRightMessageTextColor);
                 holder.timeText.setTextColor(mSendTimeTextColor);
-                holder.userName.setTextColor(mUsernameTextColor);
+
+                //Set Padding
+                convertView.setPadding(0, mMessageTopMargin, 0, mMessageBottomMargin);
 
             } else {
                 if (convertView == null) {
                     convertView = mLayoutInflater.inflate(R.layout.message_view_left, null);
                     holder = new MessageViewHolder();
-                    holder.icon = (CircleImageView) convertView.findViewById(R.id.user_icon);
+                    holder.iconContainer = (FrameLayout) convertView.findViewById(R.id.user_icon_container);
                     holder.messageText = (TextView) convertView.findViewById(R.id.message_text);
                     holder.timeText = (TextView) convertView.findViewById(R.id.time_display_text);
-                    holder.userName = (TextView) convertView.findViewById(R.id.message_user_name);
+                    holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
                     convertView.setTag(holder);
                 } else {
                     holder = (MessageViewHolder) convertView.getTag();
@@ -124,14 +162,41 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 ColorStateList colorStateList = ColorStateList.valueOf(mLeftBubbleColor);
                 DrawableCompat.setTintList(drawable, colorStateList);
 
+                //Remove view in each container
+                holder.iconContainer.removeAllViews();
+                holder.usernameContainer.removeAllViews();
 
-                holder.icon.setImageBitmap(message.getUserIcon());
+
+                if (user.getName() != null && message.getUsernameVisibility()) {
+                    View usernameView = mLayoutInflater.inflate(R.layout.user_name_left, holder.usernameContainer);
+                    holder.username = (TextView) usernameView.findViewById(R.id.message_user_name);
+                    holder.username.setText(user.getName());
+                    holder.username.setTextColor(mUsernameTextColor);
+                }
+
+                // if false, icon is not shown.
+                if (!message.isIconHided()) {
+                    View iconView = mLayoutInflater.inflate(R.layout.user_icon_left, holder.iconContainer);
+                    holder.icon = (CircleImageView) iconView.findViewById(R.id.user_icon);
+                    if (message.getIconVisibility()) {
+                        //if false, set default icon.
+                        if (user.getIcon() != null) {
+                            holder.icon.setImageBitmap(user.getIcon());
+                        }
+                    } else {
+                        //Show nothing
+                        holder.icon.setImageBitmap(null);
+                    }
+
+                }
+
                 holder.messageText.setText(message.getMessageText());
                 holder.timeText.setText(message.getTimeText());
-                holder.userName.setText(message.getUserName());
                 holder.messageText.setTextColor(mLeftMessageTextColor);
                 holder.timeText.setTextColor(mSendTimeTextColor);
-                holder.userName.setTextColor(mUsernameTextColor);
+
+                //Set Padding
+                convertView.setPadding(0, mMessageTopMargin, 0, mMessageBottomMargin);
 
             }
 
@@ -184,11 +249,21 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         notifyDataSetChanged();
     }
 
+    public void setMessageTopMargin(int messageTopMargin) {
+        mMessageTopMargin = messageTopMargin;
+    }
+
+    public void setMessageBottomMargin(int messageBottomMargin) {
+        mMessageBottomMargin = messageBottomMargin;
+    }
+
     class MessageViewHolder {
         CircleImageView icon;
+        FrameLayout iconContainer;
         TextView messageText;
         TextView timeText;
-        TextView userName;
+        TextView username;
+        FrameLayout usernameContainer;
     }
 
     class DateViewHolder {

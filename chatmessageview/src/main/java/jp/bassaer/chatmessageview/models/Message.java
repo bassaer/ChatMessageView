@@ -1,24 +1,28 @@
 package jp.bassaer.chatmessageview.models;
 
-import android.graphics.Bitmap;
-
 import java.util.Calendar;
 
 import jp.bassaer.chatmessageview.utils.TimeUtils;
 
 /**
+ * Message object
  * Created by nakayama on 2016/08/08.
  */
 public class Message {
-
-    private String mUserName;
-    private Bitmap mUserIcon;
+    private User mUser;
+    private boolean mUsernameVisibility = true;
+    /**
+     * If true, there is the icon space but invisible.
+     */
+    private boolean mIconVisibility = true;
+    /**
+     * If true, there is no icon space.
+     */
+    private boolean mHideIcon = false;
     private boolean isRightMessage;
     private String mMessageText;
     private Calendar mCreatedAt;
     private String mTimeText;
-
-
 
     private String mDateSeparateText;
 
@@ -36,15 +40,26 @@ public class Message {
             message = new Message();
         }
 
-        public Builder setUserName(String userName) {
-            message.setUserName(userName);
+        public Builder setUser(User user) {
+            message.setUser(user);
             return this;
         }
 
-        public Builder setUserIcon(Bitmap icon) {
-            message.setUserIcon(icon);
+        public Builder setUsernameVisibility(boolean visibility) {
+            message.setUsernameVisibility(visibility);
             return this;
         }
+
+        public Builder setUserIconVisibility(boolean visibility) {
+            message.setUsernameVisibility(visibility);
+            return this;
+        }
+
+        public Builder hideIcon(boolean hide) {
+            message.hideIcon(hide);
+            return this;
+        }
+
 
         public Builder setRightMessage(boolean isRight) {
             message.setRightMessage(isRight);
@@ -79,29 +94,44 @@ public class Message {
         setTimeText(TimeUtils.calendarToString(mCreatedAt, "HH:mm"));
     }
 
-
-    public String getUserName() {
-        return mUserName;
+    public User getUser() {
+        return mUser;
     }
 
-    public void setUserName(String userName) {
-        mUserName = userName;
+    public void setUser(User user) {
+        mUser = user;
+    }
+
+    public boolean getUsernameVisibility() {
+        return mUsernameVisibility;
+    }
+
+    public void setUsernameVisibility(boolean usernameVisibility) {
+        mUsernameVisibility = usernameVisibility;
+    }
+
+    public boolean isIconHided() {
+        return mHideIcon;
+    }
+
+    public void hideIcon(boolean hideIcon) {
+        mHideIcon = hideIcon;
     }
 
     public boolean isRightMessage() {
         return isRightMessage;
     }
 
+    public boolean getIconVisibility() {
+        return mIconVisibility;
+    }
+
+    public void setIconVisibility(boolean iconVisibility) {
+        mIconVisibility = iconVisibility;
+    }
+
     public void setRightMessage(boolean isRightMessage) {
         this.isRightMessage = isRightMessage;
-    }
-
-    public Bitmap getUserIcon() {
-        return mUserIcon;
-    }
-
-    public void setUserIcon(Bitmap userIcon) {
-        mUserIcon = userIcon;
     }
 
     public String getMessageText() {

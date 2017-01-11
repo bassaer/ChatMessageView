@@ -135,13 +135,37 @@ public class ChatView extends LinearLayout {
     }
 
 
+    /**
+     * Set message to right side
+     * @param message Sent message
+     */
     public void send(Message message) {
+        Object lastItem = mMessageView.getLastChatObject();
+        if (lastItem instanceof Message) {
+            if (((Message) lastItem).getUser().getId() == message.getUser().getId()) {
+                //If send same person, hide username and icon.
+                message.setIconVisibility(false);
+                message.setUsernameVisibility(false);
+            }
+        }
         mMessageView.setMessage(message);
         hideKeyboard();
         mMessageView.scrollToEnd();
     }
 
+    /**
+     * Set message to left side
+     * @param message Received message
+     */
     public void receive(Message message) {
+        Object lastItem = mMessageView.getLastChatObject();
+        if (lastItem instanceof Message) {
+            if (((Message) lastItem).getUser().getId() == message.getUser().getId()) {
+                //If send same person, hide username and icon.
+                message.setIconVisibility(false);
+                message.setUsernameVisibility(false);
+            }
+        }
         mMessageView.setMessage(message);
         if (mAutoScroll) {
             mMessageView.scrollToEnd();
@@ -208,6 +232,14 @@ public class ChatView extends LinearLayout {
      */
     public void setAutoScroll(boolean enable) {
         mAutoScroll = enable;
+    }
+
+    public void setMessageMarginTop(int px) {
+        mMessageView.setMessageMarginTop(px);
+    }
+
+    public void setMessageMarginBottom(int px) {
+        mMessageView.setMessageMarginBottom(px);
     }
 
 

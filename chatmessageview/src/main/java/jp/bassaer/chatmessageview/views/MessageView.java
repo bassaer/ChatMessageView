@@ -97,6 +97,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     }
 
+
     public void setOnKeyboardAppearListener(OnKeyboardAppearListener listener) {
         mOnKeyboardAppearListener = listener;
     }
@@ -120,7 +121,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
     }
 
     public void scrollToEnd() {
-        smoothScrollToPosition(getCount() -1);
+        smoothScrollToPosition(getCount() - 1);
     }
 
     public void setLeftBubbleColor(int color) {
@@ -149,6 +150,25 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     public void setLeftMessageTextColor(int color) {
         mMessageAdapter.setLeftMessageTextColor(color);
+    }
+
+    public void setMessageMarginTop(int px) {
+        mMessageAdapter.setMessageTopMargin(px);
+    }
+
+    public void setMessageMarginBottom(int px) {
+        mMessageAdapter.setMessageBottomMargin(px);
+    }
+
+    /**
+     * Return last object (right message or left message or date text)
+     * @return last object of chat
+     */
+    public Object getLastChatObject() {
+        if (mChatList.size() == 0) {
+            return null;
+        }
+        return mChatList.get(mChatList.size() - 1);
     }
 
 }
