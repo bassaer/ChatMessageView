@@ -2,14 +2,24 @@ package jp.bassaer.chatmessageview.models;
 
 import java.util.Calendar;
 
-import jp.bassaer.chatmessageview.utils.TimeUtils;
+import jp.bassaer.chatmessageview.utils.DateFormatter;
+import jp.bassaer.chatmessageview.utils.ITimeFormatter;
+import jp.bassaer.chatmessageview.utils.SendTimeFormatter;
 
 /**
  * Message object
  * Created by nakayama on 2016/08/08.
  */
 public class Message {
+
+    /**
+     * Sender information
+     */
     private User mUser;
+
+    /**
+     * Whether sender username is shown or not
+     */
     private boolean mUsernameVisibility = true;
     /**
      * If true, there is the icon space but invisible.
@@ -19,20 +29,47 @@ public class Message {
      * If true, there is no icon space.
      */
     private boolean mHideIcon = false;
+
+    /**
+     * Whether the message is shown right side or not.
+     */
     private boolean isRightMessage;
+
+    /**
+     * Message content text
+     */
     private String mMessageText;
+
+    /**
+     * The time message that was created
+     */
     private Calendar mCreatedAt;
-    private String mTimeText;
 
-    private String mDateSeparateText;
-
+    /**
+     * Whether cell of list view is date separator text or not.
+     */
     private boolean isDateCell;
+
+    /**
+     * Text format of the send time that is next to the message
+     */
+    private ITimeFormatter mSendTimeFormatter;
+
+    /**
+     * Date separator text format.
+     * This text is shown if the before or after message was sent different day
+     */
+    private ITimeFormatter mDateFormatter;
 
     public Message() {
         mCreatedAt = Calendar.getInstance();
-        initDate();
+        mSendTimeFormatter = new SendTimeFormatter();
+        mDateFormatter = new DateFormatter();
     }
 
+    /**
+     * Message builder
+     */
     public static class Builder {
         private Message message;
 
@@ -81,17 +118,20 @@ public class Message {
             return this;
         }
 
+        public Builder setSendTimeFormatter(ITimeFormatter sendTimeFormatter) {
+            message.setSendTimeFormatter(sendTimeFormatter);
+            return this;
+        }
+
+        public Builder setDateFormatter(ITimeFormatter dateFormatter) {
+            message.setDateFormatter(dateFormatter);
+            return this;
+        }
+
         public Message build() {
             return message;
         }
 
-    }
-
-    public void initDate(){
-        //This is shown if the before or after message was send different day
-        setDateSeparateText(TimeUtils.calendarToString(mCreatedAt, "yyyy/MM/dd"));
-        //Time text under message
-        setTimeText(TimeUtils.calendarToString(mCreatedAt, "HH:mm"));
     }
 
     public User getUser() {
@@ -148,16 +188,10 @@ public class Message {
 
     public void setCreatedAt(Calendar calendar) {
         mCreatedAt = calendar;
-        initDate();
     }
 
     public String getTimeText() {
-        return mTimeText;
-
-    }
-
-    public void setTimeText(String timeText) {
-        mTimeText = timeText;
+        return mSendTimeFormatter.getFormattedTimeText(mCreatedAt);
     }
 
     public boolean isDateCell() {
@@ -169,11 +203,23 @@ public class Message {
     }
 
     public String getDateSeparateText() {
-        return mDateSeparateText;
+        return mDateFormatter.getFormattedTimeText(mCreatedAt);
     }
 
-    public void setDateSeparateText(String dateSeparateText) {
-        mDateSeparateText = dateSeparateText;
+    /**
+     * Set custom send time text formatter
+     * @param sendTimeFormatter custom send time formatter
+     */
+    public void setSendTimeFormatter(ITimeFormatter sendTimeFormatter) {
+        mSendTimeFormatter = sendTimeFormatter;
+    }
+
+    /**
+     * Set custom date text formatter
+     * @param dateFormatter custom date formatter
+     */
+    public void setDateFormatter(ITimeFormatter dateFormatter) {
+        mDateFormatter = dateFormatter;
     }
 
     /**

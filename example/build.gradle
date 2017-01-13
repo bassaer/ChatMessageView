@@ -24,4 +24,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':chatmessageview')
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.google.code.gson:gson:2.3.1'
 }

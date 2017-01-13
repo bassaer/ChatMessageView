@@ -13,13 +13,14 @@ public class MainActivity extends Activity {
 
     public static final int SIMPLE_CHAT = 0;
     public static final int MESSENGER = 1;
+    public static final int RESET_DATA = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] menu = {"Simple Chat", "Messenger"};
+        String[] menu = {"Simple Chat", "Messenger", "Reset Data"};
 
         ListView menuList = (ListView) findViewById(R.id.menu_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -37,6 +38,9 @@ public class MainActivity extends Activity {
                     case MESSENGER:
                         intent = new Intent(MainActivity.this, MessengerActivity.class);
                         startActivity(intent);
+                        break;
+                    case RESET_DATA:
+                        AppData.reset(MainActivity.this);
                         break;
                     default:
                         return;

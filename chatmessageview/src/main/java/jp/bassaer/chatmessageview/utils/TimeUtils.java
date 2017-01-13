@@ -22,4 +22,16 @@ public class TimeUtils {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(calendar.getTime());
     }
+
+    /**
+     * Return time difference days
+     * @param prev previous date
+     * @param target target date
+     * @return time difference days
+     */
+    public static int getDiffDays(Calendar prev, Calendar target) {
+        long timeDiff = prev.getTimeInMillis() - target.getTimeInMillis();
+        int millisOfDay = 1000 * 60 * 60 * 24;
+        return (int)(timeDiff / millisOfDay);
+    }
 }

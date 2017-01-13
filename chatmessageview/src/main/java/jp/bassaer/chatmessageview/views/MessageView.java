@@ -1,14 +1,17 @@
 package jp.bassaer.chatmessageview.views;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import jp.bassaer.chatmessageview.models.Message;
+import jp.bassaer.chatmessageview.utils.TimeUtils;
 import jp.bassaer.chatmessageview.views.adapters.MessageAdapter;
 
 /**
@@ -16,9 +19,6 @@ import jp.bassaer.chatmessageview.views.adapters.MessageAdapter;
  * Created by nakayama on 2016/08/08.
  */
 public class MessageView extends ListView implements View.OnFocusChangeListener{
-
-    final GradientDrawable mLeftBubble = new GradientDrawable();
-    final GradientDrawable mRightBubble = new GradientDrawable();
 
     /**
      * All contents such as right message, left message, date label
@@ -33,6 +33,16 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     private OnKeyboardAppearListener mOnKeyboardAppearListener;
 
+    /**
+     * MessageView is refreshed at this time
+     */
+    private long mRefreshInterval = 60000;
+    /**
+     * Refresh scheduler
+     */
+    private Timer mRefreshTimer;
+
+    private Handler mHandler;
 
 
     public interface OnKeyboardAppearListener {
@@ -74,8 +84,26 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         setDividerHeight(0);
         mMessageAdapter = new MessageAdapter(getContext(), 0, mChatList);
         setAdapter(mMessageAdapter);
+
+        mHandler = new Handler();
+        mRefreshTimer = new Timer(true);
+        mRefreshTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mMessageAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }, 1000, mRefreshInterval);
     }
 
+    /**
+     * Set date text before set message if sent at the different day
+     * @param message new message
+     */
     public void setMessage(Message message){
         if(mChatList.size() == 0){
             mChatList.add(message.getDateSeparateText());
@@ -84,8 +112,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
             Message prevMessage = mMessageList.get(mMessageList.size() - 1);
 
             //This is just difference between days
-            int diff = message.getCompareCalendar().compareTo(prevMessage.getCompareCalendar());
-            if(diff != 0){
+            if(TimeUtils.getDiffDays(prevMessage.getCreatedAt(), message.getCreatedAt()) != 0){
                 //Set date label because of different day
                 mChatList.add(message.getDateSeparateText());
             }
@@ -171,4 +198,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         return mChatList.get(mChatList.size() - 1);
     }
 
+    public void setRefreshInterval(long refreshInterval) {
+        mRefreshInterval = refreshInterval;
+    }
 }
