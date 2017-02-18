@@ -3,6 +3,12 @@
     <string name="input_hint">Message..</string>
     <string name="unknown">Unknown</string>
 
+    <!-- Delivery status -->
+    <string name="sending">Sending</string>
+    <string name="sent">Sent</string>
+    <string name="seen">Seen</string>
+    <string name="error">Error</string>
+
 
     <!-- Default setting for demo-->
     <string name="default_text_short">Hello!!</string>

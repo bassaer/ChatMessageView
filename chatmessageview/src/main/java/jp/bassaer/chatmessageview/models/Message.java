@@ -1,8 +1,13 @@
 package jp.bassaer.chatmessageview.models;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.Calendar;
 
 import jp.bassaer.chatmessageview.utils.DateFormatter;
+import jp.bassaer.chatmessageview.utils.DefaultTimeFormatter;
+import jp.bassaer.chatmessageview.utils.IMessageStatusIconFormatter;
+import jp.bassaer.chatmessageview.utils.IMessageStatusTextFormatter;
 import jp.bassaer.chatmessageview.utils.ITimeFormatter;
 import jp.bassaer.chatmessageview.utils.SendTimeFormatter;
 
@@ -61,10 +66,71 @@ public class Message {
      */
     private ITimeFormatter mDateFormatter;
 
+    /**
+     * Message status
+     * You can use to know the message status such as fail, delivered, seen.. etc.
+     */
+    private int mStatus;
+
+    /**
+     * Message status is not shown.
+     */
+    public static final int MESSAGE_STATUS_NONE = 0;
+
+    /**
+     * Show message status icon.
+     */
+    public static final int MESSAGE_STATUS_ICON = 1;
+
+    /**
+     * Show message status text.
+     * ex. seen, fail, delivered
+     */
+    public static final int MESSAGE_STATUS_TEXT = 2;
+
+    /**
+     * Show message status icon only right message
+     */
+    public static final int MESSAGE_STATUS_ICON_RIGHT_ONLY = 3;
+
+    /**
+     * Show message status icon only left message
+     */
+    public static final int MESSAGE_STATUS_ICON_LEFT_ONLY = 4;
+
+    /**
+     * Show message status text only right message
+     */
+    public static final int MESSAGE_STATUS_TEXT_RIGHT_ONLY = 5;
+
+    /**
+     * Show message status text only left message
+     */
+    public static final int MESSAGE_STATUS_TEXT_LEFT_ONLY = 6;
+
+    /**
+     * Message status type such as icon, text, or none.
+     */
+    private int mMessageStatusType = MESSAGE_STATUS_NONE;
+
+    /**
+     * Message status icon formatter
+     */
+    private IMessageStatusIconFormatter mStatusIconFormatter;
+
+    /**
+     * Message status text formatter
+     */
+    private IMessageStatusTextFormatter mStatusTextFormatter;
+
+    /**
+     * Constructor
+     */
     public Message() {
         mCreatedAt = Calendar.getInstance();
         mSendTimeFormatter = new SendTimeFormatter();
         mDateFormatter = new DateFormatter();
+        mSendTimeFormatter = new DefaultTimeFormatter();
     }
 
     /**
@@ -125,6 +191,26 @@ public class Message {
 
         public Builder setDateFormatter(ITimeFormatter dateFormatter) {
             message.setDateFormatter(dateFormatter);
+            return this;
+        }
+
+        public Builder setStatus(int status) {
+            message.setStatus(status);
+            return this;
+        }
+
+        public Builder setMessageStatusType(int messageStatusType) {
+            message.setMessageStatusType(messageStatusType);
+            return this;
+        }
+
+        public Builder setStatusIconFormatter(IMessageStatusIconFormatter formatter) {
+            message.setStatusIconFormatter(formatter);
+            return this;
+        }
+
+        public Builder setStatusTextFormatter(IMessageStatusTextFormatter formatter) {
+            message.setStatusTextFormatter(formatter);
             return this;
         }
 
@@ -204,6 +290,46 @@ public class Message {
 
     public String getDateSeparateText() {
         return mDateFormatter.getFormattedTimeText(mCreatedAt);
+    }
+
+    public int getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(int status) {
+        mStatus = status;
+    }
+
+    public int getMessageStatusType() {
+        return mMessageStatusType;
+    }
+
+    public void setMessageStatusType(int messageStatusType) {
+        mMessageStatusType = messageStatusType;
+    }
+
+    public IMessageStatusIconFormatter getStatusIconFormatter() {
+        return mStatusIconFormatter;
+    }
+
+    public void setStatusIconFormatter(IMessageStatusIconFormatter statusIconFormatter) {
+        mStatusIconFormatter = statusIconFormatter;
+    }
+
+    public Drawable getStatusIcon() {
+        return mStatusIconFormatter.getStatusIcon(mStatus, isRightMessage());
+    }
+
+    public IMessageStatusTextFormatter getStatusTextFormatter() {
+        return mStatusTextFormatter;
+    }
+
+    public void setStatusTextFormatter(IMessageStatusTextFormatter statusTextFormatter) {
+        mStatusTextFormatter = statusTextFormatter;
+    }
+
+    public String getStatusText() {
+        return mStatusTextFormatter.getStatusText(mStatus, isRightMessage());
     }
 
     /**

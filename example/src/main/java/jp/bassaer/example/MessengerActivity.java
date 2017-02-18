@@ -38,16 +38,16 @@ public class MessengerActivity extends Activity {
         mChatView = (ChatView) findViewById(R.id.chat_view);
 
         //Set UI parameters if you need
-        mChatView.setRightBubbleColor(ContextCompat.getColor(this, R.color.green500));
-        mChatView.setLeftBubbleColor(Color.WHITE);
-        mChatView.setBackgroundColor(ContextCompat.getColor(this, R.color.blueGray500));
-        mChatView.setSendButtonColor(ContextCompat.getColor(this, R.color.cyan500));
+        mChatView.setRightBubbleColor(ContextCompat.getColor(this, R.color.blue500));
+        mChatView.setLeftBubbleColor(ContextCompat.getColor(this, R.color.gray300));
+        mChatView.setBackgroundColor(ContextCompat.getColor(this, R.color.blueGray200));
+        mChatView.setSendButtonColor(ContextCompat.getColor(this, R.color.lightBlue500));
         mChatView.setSendIcon(R.drawable.ic_action_send);
         mChatView.setRightMessageTextColor(Color.WHITE);
         mChatView.setLeftMessageTextColor(Color.BLACK);
-        mChatView.setUsernameTextColor(Color.WHITE);
-        mChatView.setSendTimeTextColor(Color.WHITE);
-        mChatView.setDateSeparatorColor(Color.WHITE);
+        mChatView.setUsernameTextColor(ContextCompat.getColor(this, R.color.blueGray500));
+        mChatView.setSendTimeTextColor(ContextCompat.getColor(this, R.color.blueGray500));
+        mChatView.setDateSeparatorColor(ContextCompat.getColor(this, R.color.blueGray500));
         mChatView.setInputTextHint("new message...");
         mChatView.setMessageMarginTop(5);
         mChatView.setMessageMarginBottom(5);
@@ -63,11 +63,16 @@ public class MessengerActivity extends Activity {
                         .setRightMessage(true)
                         .setMessageText(mChatView.getInputText())
                         .hideIcon(true)
-                        .setSendTimeFormatter(new MyTimeFormatter())
+                        .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
+                        .setStatusTextFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
+                        .setMessageStatusType(Message.MESSAGE_STATUS_ICON)
                         .build();
                 if (mUsers.get(0).getIcon() == null) {
                     Log.d(getClass().getName(), mUsers.get(0).getName() + "'s icon is null ");
                 }
+                //Set random status(Delivering, delivered, seen or fail)
+                int messageStatus = new Random().nextInt(4);
+                message.setStatus(messageStatus);
                 //Set to chat view
                 mChatView.send(message);
                 //Add message list
@@ -78,12 +83,17 @@ public class MessengerActivity extends Activity {
                 //Ignore hey
                 if (!message.getMessageText().contains("hey")) {
 
+                    messageStatus = new Random().nextInt(4);
+
                     //Receive message
                     final Message receivedMessage = new Message.Builder()
                             .setUser(mUsers.get(1))
                             .setRightMessage(false)
                             .setMessageText(ChatBot.talk(mUsers.get(0).getName(), message.getMessageText()))
-                            .setSendTimeFormatter(new MyTimeFormatter())
+                            .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
+                            .setStatusTextFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
+                            .setMessageStatusType(Message.MESSAGE_STATUS_ICON)
+                            .setStatus(messageStatus)
                             .build();
 
                     // This is a demo bot
@@ -143,7 +153,6 @@ public class MessengerActivity extends Activity {
                         message.getUser().setIcon(user.getIcon());
                     }
                 }
-                message.setSendTimeFormatter(new MyTimeFormatter());
                 if (!message.isDateCell()) {
                     if (message.isRightMessage()) {
                         message.hideIcon(true);
@@ -153,6 +162,9 @@ public class MessengerActivity extends Activity {
                     }
 
                 }
+                message.setMessageStatusType(Message.MESSAGE_STATUS_ICON_RIGHT_ONLY);
+                message.setStatusIconFormatter(new MyMessageStatusFormatter(this));
+                message.setStatusTextFormatter(new MyMessageStatusFormatter(this));
             }
         }
     }

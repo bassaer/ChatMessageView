@@ -7,14 +7,29 @@
               android:paddingTop="@dimen/spacing_micro"
               android:paddingBottom="@dimen/spacing_micro">
 
-    <TextView
-        android:id="@+id/time_display_text"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_line"
         android:layout_gravity="bottom"
-        android:text="@string/default_time_text"/>
+        android:gravity="bottom|right">
+
+        <FrameLayout
+            android:id="@+id/message_status_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/time_display_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_time_text"/>
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"

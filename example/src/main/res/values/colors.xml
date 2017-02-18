@@ -14,7 +14,7 @@
     <color name="lightBlue500">#03A9F4</color>
     <color name="deepOrange500">#FF5722</color>
     <color name="amber500">#FFC107</color>
-
+    <color name="blue500">#2196F3</color>
     <color name="green500">#4CAF50</color>
 
 
@@ -22,7 +22,9 @@
     <!-- Grey scales -->
     <color name="gray200">#EEEEEE</color>
     <color name="gray300">#E0E0E0</color>
-    <color name="blueGray50">#ECEFF1</color>
+    <color name="gray400">#BDBDBD</color>
+    <color name="gray500">#9E9E9E</color>
+    <color name="blueGray100">#CFD8DC</color>
     <color name="blueGray200">#B0BEC5</color>
     <color name="blueGray300">#90A4AE</color>
     <color name="blueGray500">#607D8B</color>

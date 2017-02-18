@@ -7,6 +7,7 @@
     <dimen name="font_small">15sp</dimen>
 
     <!-- Icon size -->
+    <dimen name="icon_small">20dp</dimen>
     <dimen name="icon_normal">50dp</dimen>
 
     <!-- Spacing between two views -->

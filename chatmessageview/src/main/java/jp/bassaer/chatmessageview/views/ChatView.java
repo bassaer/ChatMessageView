@@ -222,6 +222,10 @@ public class ChatView extends LinearLayout {
         mMessageView.setRightMessageTextColor(color);
     }
 
+    public void setMessageStatusTextColor(int color) {
+        mMessageView.setMessageStatusColorTextColor(color);
+    }
+
     public void setLeftMessageTextColor(int color) {
         mMessageView.setLeftMessageTextColor(color);
     }

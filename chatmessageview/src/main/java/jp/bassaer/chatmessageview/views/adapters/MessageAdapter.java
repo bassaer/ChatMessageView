@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
     private int mLeftMessageTextColor = Color.BLACK;
     private int mLeftBubbleColor;
     private int mRightBubbleColor;
+    private int mStatusTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
     /**
      * Default message item margin top
      */
@@ -93,6 +95,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
             User user = message.getUser();
 
             if (message.isRightMessage()) {
+                //Right message
                 if (convertView == null) {
                     convertView = mLayoutInflater.inflate(R.layout.message_view_right, null);
                     holder = new MessageViewHolder();
@@ -100,6 +103,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder.messageText = (TextView) convertView.findViewById(R.id.message_text);
                     holder.timeText = (TextView) convertView.findViewById(R.id.time_display_text);
                     holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
+                    holder.statusContainer = (FrameLayout) convertView.findViewById(R.id.message_status_container);
                     convertView.setTag(holder);
                 } else {
                     holder = (MessageViewHolder) convertView.getTag();
@@ -107,12 +111,14 @@ public class MessageAdapter extends ArrayAdapter<Object> {
 
                 //Set bubble color
                 Drawable drawable = holder.messageText.getBackground();
+                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
                 ColorStateList colorStateList = ColorStateList.valueOf(mRightBubbleColor);
-                DrawableCompat.setTintList(drawable, colorStateList);
+                DrawableCompat.setTintList(wrappedDrawable, colorStateList);
 
                 //Remove view in each container
                 holder.iconContainer.removeAllViews();
                 holder.usernameContainer.removeAllViews();
+                holder.statusContainer.removeAllViews();
 
                 if (user.getName() != null && message.getUsernameVisibility()) {
                     View usernameView = mLayoutInflater.inflate(R.layout.user_name_right, holder.usernameContainer);
@@ -134,7 +140,21 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                         //Show nothing
                         holder.icon.setVisibility(View.INVISIBLE);
                     }
+                }
 
+
+                //Show message status
+                if (message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON || message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON_RIGHT_ONLY) {
+                    //Show message status icon
+                    View statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer);
+                    holder.statusIcon = (ImageView)statusIcon.findViewById(R.id.status_icon_image_view);
+                    holder.statusIcon.setImageDrawable(message.getStatusIcon());
+                } else if (message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT || message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT_RIGHT_ONLY) {
+                    //Show message status text
+                    View statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer);
+                    holder.statusText = (TextView)statusText.findViewById(R.id.status_text_view);
+                    holder.statusText.setText(message.getStatusText());
+                    holder.statusText.setTextColor(mStatusTextColor);
                 }
 
                 holder.messageText.setText(message.getMessageText());
@@ -146,6 +166,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 convertView.setPadding(0, mMessageTopMargin, 0, mMessageBottomMargin);
 
             } else {
+                //Left message
                 if (convertView == null) {
                     convertView = mLayoutInflater.inflate(R.layout.message_view_left, null);
                     holder = new MessageViewHolder();
@@ -153,18 +174,22 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder.messageText = (TextView) convertView.findViewById(R.id.message_text);
                     holder.timeText = (TextView) convertView.findViewById(R.id.time_display_text);
                     holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
+                    holder.statusContainer = (FrameLayout) convertView.findViewById(R.id.message_status_container);
                     convertView.setTag(holder);
                 } else {
                     holder = (MessageViewHolder) convertView.getTag();
                 }
 
                 Drawable drawable = holder.messageText.getBackground();
+                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
                 ColorStateList colorStateList = ColorStateList.valueOf(mLeftBubbleColor);
-                DrawableCompat.setTintList(drawable, colorStateList);
+                DrawableCompat.setTintList(wrappedDrawable, colorStateList);
+
 
                 //Remove view in each container
                 holder.iconContainer.removeAllViews();
                 holder.usernameContainer.removeAllViews();
+                holder.statusContainer.removeAllViews();
 
 
                 if (user.getName() != null && message.getUsernameVisibility()) {
@@ -188,6 +213,20 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                         holder.icon.setImageBitmap(null);
                     }
 
+                }
+
+                //Show message status
+                if (message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON || message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON_LEFT_ONLY) {
+                    //Show message status icon
+                    View statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer);
+                    holder.statusIcon = (ImageView)statusIcon.findViewById(R.id.status_icon_image_view);
+                    holder.statusIcon.setImageDrawable(message.getStatusIcon());
+                } else if (message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT || message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT_LEFT_ONLY) {
+                    //Show message status text
+                    View statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer);
+                    holder.statusText = (TextView)statusText.findViewById(R.id.status_text_view);
+                    holder.statusText.setText(message.getStatusText());
+                    holder.statusText.setTextColor(mStatusTextColor);
                 }
 
                 holder.messageText.setText(message.getMessageText());
@@ -257,6 +296,11 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         mMessageBottomMargin = messageBottomMargin;
     }
 
+    public void setStatusTextColor(int statusTextColor) {
+        mStatusTextColor = statusTextColor;
+        notifyDataSetChanged();
+    }
+
     class MessageViewHolder {
         CircleImageView icon;
         FrameLayout iconContainer;
@@ -264,6 +308,9 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         TextView timeText;
         TextView username;
         FrameLayout usernameContainer;
+        FrameLayout statusContainer;
+        ImageView statusIcon;
+        TextView statusText;
     }
 
     class DateViewHolder {
