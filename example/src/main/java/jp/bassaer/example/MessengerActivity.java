@@ -14,7 +14,6 @@ import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.models.User;
 import com.github.bassaer.chatmessageview.utils.ChatBot;
 import com.github.bassaer.chatmessageview.views.ChatView;
-import com.github.bassaer.example.R;
 
 import java.util.ArrayList;
 import java.util.Random;
