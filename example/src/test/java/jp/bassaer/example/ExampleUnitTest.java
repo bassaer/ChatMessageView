@@ -1,4 +1,4 @@
-package jp.bassaer.example;
+package com.github.bassaer.example;
 
 import org.junit.Test;
 

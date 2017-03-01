@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/android,intellij,java,gradle
+# Created by https://www.gitignore.io/api/android,intellij,java,maven,gradle
 
 ### Android ###
 # Built application files
@@ -41,6 +41,10 @@ captures/
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/libraries
+.idea/vcs.xml
+.idea/misc.xml
+.idea/modules.xml
+
 
 # Keystore files
 *.jks
@@ -100,6 +104,21 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml
 # *.ipr
+
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Exclude maven wrapper
+!/.mvn/wrapper/maven-wrapper.jar
 
 
 ### Java ###

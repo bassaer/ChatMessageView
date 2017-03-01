@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-  <groupId>jp.bassaer.chatmessageview</groupId>
+  <groupId>com.github.bassaer.chatmessageview</groupId>
   <artifactId>chatmessageview</artifactId>
   <versioning>
     <release>1.2.3</release>

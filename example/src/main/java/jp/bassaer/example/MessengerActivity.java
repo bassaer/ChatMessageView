@@ -10,13 +10,14 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
+import com.github.bassaer.chatmessageview.models.Message;
+import com.github.bassaer.chatmessageview.models.User;
+import com.github.bassaer.chatmessageview.utils.ChatBot;
+import com.github.bassaer.chatmessageview.views.ChatView;
+import com.github.bassaer.example.R;
+
 import java.util.ArrayList;
 import java.util.Random;
-
-import jp.bassaer.chatmessageview.models.Message;
-import jp.bassaer.chatmessageview.models.User;
-import jp.bassaer.chatmessageview.utils.ChatBot;
-import jp.bassaer.chatmessageview.views.ChatView;
 
 /**
  * Simple chat example activity

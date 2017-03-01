@@ -1,4 +1,4 @@
-package jp.bassaer.chatmessageview;
+package com.github.bassaer.chatmessageview;
 
 import org.junit.Test;
 

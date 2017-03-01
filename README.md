@@ -7,9 +7,11 @@
 
 This library aims to provide a chat UI view for Android.  
 
-<img src="https://github.com/bassaer/ChatMessageView/blob/master/screens.png" height="285dp">
+<img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screens.png" height="285dp">
 
-<img src="https://github.com/bassaer/ChatMessageView/blob/master/screen.gif" height="560dp">
+<img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screen.gif" height="560dp">
+
+<img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screen5.png" height="560dp">
 
 
 ##Feature
@@ -20,9 +22,11 @@ This library aims to provide a chat UI view for Android.
 
 ##Gradle
 
+[![Download](https://api.bintray.com/packages/nakayama/ChatMessageView/chatmessageview/images/download.svg)](https://bintray.com/nakayama/ChatMessageView/chatmessageview/_latestVersion)
+
 ```
 dependencies {
-    compile 'jp.bassaer:chatmessageview:1.2.2'
+    compile 'com.github.bassaer:chatmessageview:1.2.4'
 }
 
 ```
@@ -40,7 +44,7 @@ Only MessageView
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <jp.bassaer.chatmessageview.views.MessageView
+    <com.github.bassaer.chatmessageview.views.MessageView
         android:id="@+id/message_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -57,7 +61,7 @@ ChatView has MessageView and text box.
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <jp.bassaer.chatmessageview.views.ChatView
+    <com.github.bassaer.chatmessageview.views.ChatView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

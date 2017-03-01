@@ -1,8 +1,8 @@
 package jp.bassaer.example;
 
-import java.util.Calendar;
+import com.github.bassaer.chatmessageview.utils.ITimeFormatter;
 
-import jp.bassaer.chatmessageview.utils.ITimeFormatter;
+import java.util.Calendar;
 
 /**
  * Custom time formatter

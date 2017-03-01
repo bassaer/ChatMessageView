@@ -8,6 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.github.bassaer.example.R;
+
 
 public class MainActivity extends Activity {
 

@@ -5,12 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
-import java.util.ArrayList;
+import com.github.bassaer.chatmessageview.models.LeftMessage;
+import com.github.bassaer.chatmessageview.models.Message;
+import com.github.bassaer.chatmessageview.models.User;
+import com.github.bassaer.chatmessageview.views.MessageView;
+import com.github.bassaer.example.R;
 
-import jp.bassaer.chatmessageview.models.LeftMessage;
-import jp.bassaer.chatmessageview.models.Message;
-import jp.bassaer.chatmessageview.models.User;
-import jp.bassaer.chatmessageview.views.MessageView;
+import java.util.ArrayList;
 
 /**
  * Simple chat UI

@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <jp.bassaer.chatmessageview.views.ChatView
+    <com.github.bassaer.chatmessageview.views.ChatView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

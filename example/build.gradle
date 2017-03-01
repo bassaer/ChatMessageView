@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "jp.bassaer.example"
+        applicationId "com.github.bassaer.example"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1

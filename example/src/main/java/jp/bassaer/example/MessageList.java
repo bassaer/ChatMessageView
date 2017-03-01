@@ -1,10 +1,10 @@
 package jp.bassaer.example;
 
+import com.github.bassaer.chatmessageview.models.Message;
+import com.github.bassaer.chatmessageview.models.User;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import jp.bassaer.chatmessageview.models.Message;
-import jp.bassaer.chatmessageview.models.User;
 
 /**
  * Wrapper class {@link ArrayList} for save data
