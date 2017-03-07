@@ -1,8 +1,13 @@
 package jp.bassaer.example;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.models.User;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -45,22 +50,37 @@ public class MessageList {
     }
 
     private SaveMessage convertMessage(Message message) {
-        return new SaveMessage(
+        SaveMessage saveMessage = new SaveMessage(
                 message.getUser().getId(),
                 message.getUser().getName(),
                 message.getMessageText(),
                 message.getCreatedAt(),
                 message.isRightMessage());
+
+        if (message.getType() == Message.Type.Picture
+                && message.getPicture() != null) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            message.getPicture().compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            saveMessage.setPictureString(Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT));
+        }
+
+        return saveMessage;
     }
 
     private Message convertMessage(SaveMessage saveMessage) {
         User user = new User(saveMessage.getId(), saveMessage.getUsername(), null);
+
         Message message = new Message.Builder()
                 .setUser(user)
                 .setMessageText(saveMessage.getContent())
                 .setRightMessage(saveMessage.isRightMessage())
                 .setCreatedAt(saveMessage.getCreatedAt())
                 .build();
+
+        if (saveMessage.getPictureString() != null) {
+            byte[] bytes = Base64.decode(saveMessage.getPictureString().getBytes(), Base64.DEFAULT);
+            message.setPicture(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+        }
         return message;
     }
 
@@ -70,6 +90,7 @@ public class MessageList {
         private String mContent;
         private Calendar mCreatedAt;
         private boolean mRightMessage;
+        private String mPictureString;
 
         public SaveMessage(int id, String username, String content, Calendar createdAt, boolean isRightMessage) {
             mId = id;
@@ -97,6 +118,14 @@ public class MessageList {
 
         public boolean isRightMessage() {
             return mRightMessage;
+        }
+
+        public String getPictureString() {
+            return mPictureString;
+        }
+
+        public void setPictureString(String pictureString) {
+            mPictureString = pictureString;
         }
     }
 }

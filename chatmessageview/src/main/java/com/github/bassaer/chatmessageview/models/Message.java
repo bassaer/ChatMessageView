@@ -1,8 +1,7 @@
 package com.github.bassaer.chatmessageview.models;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-
-import java.util.Calendar;
 
 import com.github.bassaer.chatmessageview.utils.DateFormatter;
 import com.github.bassaer.chatmessageview.utils.DefaultTimeFormatter;
@@ -10,6 +9,8 @@ import com.github.bassaer.chatmessageview.utils.IMessageStatusIconFormatter;
 import com.github.bassaer.chatmessageview.utils.IMessageStatusTextFormatter;
 import com.github.bassaer.chatmessageview.utils.ITimeFormatter;
 import com.github.bassaer.chatmessageview.utils.SendTimeFormatter;
+
+import java.util.Calendar;
 
 /**
  * Message object
@@ -124,6 +125,28 @@ public class Message {
     private IMessageStatusTextFormatter mStatusTextFormatter;
 
     /**
+     * Picture message
+     */
+    private Bitmap mPicture;
+
+
+    /**
+     * Message Types
+     *
+     */
+    public enum Type {
+        Text,
+        Picture,
+        Map,
+        Link
+    }
+
+    /**
+     * Message type
+     */
+    private Type mType;
+
+    /**
      * Constructor
      */
     public Message() {
@@ -131,6 +154,7 @@ public class Message {
         mSendTimeFormatter = new SendTimeFormatter();
         mDateFormatter = new DateFormatter();
         mSendTimeFormatter = new DefaultTimeFormatter();
+        mType = Type.Text;
     }
 
     /**
@@ -211,6 +235,16 @@ public class Message {
 
         public Builder setStatusTextFormatter(IMessageStatusTextFormatter formatter) {
             message.setStatusTextFormatter(formatter);
+            return this;
+        }
+
+        public Builder setType(Type type) {
+            message.setType(type);
+            return this;
+        }
+
+        public Builder setPicture(Bitmap picture) {
+            message.setPicture(picture);
             return this;
         }
 
@@ -332,6 +366,22 @@ public class Message {
         return mStatusTextFormatter.getStatusText(mStatus, isRightMessage());
     }
 
+    public Type getType() {
+        return mType;
+    }
+
+    public void setType(Type type) {
+        mType = type;
+    }
+
+    public Bitmap getPicture() {
+        return mPicture;
+    }
+
+    public void setPicture(Bitmap picture) {
+        mPicture = picture;
+    }
+
     /**
      * Set custom send time text formatter
      * @param sendTimeFormatter custom send time formatter
@@ -362,4 +412,19 @@ public class Message {
         return calendar;
     }
 
+    public interface OnBubbleClickListener {
+        void onClick(Message message);
+    }
+
+    public interface OnBubbleLongClickListener {
+        void onLongClick(Message message);
+    }
+
+    public interface OnIconClickListener {
+        void onIconClick(Message message);
+    }
+
+    public interface OnIconLongClickListener {
+        void onIconLongClick(Message message);
+    }
 }

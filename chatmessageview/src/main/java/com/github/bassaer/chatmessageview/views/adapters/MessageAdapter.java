@@ -33,6 +33,11 @@ public class MessageAdapter extends ArrayAdapter<Object> {
     private ArrayList<Object> mObjects;
     private ArrayList<Object> mViewTypes = new ArrayList<>();
 
+    private Message.OnIconClickListener mOnIconClickListener;
+    private Message.OnBubbleClickListener mOnBubbleClickListener;
+    private Message.OnIconLongClickListener mOnIconLongClickListener;
+    private Message.OnBubbleLongClickListener mOnBubbleLongClickListener;
+
     private int mUsernameTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
     private int mSendTimeTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
     private int mDateSeparatorColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
@@ -93,7 +98,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         } else {
             //Item is a message
             MessageViewHolder holder;
-            Message message = (Message) item;
+            final Message message = (Message) item;
             User user = message.getUser();
 
             if (message.isRightMessage()) {
@@ -138,6 +143,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                         if (user.getIcon() != null) {
                             holder.icon.setImageBitmap(user.getIcon());
                         }
+
                     } else {
                         //Show nothing
                         holder.icon.setVisibility(View.INVISIBLE);
@@ -241,6 +247,50 @@ public class MessageAdapter extends ArrayAdapter<Object> {
 
             }
 
+            //Set bubble click listener
+            if (mOnBubbleClickListener != null) {
+                holder.messageText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mOnBubbleClickListener.onClick(message);
+                    }
+                });
+            }
+
+            //Set bubble long click listener
+            if (mOnBubbleLongClickListener != null) {
+                holder.messageText.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        mOnBubbleLongClickListener.onLongClick(message);
+                        return true;//ignore onclick event
+                    }
+                });
+            }
+
+            //Set icon events if icon is shown
+            if (message.getIconVisibility() && holder.icon != null) {
+                //Set icon click listener
+                if (mOnIconClickListener != null) {
+                    holder.icon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnIconClickListener.onIconClick(message);
+                        }
+                    });
+                }
+
+                if (mOnIconLongClickListener != null) {
+                    holder.icon.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            mOnIconLongClickListener.onIconLongClick(message);
+                            return true;
+                        }
+                    });
+                }
+            }
+
         }
 
         return convertView;
@@ -264,6 +314,21 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         notifyDataSetChanged();
     }
 
+    public void setOnIconClickListener(Message.OnIconClickListener onIconClickListener) {
+        mOnIconClickListener = onIconClickListener;
+    }
+
+    public void setOnBubbleClickListener(Message.OnBubbleClickListener onBubbleClickListener) {
+        mOnBubbleClickListener = onBubbleClickListener;
+    }
+
+    public void setOnIconLongClickListener(Message.OnIconLongClickListener onIconLongClickListener) {
+        mOnIconLongClickListener = onIconLongClickListener;
+    }
+
+    public void setOnBubbleLongClickListener(Message.OnBubbleLongClickListener onBubbleLongClickListener) {
+        mOnBubbleLongClickListener = onBubbleLongClickListener;
+    }
 
     public void setUsernameTextColor(int usernameTextColor) {
         mUsernameTextColor = usernameTextColor;

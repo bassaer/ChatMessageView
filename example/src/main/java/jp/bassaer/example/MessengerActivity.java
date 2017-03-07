@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.models.User;
@@ -51,6 +52,50 @@ public class MessengerActivity extends Activity {
         mChatView.setInputTextHint("new message...");
         mChatView.setMessageMarginTop(5);
         mChatView.setMessageMarginBottom(5);
+
+        mChatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
+            @Override
+            public void onClick(Message message) {
+                Toast.makeText(
+                        MessengerActivity.this,
+                        "click : " + message.getUser().getName() + " - " + message.getMessageText(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+
+        mChatView.setOnBubbleLongClickListener(new Message.OnBubbleLongClickListener() {
+            @Override
+            public void onLongClick(Message message) {
+                Toast.makeText(
+                        MessengerActivity.this,
+                        "Long click : " + message.getUser().getName() + " - " + message.getMessageText(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+
+        mChatView.setOnIconClickListener(new Message.OnIconClickListener() {
+            @Override
+            public void onIconClick(Message message) {
+                Toast.makeText(
+                        MessengerActivity.this,
+                        "click : icon " + message.getUser().getName(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+
+        mChatView.setOnIconLongClickListener(new Message.OnIconLongClickListener() {
+            @Override
+            public void onIconLongClick(Message message) {
+                Toast.makeText(
+                        MessengerActivity.this,
+                        "Long click : icon " + message.getUser().getName(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
 
         //Click Send Button
         mChatView.setOnClickSendButtonListener(new View.OnClickListener() {

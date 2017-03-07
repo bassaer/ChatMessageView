@@ -6,13 +6,13 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.utils.TimeUtils;
 import com.github.bassaer.chatmessageview.views.adapters.MessageAdapter;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Simple chat view
@@ -181,6 +181,22 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     public void setLeftMessageTextColor(int color) {
         mMessageAdapter.setLeftMessageTextColor(color);
+    }
+
+    public void setOnBubbleClickListener(Message.OnBubbleClickListener listener) {
+        mMessageAdapter.setOnBubbleClickListener(listener);
+    }
+
+    public void setOnBubbleLongClickListener(Message.OnBubbleLongClickListener listener) {
+        mMessageAdapter.setOnBubbleLongClickListener(listener);
+    }
+
+    public void setOnIconClickListener(Message.OnIconClickListener listener) {
+        mMessageAdapter.setOnIconClickListener(listener);
+    }
+
+    public void setOnIconLongClickListener(Message.OnIconLongClickListener listener) {
+        mMessageAdapter.setOnIconLongClickListener(listener);
     }
 
     public void setMessageMarginTop(int px) {

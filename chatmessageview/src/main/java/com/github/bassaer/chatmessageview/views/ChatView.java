@@ -226,6 +226,22 @@ public class ChatView extends LinearLayout {
         mMessageView.setMessageStatusColorTextColor(color);
     }
 
+    public void setOnBubbleClickListener(Message.OnBubbleClickListener listener) {
+        mMessageView.setOnBubbleClickListener(listener);
+    }
+
+    public void setOnBubbleLongClickListener(Message.OnBubbleLongClickListener listener) {
+        mMessageView.setOnBubbleLongClickListener(listener);
+    }
+
+    public void setOnIconClickListener(Message.OnIconClickListener listener) {
+        mMessageView.setOnIconClickListener(listener);
+    }
+
+    public void setOnIconLongClickListener(Message.OnIconLongClickListener listener) {
+        mMessageView.setOnIconLongClickListener(listener);
+    }
+
     public void setLeftMessageTextColor(int color) {
         mMessageView.setLeftMessageTextColor(color);
     }
