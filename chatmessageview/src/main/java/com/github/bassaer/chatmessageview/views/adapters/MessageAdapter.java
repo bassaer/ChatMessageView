@@ -107,7 +107,8 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     convertView = mLayoutInflater.inflate(R.layout.message_view_right, null);
                     holder = new MessageViewHolder();
                     holder.iconContainer = (FrameLayout) convertView.findViewById(R.id.user_icon_container);
-                    holder.messageText = (TextView) convertView.findViewById(R.id.message_text);
+                    holder.mainMessageContainer = (FrameLayout) convertView.findViewById(R.id.main_message_container);
+                    //holder.messageText = (TextView) convertView.findViewById(R.id.message_text);
                     holder.timeText = (TextView) convertView.findViewById(R.id.time_display_text);
                     holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
                     holder.statusContainer = (FrameLayout) convertView.findViewById(R.id.message_status_container);
@@ -116,16 +117,11 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder = (MessageViewHolder) convertView.getTag();
                 }
 
-                //Set bubble color
-                Drawable drawable = holder.messageText.getBackground();
-                Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
-                ColorStateList colorStateList = ColorStateList.valueOf(mRightBubbleColor);
-                DrawableCompat.setTintList(wrappedDrawable, colorStateList);
-
                 //Remove view in each container
                 holder.iconContainer.removeAllViews();
                 holder.usernameContainer.removeAllViews();
                 holder.statusContainer.removeAllViews();
+                holder.mainMessageContainer.removeAllViews();
 
                 if (user.getName() != null && message.getUsernameVisibility()) {
                     View usernameView = mLayoutInflater.inflate(R.layout.user_name_right, holder.usernameContainer);
@@ -165,7 +161,23 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder.statusText.setTextColor(mStatusTextColor);
                 }
 
-                holder.messageText.setText(message.getMessageText());
+                //Set text or picture on message bubble
+                if (message.getPicture() != null) {
+                    //Set picture
+
+
+                } else {
+                    //Set text
+                    View textBubble = mLayoutInflater.inflate(R.layout.message_text_right, holder.mainMessageContainer);
+                    holder.messageText = (TextView) textBubble.findViewById(R.id.message_text);
+                    holder.messageText.setText(message.getMessageText());
+                    //Set bubble color
+                    Drawable drawable = holder.messageText.getBackground();
+                    Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+                    ColorStateList colorStateList = ColorStateList.valueOf(mRightBubbleColor);
+                    DrawableCompat.setTintList(wrappedDrawable, colorStateList);
+                }
+
                 holder.timeText.setText(message.getTimeText());
                 holder.messageText.setTextColor(mRightMessageTextColor);
                 holder.timeText.setTextColor(mSendTimeTextColor);
@@ -374,6 +386,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         TextView messageText;
         TextView timeText;
         TextView username;
+        FrameLayout mainMessageContainer;
         FrameLayout usernameContainer;
         FrameLayout statusContainer;
         ImageView statusIcon;

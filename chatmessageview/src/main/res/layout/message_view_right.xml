@@ -44,18 +44,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"/>
 
-        <TextView
-            android:id="@+id/message_text"
+        <FrameLayout
+            android:id="@+id/main_message_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/message_text_shape_right"
-            android:gravity="left"
-            android:maxWidth="@dimen/width_normal"
-            android:padding="@dimen/spacing_micro"
-            android:text="@string/default_text_short"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/font_normal"
-            />
+            android:padding="@dimen/spacing_micro"/>
 
     </LinearLayout>
 
