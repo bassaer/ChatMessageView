@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -52,31 +51,6 @@ public class ChatView extends LinearLayout {
         mInputText = (EditText) layout.findViewById(R.id.message_edit_text);
         mSendButton = (ImageButton) layout.findViewById(R.id.send_button);
         mChatContainer = (FrameLayout) layout.findViewById(R.id.chat_container);
-
-        mInputText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String input = editable.toString();
-
-                //Cannot send when input is empty
-                if (input.length() == 0) {
-                    mSendButton.setEnabled(false);
-                } else {
-                    mSendButton.setEnabled(true);
-                }
-            }
-        });
-
 
         mMessageView.setFocusableInTouchMode(true);
         //if touched Chat screen
@@ -262,5 +236,20 @@ public class ChatView extends LinearLayout {
         mMessageView.setMessageMarginBottom(px);
     }
 
+    /**
+     * Add Text watcher
+     * @param watcher behavior when text view status is changed
+     */
+    public void addTextWatcher(TextWatcher watcher) {
+        mInputText.addTextChangedListener(watcher);
+    }
+
+    public void setEnableSendButton(boolean enable) {
+        mSendButton.setEnabled(enable);
+    }
+
+    public boolean isEnabledSendButton() {
+        return mSendButton.isEnabled();
+    }
 
 }

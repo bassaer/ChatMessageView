@@ -57,6 +57,8 @@ public class MessageList {
                 message.getCreatedAt(),
                 message.isRightMessage());
 
+        saveMessage.setType(message.getType());
+
         if (message.getType() == Message.Type.Picture
                 && message.getPicture() != null) {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -75,6 +77,7 @@ public class MessageList {
                 .setMessageText(saveMessage.getContent())
                 .setRightMessage(saveMessage.isRightMessage())
                 .setCreatedAt(saveMessage.getCreatedAt())
+                .setType(saveMessage.getType())
                 .build();
 
         if (saveMessage.getPictureString() != null) {
@@ -91,6 +94,7 @@ public class MessageList {
         private Calendar mCreatedAt;
         private boolean mRightMessage;
         private String mPictureString;
+        private Message.Type mType;
 
         public SaveMessage(int id, String username, String content, Calendar createdAt, boolean isRightMessage) {
             mId = id;
@@ -126,6 +130,14 @@ public class MessageList {
 
         public void setPictureString(String pictureString) {
             mPictureString = pictureString;
+        }
+
+        public Message.Type getType() {
+            return mType;
+        }
+
+        public void setType(Message.Type type) {
+            mType = type;
         }
     }
 }

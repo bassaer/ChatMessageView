@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -112,18 +111,24 @@ public class MessengerActivity extends Activity {
                         .setStatusTextFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
                         .setMessageStatusType(Message.MESSAGE_STATUS_ICON)
                         .build();
-                if (mUsers.get(0).getIcon() == null) {
-                    Log.d(getClass().getName(), mUsers.get(0).getName() + "'s icon is null ");
-                }
+
                 //Set random status(Delivering, delivered, seen or fail)
                 int messageStatus = new Random().nextInt(4);
                 message.setStatus(messageStatus);
+
+                if (message.getMessageText().equals("")) {
+                    message.setPicture(message.getUser().getIcon());
+                    message.setType(Message.Type.Picture);
+                }
+
                 //Set to chat view
                 mChatView.send(message);
                 //Add message list
                 mMessageList.add(message);
                 //Reset edit text
                 mChatView.setInputText("");
+
+
 
                 //Ignore hey
                 if (!message.getMessageText().contains("hey")) {

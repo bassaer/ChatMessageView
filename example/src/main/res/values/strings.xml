@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ChatMessageView</string>
+    <string name="error">Error</string>
 </resources>

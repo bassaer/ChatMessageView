@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.github.bassaer.chatmessageview.R;
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.models.User;
+import com.github.bassaer.chatmessageview.views.RoundImageView;
 
 import java.util.ArrayList;
 
@@ -162,10 +163,11 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 }
 
                 //Set text or picture on message bubble
-                if (message.getPicture() != null) {
+                if (message.getType() == Message.Type.Picture) {
                     //Set picture
-
-
+                    View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_right, holder.mainMessageContainer);
+                    holder.messagePicture = (RoundImageView) pictureBubble.findViewById(R.id.message_picture);
+                    holder.messagePicture.setImageBitmap(message.getPicture());
                 } else {
                     //Set text
                     View textBubble = mLayoutInflater.inflate(R.layout.message_text_right, holder.mainMessageContainer);
@@ -176,10 +178,12 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
                     ColorStateList colorStateList = ColorStateList.valueOf(mRightBubbleColor);
                     DrawableCompat.setTintList(wrappedDrawable, colorStateList);
+                    //Set message text color
+                    holder.messageText.setTextColor(mRightMessageTextColor);
                 }
 
                 holder.timeText.setText(message.getTimeText());
-                holder.messageText.setTextColor(mRightMessageTextColor);
+
                 holder.timeText.setTextColor(mSendTimeTextColor);
 
                 //Set Padding
@@ -259,25 +263,27 @@ public class MessageAdapter extends ArrayAdapter<Object> {
 
             }
 
-            //Set bubble click listener
-            if (mOnBubbleClickListener != null) {
-                holder.messageText.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mOnBubbleClickListener.onClick(message);
-                    }
-                });
-            }
+            if (holder.mainMessageContainer != null) {
+                //Set bubble click listener
+                if (mOnBubbleClickListener != null) {
+                    holder.mainMessageContainer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mOnBubbleClickListener.onClick(message);
+                        }
+                    });
+                }
 
-            //Set bubble long click listener
-            if (mOnBubbleLongClickListener != null) {
-                holder.messageText.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        mOnBubbleLongClickListener.onLongClick(message);
-                        return true;//ignore onclick event
-                    }
-                });
+                //Set bubble long click listener
+                if (mOnBubbleLongClickListener != null) {
+                    holder.mainMessageContainer.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            mOnBubbleLongClickListener.onLongClick(message);
+                            return true;//ignore onclick event
+                        }
+                    });
+                }
             }
 
             //Set icon events if icon is shown
@@ -383,6 +389,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
     class MessageViewHolder {
         CircleImageView icon;
         FrameLayout iconContainer;
+        RoundImageView messagePicture;
         TextView messageText;
         TextView timeText;
         TextView username;
