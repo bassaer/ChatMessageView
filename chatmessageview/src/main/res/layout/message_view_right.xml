@@ -11,10 +11,10 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_micro"
         android:layout_marginBottom="@dimen/spacing_line"
         android:layout_gravity="bottom"
-        android:gravity="bottom|right">
+        android:gravity="bottom|end">
 
         <FrameLayout
             android:id="@+id/message_status_container"
@@ -42,13 +42,12 @@
             android:id="@+id/message_user_name_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"/>
+            android:layout_gravity="end"/>
 
         <FrameLayout
             android:id="@+id/main_message_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_micro"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

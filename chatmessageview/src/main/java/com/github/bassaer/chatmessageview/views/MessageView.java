@@ -83,6 +83,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
     public void init() {
         setDividerHeight(0);
         mMessageAdapter = new MessageAdapter(getContext(), 0, mChatList);
+
         setAdapter(mMessageAdapter);
 
         mHandler = new Handler();

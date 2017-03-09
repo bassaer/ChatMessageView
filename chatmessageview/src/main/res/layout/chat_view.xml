@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/chat_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="@dimen/spacing_tiny"
         android:layout_weight="1">
 
         <com.github.bassaer.chatmessageview.views.MessageView
             android:id="@+id/message_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:listSelector="@android:color/transparent"
-            android:cacheColorHint="@android:color/transparent"/>
+            android:cacheColorHint="@android:color/transparent"
+            android:listSelector="@android:color/transparent"/>
 
     </FrameLayout>
 
 
-
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/icon_normal"
         android:background="@color/blueGray50"
+        android:orientation="horizontal"
         >
+
+        <ImageButton
+            android:id="@+id/option_button"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/icon_normal"
+            android:layout_height="@dimen/icon_normal"
+            android:src="@drawable/ic_action_add"
+            />
 
         <EditText
             android:id="@+id/message_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/input_hint"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="@string/input_hint"/>
 
         <ImageButton
             android:id="@+id/send_button"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="@dimen/icon_normal"
             android:layout_height="@dimen/icon_normal"
             android:src="@drawable/ic_action_send"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
             />
 
     </LinearLayout>

@@ -43,6 +43,7 @@ public class MessengerActivity extends Activity {
         mChatView.setBackgroundColor(ContextCompat.getColor(this, R.color.blueGray200));
         mChatView.setSendButtonColor(ContextCompat.getColor(this, R.color.lightBlue500));
         mChatView.setSendIcon(R.drawable.ic_action_send);
+        mChatView.setOptionButtonColor(R.color.teal500);
         mChatView.setRightMessageTextColor(Color.WHITE);
         mChatView.setLeftMessageTextColor(Color.BLACK);
         mChatView.setUsernameTextColor(ContextCompat.getColor(this, R.color.blueGray500));
@@ -145,6 +146,12 @@ public class MessengerActivity extends Activity {
                             .setMessageStatusType(Message.MESSAGE_STATUS_ICON)
                             .setStatus(messageStatus)
                             .build();
+
+                    if (message.getType() == Message.Type.Picture) {
+                        receivedMessage.setType(Message.Type.Picture);
+                        Bitmap picture = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+                        receivedMessage.setPicture(picture);
+                    }
 
                     // This is a demo bot
                     // Return within 3 seconds

@@ -28,10 +28,13 @@ public class ChatView extends LinearLayout {
     private MessageView mMessageView;
     private EditText mInputText;
     private ImageButton mSendButton;
+    private ImageButton mOptionButton;
     private FrameLayout mChatContainer;
     private InputMethodManager mInputMethodManager;
     private int mSendIconId = R.drawable.ic_action_send;
+    private int mOptionIconId = R.drawable.ic_action_add;
     private int mSendIconColor = ContextCompat.getColor(getContext(), R.color.lightBlue500);
+    private int mOptionIconColor = ContextCompat.getColor(getContext(), R.color.lightBlue500);
     private boolean mAutoScroll = true;
 
     public ChatView(Context context, AttributeSet attrs) {
@@ -50,6 +53,7 @@ public class ChatView extends LinearLayout {
         mMessageView = (MessageView) layout.findViewById(R.id.message_view);
         mInputText = (EditText) layout.findViewById(R.id.message_edit_text);
         mSendButton = (ImageButton) layout.findViewById(R.id.send_button);
+        mOptionButton = (ImageButton) layout.findViewById(R.id.option_button);
         mChatContainer = (FrameLayout) layout.findViewById(R.id.chat_container);
 
         mMessageView.setFocusableInTouchMode(true);
@@ -158,6 +162,10 @@ public class ChatView extends LinearLayout {
         mSendButton.setOnClickListener(listener);
     }
 
+    public void setOnClickOptionButtonListener(View.OnClickListener listener) {
+        mOptionButton.setOnClickListener(listener);
+    }
+
     public void setBackgroundColor(int color) {
         mMessageView.setBackgroundColor(color);
         mChatContainer.setBackgroundColor(color);
@@ -165,15 +173,30 @@ public class ChatView extends LinearLayout {
 
     public void setSendButtonColor(int color) {
         mSendIconColor = color;
-        ColorStateList colorStateList = ColorStateList.valueOf(mSendIconColor);
-        Drawable icon = ContextCompat.getDrawable(getContext(), mSendIconId);
-        DrawableCompat.setTintList(icon, colorStateList);
-        mSendButton.setImageDrawable(icon);
+        mSendButton.setImageDrawable(getColoredDrawable(color, mSendIconId));
+    }
+
+    public void setOptionButtonColor(int color) {
+        mOptionIconColor = color;
+        mOptionButton.setImageDrawable(getColoredDrawable(color, mOptionIconId));
+    }
+
+    public Drawable getColoredDrawable(int color, int iconId) {
+        ColorStateList colorStateList = ColorStateList.valueOf(color);
+        Drawable icon = ContextCompat.getDrawable(getContext(), iconId);
+        Drawable wrappedDrawable = DrawableCompat.wrap(icon);
+        DrawableCompat.setTintList(wrappedDrawable, colorStateList);
+        return wrappedDrawable;
     }
 
     public void setSendIcon(int resId) {
         mSendIconId = resId;
         setSendButtonColor(mSendIconColor);
+    }
+
+    public void setOptionIcon(int resId) {
+        mOptionIconId = resId;
+        setOptionButtonColor(mOptionIconColor);
     }
 
     public void setInputTextHint(String hint) {
