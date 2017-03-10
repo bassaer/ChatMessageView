@@ -57,7 +57,7 @@ public class Message {
     private boolean isDateCell;
 
     /**
-     * Text format of the send time that is next to the message
+     * TEXT format of the send time that is next to the message
      */
     private ITimeFormatter mSendTimeFormatter;
 
@@ -125,7 +125,7 @@ public class Message {
     private IMessageStatusTextFormatter mStatusTextFormatter;
 
     /**
-     * Picture message
+     * PICTURE message
      */
     private Bitmap mPicture;
 
@@ -135,10 +135,10 @@ public class Message {
      *
      */
     public enum Type {
-        Text,
-        Picture,
-        Map,
-        Link
+        TEXT,
+        PICTURE,
+        MAP,
+        LINK
     }
 
     /**
@@ -154,7 +154,7 @@ public class Message {
         mSendTimeFormatter = new SendTimeFormatter();
         mDateFormatter = new DateFormatter();
         mSendTimeFormatter = new DefaultTimeFormatter();
-        mType = Type.Text;
+        mType = Type.TEXT;
     }
 
     /**

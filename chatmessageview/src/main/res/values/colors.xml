@@ -19,6 +19,7 @@
     <color name="blueGray50">#ECEFF1</color>
     <color name="blueGray200">#B0BEC5</color>
     <color name="blueGray300">#90A4AE</color>
+    <color name="blueGray400">#78909C</color>
     <color name="blueGray500">#607D8B</color>
 
     <!-- Bubble color -->

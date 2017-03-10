@@ -59,7 +59,7 @@ public class MessageList {
 
         saveMessage.setType(message.getType());
 
-        if (message.getType() == Message.Type.Picture
+        if (message.getType() == Message.Type.PICTURE
                 && message.getPicture() != null) {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             message.getPicture().compress(Bitmap.CompressFormat.JPEG, 100, outputStream);

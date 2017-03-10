@@ -26,9 +26,12 @@ public class ChatBot {
             return "It's " + TimeUtils.calendarToString(Calendar.getInstance(), "M/d(E)");
 
         } else {
-            return "Lorem ipsum dolor sit amet, " +
-                    "consectetur adipiscing elit, " +
-                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ";
+            String reply = "Lorem ipsum dolor sit amet";
+            if (receive.length() > 7) {
+                reply += ", consectetur adipiscing elit, " +
+                        "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ";
+            }
+            return reply;
         }
     }
 }

@@ -220,7 +220,7 @@ public class ChatView extends LinearLayout {
     }
 
     public void setMessageStatusTextColor(int color) {
-        mMessageView.setMessageStatusColorTextColor(color);
+        mMessageView.setMessageStatusColor(color);
     }
 
     public void setOnBubbleClickListener(Message.OnBubbleClickListener listener) {
@@ -260,7 +260,7 @@ public class ChatView extends LinearLayout {
     }
 
     /**
-     * Add Text watcher
+     * Add TEXT watcher
      * @param watcher behavior when text view status is changed
      */
     public void addTextWatcher(TextWatcher watcher) {

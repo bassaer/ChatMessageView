@@ -46,7 +46,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
     private int mLeftMessageTextColor = Color.BLACK;
     private int mLeftBubbleColor;
     private int mRightBubbleColor;
-    private int mStatusTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
+    private int mStatusColor = ContextCompat.getColor(getContext(), R.color.blueGray500);
     /**
      * Default message item margin top
      */
@@ -158,16 +158,17 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     View statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer);
                     holder.statusIcon = (ImageView)statusIcon.findViewById(R.id.status_icon_image_view);
                     holder.statusIcon.setImageDrawable(message.getStatusIcon());
+                    setColorDrawable(mStatusColor, holder.statusIcon.getDrawable());
                 } else if (message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT || message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT_RIGHT_ONLY) {
                     //Show message status text
                     View statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer);
                     holder.statusText = (TextView)statusText.findViewById(R.id.status_text_view);
                     holder.statusText.setText(message.getStatusText());
-                    holder.statusText.setTextColor(mStatusTextColor);
+                    holder.statusText.setTextColor(mStatusColor);
                 }
 
                 //Set text or picture on message bubble
-                if (message.getType() == Message.Type.Picture) {
+                if (message.getType() == Message.Type.PICTURE) {
                     //Set picture
                     View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_right, holder.mainMessageContainer);
                     holder.messagePicture = (RoundImageView) pictureBubble.findViewById(R.id.message_picture);
@@ -178,10 +179,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder.messageText = (TextView) textBubble.findViewById(R.id.message_text);
                     holder.messageText.setText(message.getMessageText());
                     //Set bubble color
-                    bubbleDrawable = holder.messageText.getBackground();
-                    wrappedDrawable = DrawableCompat.wrap(bubbleDrawable);
-                    colorStateList = ColorStateList.valueOf(mRightBubbleColor);
-                    DrawableCompat.setTintList(wrappedDrawable, colorStateList);
+                    setColorDrawable(mRightBubbleColor, holder.messageText.getBackground());
                     //Set message text color
                     holder.messageText.setTextColor(mRightMessageTextColor);
                 }
@@ -245,16 +243,17 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     View statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer);
                     holder.statusIcon = (ImageView)statusIcon.findViewById(R.id.status_icon_image_view);
                     holder.statusIcon.setImageDrawable(message.getStatusIcon());
+                    setColorDrawable(mStatusColor, holder.statusIcon.getDrawable());
                 } else if (message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT || message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT_LEFT_ONLY) {
                     //Show message status text
                     View statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer);
                     holder.statusText = (TextView)statusText.findViewById(R.id.status_text_view);
                     holder.statusText.setText(message.getStatusText());
-                    holder.statusText.setTextColor(mStatusTextColor);
+                    holder.statusText.setTextColor(mStatusColor);
                 }
 
                 //Set text or picture on message bubble
-                if (message.getType() == Message.Type.Picture) {
+                if (message.getType() == Message.Type.PICTURE) {
                     //Set picture
                     View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_left, holder.mainMessageContainer);
                     holder.messagePicture = (RoundImageView) pictureBubble.findViewById(R.id.message_picture);
@@ -265,10 +264,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder.messageText = (TextView) textBubble.findViewById(R.id.message_text);
                     holder.messageText.setText(message.getMessageText());
                     //Set bubble color
-                    bubbleDrawable = holder.messageText.getBackground();
-                    wrappedDrawable = DrawableCompat.wrap(bubbleDrawable);
-                    colorStateList = ColorStateList.valueOf(mLeftBubbleColor);
-                    DrawableCompat.setTintList(wrappedDrawable, colorStateList);
+                    setColorDrawable(mLeftBubbleColor, holder.messageText.getBackground());
                     //Set message text color
                     holder.messageText.setTextColor(mLeftMessageTextColor);
                 }
@@ -330,6 +326,20 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         }
 
         return convertView;
+    }
+
+    /**
+     * Add color to drawable
+     * @param color setting color
+     * @param drawable which be set color
+     */
+    public void setColorDrawable(int color, Drawable drawable) {
+        if (drawable == null) {
+            return;
+        }
+        ColorStateList colorStateList = ColorStateList.valueOf(color);
+        Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTintList(wrappedDrawable, colorStateList);
     }
 
     /**
@@ -399,8 +409,8 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         mMessageBottomMargin = messageBottomMargin;
     }
 
-    public void setStatusTextColor(int statusTextColor) {
-        mStatusTextColor = statusTextColor;
+    public void setStatusColor(int statusTextColor) {
+        mStatusColor = statusTextColor;
         notifyDataSetChanged();
     }
 

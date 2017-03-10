@@ -168,8 +168,8 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         mMessageAdapter.setSendTimeTextColor(color);
     }
 
-    public void setMessageStatusColorTextColor(int color) {
-        mMessageAdapter.setStatusTextColor(color);
+    public void setMessageStatusColor(int color) {
+        mMessageAdapter.setStatusColor(color);
     }
 
     public void setDateSeparatorTextColor(int color) {

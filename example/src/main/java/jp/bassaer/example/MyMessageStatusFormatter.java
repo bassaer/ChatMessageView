@@ -49,6 +49,9 @@ public class MyMessageStatusFormatter implements IMessageStatusIconFormatter, IM
 
     @Override
     public Drawable getStatusIcon(int status, boolean isRightMessage) {
+        if (!isRightMessage) {
+            return null;
+        }
         switch (status) {
             case STATUS_DELIVERING:
                 return mDeliveringIcon;

@@ -1,7 +1,7 @@
 #ChatMessageView
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ChatMessageView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5032)
-[ ![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
+[![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/bassaer/ChatMessageView/blob/master/LICENSE)
 
@@ -9,9 +9,11 @@ This library aims to provide a chat UI view for Android.
 
 <img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screens.png" height="285dp">
 
+<img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screen_1_3_0.png" height="560dp">
+
 <img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screen.gif" height="560dp">
 
-<img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screen5.png" height="560dp">
+
 
 
 ##Feature
@@ -26,14 +28,15 @@ This library aims to provide a chat UI view for Android.
 
 ```
 dependencies {
-    compile 'com.github.bassaer:chatmessageview:1.2.4'
+    compile 'com.github.bassaer:chatmessageview:1.3.0'
 }
 
 ```
 
 ##Usage
 
-Layout file
+[How to use this library](https://github.com/bassaer/ChatMessageView/wiki)
+
 
 Only MessageView
 
