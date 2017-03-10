@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -32,6 +33,13 @@ public class RoundImageView extends ImageView {
     }
 
     private void initClipPath() {
+
+        // Below Jelly Bean, clipPath on canvas would not work because lack of hardware acceleration
+        // support. Hence, we should explicitly say to use software acceleration.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
         mClipPath = new Path();
         RectF rect = new RectF(0, 0, getWidth(), getHeight());
         float radius = getResources().getDimensionPixelSize(R.dimen.view_radius_normal);
