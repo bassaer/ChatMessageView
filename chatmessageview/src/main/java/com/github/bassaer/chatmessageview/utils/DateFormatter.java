@@ -9,6 +9,6 @@ import java.util.Calendar;
 public class DateFormatter implements ITimeFormatter {
     @Override
     public String getFormattedTimeText(Calendar createdAt) {
-        return TimeUtils.calendarToString(createdAt, "yyyy/MM/dd");
+        return TimeUtils.calendarToString(createdAt, "MMM. dd, yyyy");
     }
 }
