@@ -1,4 +1,4 @@
-#ChatMessageView
+# ChatMessageView
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ChatMessageView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5032)
 [![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
@@ -13,16 +13,13 @@ This library aims to provide a chat UI view for Android.
 
 <img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screen.gif" height="560dp">
 
-
-
-
-##Feature
+## Feature
 
 - You need to write just few code to create chat view.
 - Auto date setting
 - Easy to use for bot app
 
-##Gradle
+## Gradle
 
 [ ![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
 
@@ -33,7 +30,7 @@ dependencies {
 
 ```
 
-##Usage
+## Usage
 
 [How to use this library](https://github.com/bassaer/ChatMessageView/wiki)
 
@@ -156,7 +153,7 @@ public class MessengerActivity extends Activity {
 
 ```
 
-##License
+## License
 
 ```
 MIT License
