@@ -135,7 +135,8 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         super.onSizeChanged(width, height, oldWidth, oldHeight);
 
         // if ListView became smaller
-        if (height < oldHeight) {
+        if (mOnKeyboardAppearListener != null
+                && height < oldHeight) {
             mOnKeyboardAppearListener.onKeyboardAppeared(true);
         }
     }
