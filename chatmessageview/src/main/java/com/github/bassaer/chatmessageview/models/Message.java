@@ -178,7 +178,7 @@ public class Message {
         }
 
         public Builder setUserIconVisibility(boolean visibility) {
-            message.setUsernameVisibility(visibility);
+            message.setIconVisibility(visibility);
             return this;
         }
 
