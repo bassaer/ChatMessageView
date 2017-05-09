@@ -8,7 +8,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
-        versionName "1.3.1"
+        versionName "1.3.2"
     }
     buildTypes {
         release {
@@ -22,7 +22,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.github.bassaer'
-version = '1.3.1'
+version = '1.3.2'
 
 def siteUrl = 'https://github.com/bassaer/ChatMessageView'
 def gitUrl = 'https://github.com/bassaer/ChatMessageView.git'
@@ -118,7 +118,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '1.3.1'
+            pom.version = '1.3.2'
             pom.groupId = 'com.github.bassaer'
             pom.artifactId = 'chatmessageview'
         }
