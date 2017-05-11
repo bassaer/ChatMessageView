@@ -36,6 +36,7 @@ public class ChatView extends LinearLayout {
     private int mSendIconColor = ContextCompat.getColor(getContext(), R.color.lightBlue500);
     private int mOptionIconColor = ContextCompat.getColor(getContext(), R.color.lightBlue500);
     private boolean mAutoScroll = true;
+    private boolean mAutoHidingKeyboard = true;
 
     public ChatView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -127,8 +128,15 @@ public class ChatView extends LinearLayout {
             }
         }
         mMessageView.setMessage(message);
-        hideKeyboard();
-        mMessageView.scrollToEnd();
+
+        //Hide keyboard after post
+        if (mAutoHidingKeyboard) {
+            hideKeyboard();
+        }
+        //Scroll to bottom after post
+        if (mAutoScroll) {
+            mMessageView.scrollToEnd();
+        }
     }
 
     /**
@@ -275,4 +283,11 @@ public class ChatView extends LinearLayout {
         return mSendButton.isEnabled();
     }
 
+    /**
+     * Auto hiding keyboard after post
+     * @param autoHidingKeyboard if true, keyboard will be hided after post
+     */
+    public void setAutoHidingKeyboard(boolean autoHidingKeyboard) {
+        mAutoHidingKeyboard = autoHidingKeyboard;
+    }
 }
