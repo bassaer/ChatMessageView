@@ -25,7 +25,7 @@ This library aims to provide a chat UI view for Android.
 
 ```
 dependencies {
-    compile 'com.github.bassaer:chatmessageview:1.3.2'
+    compile 'com.github.bassaer:chatmessageview:1.3.3'
 }
 
 ```
