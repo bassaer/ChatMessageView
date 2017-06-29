@@ -6,5 +6,5 @@
     android:layout_height="@dimen/width_normal"
     android:src="@drawable/face_1"
     android:background="@android:color/transparent"
-    android:scaleType="fitXY"
+    android:scaleType="fitCenter"
     android:contentDescription="@string/error"/>
