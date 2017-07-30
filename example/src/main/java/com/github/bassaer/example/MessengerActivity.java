@@ -1,4 +1,4 @@
-package jp.bassaer.example;
+package com.github.bassaer.example;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Toast;
@@ -29,6 +30,35 @@ import java.util.Random;
  */
 public class MessengerActivity extends Activity {
 
+    @VisibleForTesting
+    protected static final int RIGHT_BUBBLE_COLOR = R.color.colorPrimaryDark;
+    @VisibleForTesting
+    protected static final int LEFT_BUBBLE_COLOR = R.color.gray300;
+    @VisibleForTesting
+    protected static final int BACKGROUND_COLOR = R.color.blueGray400;
+    @VisibleForTesting
+    protected static final int SEND_BUTTON_COLOR = R.color.blueGray500;
+    @VisibleForTesting
+    protected static final int SEND_ICON = R.drawable.ic_action_send;
+    @VisibleForTesting
+    protected static final int OPTION_BUTTON_COLOR = R.color.teal500;
+    @VisibleForTesting
+    protected static final int RIGHT_MESSAGE_TEXT_COLOR = Color.WHITE;
+    @VisibleForTesting
+    protected static final int LEFT_MESSAGE_TEXT_COLOR = Color.BLACK;
+    @VisibleForTesting
+    protected static final int USERNAME_TEXT_COLOR = Color.WHITE;
+    @VisibleForTesting
+    protected static final int SEND_TIME_TEXT_COLOR = Color.WHITE;
+    @VisibleForTesting
+    protected static final int DATA_SEPARATOR_COLOR = Color.WHITE;
+    @VisibleForTesting
+    protected static final int MESSAGE_STATUS_TEXT_COLOR = Color.WHITE;
+    @VisibleForTesting
+    protected static final String INPUT_TEXT_HINT = "New message..";
+    @VisibleForTesting
+    protected static final int MESSAGE_MARGIN = 5;
+
     private ChatView mChatView;
     private MessageList mMessageList;
     private ArrayList<User> mUsers;
@@ -45,21 +75,21 @@ public class MessengerActivity extends Activity {
         mChatView = (ChatView) findViewById(R.id.chat_view);
 
         //Set UI parameters if you need
-        mChatView.setRightBubbleColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        mChatView.setLeftBubbleColor(ContextCompat.getColor(this, R.color.gray300));
-        mChatView.setBackgroundColor(ContextCompat.getColor(this, R.color.blueGray400));
-        mChatView.setSendButtonColor(ContextCompat.getColor(this, R.color.blueGray500));
-        mChatView.setSendIcon(R.drawable.ic_action_send);
-        mChatView.setOptionButtonColor(R.color.teal500);
-        mChatView.setRightMessageTextColor(Color.WHITE);
-        mChatView.setLeftMessageTextColor(Color.BLACK);
-        mChatView.setUsernameTextColor(Color.WHITE);
-        mChatView.setSendTimeTextColor(Color.WHITE);
-        mChatView.setDateSeparatorColor(Color.WHITE);
-        mChatView.setMessageStatusTextColor(Color.WHITE);
-        mChatView.setInputTextHint("new message...");
-        mChatView.setMessageMarginTop(5);
-        mChatView.setMessageMarginBottom(5);
+        mChatView.setRightBubbleColor(ContextCompat.getColor(this,RIGHT_BUBBLE_COLOR));
+        mChatView.setLeftBubbleColor(ContextCompat.getColor(this, LEFT_BUBBLE_COLOR));
+        mChatView.setBackgroundColor(ContextCompat.getColor(this, BACKGROUND_COLOR));
+        mChatView.setSendButtonColor(ContextCompat.getColor(this, SEND_BUTTON_COLOR));
+        mChatView.setSendIcon(SEND_ICON);
+        mChatView.setOptionButtonColor(OPTION_BUTTON_COLOR);
+        mChatView.setRightMessageTextColor(RIGHT_MESSAGE_TEXT_COLOR);
+        mChatView.setLeftMessageTextColor(LEFT_MESSAGE_TEXT_COLOR);
+        mChatView.setUsernameTextColor(USERNAME_TEXT_COLOR);
+        mChatView.setSendTimeTextColor(SEND_TIME_TEXT_COLOR);
+        mChatView.setDateSeparatorColor(DATA_SEPARATOR_COLOR);
+        mChatView.setMessageStatusTextColor(MESSAGE_STATUS_TEXT_COLOR);
+        mChatView.setInputTextHint(INPUT_TEXT_HINT);
+        mChatView.setMessageMarginTop(MESSAGE_MARGIN);
+        mChatView.setMessageMarginBottom(MESSAGE_MARGIN);
 
         mChatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
             @Override
@@ -75,11 +105,7 @@ public class MessengerActivity extends Activity {
         mChatView.setOnBubbleLongClickListener(new Message.OnBubbleLongClickListener() {
             @Override
             public void onLongClick(Message message) {
-                Toast.makeText(
-                        MessengerActivity.this,
-                        "Long click : " + message.getUser().getName() + " - " + message.getMessageText(),
-                        Toast.LENGTH_SHORT
-                ).show();
+
             }
         });
 
@@ -289,4 +315,8 @@ public class MessengerActivity extends Activity {
         AppData.putMessageList(this, mMessageList);
     }
 
+    @VisibleForTesting
+    public ArrayList<User> getUsers() {
+        return mUsers;
+    }
 }

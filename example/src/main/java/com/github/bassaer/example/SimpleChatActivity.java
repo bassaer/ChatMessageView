@@ -1,4 +1,4 @@
-package jp.bassaer.example;
+package com.github.bassaer.example;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
