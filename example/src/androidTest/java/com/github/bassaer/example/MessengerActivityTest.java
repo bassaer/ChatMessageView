@@ -1,13 +1,16 @@
 package com.github.bassaer.example;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.DataInteraction;
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.models.User;
+import com.github.bassaer.chatmessageview.utils.TimeUtils;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,9 +30,9 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.github.bassaer.example.ImageViewDrawableMatcher.withDrawable;
 import static org.hamcrest.Matchers.anything;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.containsString;
 
 /**
  * MainActivity Test
@@ -39,39 +42,56 @@ import static org.mockito.Mockito.when;
 public class MessengerActivityTest {
     private MessageList mMessageList;
 
-    Context mContext;
+    private Context mContext;
     private List<User> mUsers;
+    private Intent mIntent;
 
     @Rule
-    public ActivityTestRule<MessengerActivity> mActivityRule = new ActivityTestRule<>(MessengerActivity.class);
+    public ActivityTestRule<MessengerActivity> mActivityRule
+            = new ActivityTestRule<>(MessengerActivity.class, true, false);
 
     @Before
     public void setUp() throws Exception {
-        Message message = mock(Message.class);
-        Calendar mockTime = Calendar.getInstance();
-        //2017-08-01 10:00:00
-        mockTime.setTimeInMillis(1501549200);
-        when(message.getCreatedAt()).thenReturn(mockTime);
-        mContext = InstrumentationRegistry.getContext();
+        mIntent = new Intent();
+        mContext = InstrumentationRegistry.getTargetContext();
         AppData.reset(mContext);
+        mActivityRule.launchActivity(mIntent);
         mUsers = mActivityRule.getActivity().getUsers();
     }
 
     @After
     public void tearDown() throws Exception {
-        mContext = InstrumentationRegistry.getContext();
         AppData.reset(mContext);
     }
 
     @Test
     public void testSendingMessage() throws Exception {
-        AppData.reset(mContext);
-        String message = "hello";
+        String message = "testing";
         inputText(message);
         User sendingUser = mUsers.get(0);
-        //onRow(0).onChildView(withId(R.id.user_icon)).check(matches(withDrawable(R.drawable.face_2)));
+        Calendar now = Calendar.getInstance();
+        String expectingDate = TimeUtils.calendarToString(now, "MMM. dd, yyyy");
+        onRow(0).onChildView(withId(R.id.date_separate_text)).check(matches(withText(expectingDate)));
         onRow(1).onChildView(withId(R.id.message_user_name)).check(matches(withText(sendingUser.getName())));
         onRow(1).onChildView(withId(R.id.message_text)).check(matches(withText(message)));
+    }
+
+    @Test
+    public void testReply() throws Exception {
+        String message = "Hello";
+        inputText(message);
+        User sendingUser = mUsers.get(0);
+        User replyingUser = mUsers.get(1);
+        long waitingTime = 3000;
+        IdlingResource idlingResource = new ElapsedTimeIdlingResource(waitingTime);
+        Espresso.registerIdlingResources(idlingResource);
+        onRow(1).onChildView(withId(R.id.message_user_name)).check(matches(withText(sendingUser.getName())));
+        onRow(1).onChildView(withId(R.id.message_text)).check(matches(withText(message)));
+        onRow(2).onChildView(withId(R.id.user_icon)).check(matches(withDrawable(R.drawable.face_1)));
+        onRow(2).onChildView(withId(R.id.message_user_name)).check(matches(withText(replyingUser.getName())));
+        onRow(2).onChildView(withId(R.id.message_text)).check(matches(withText(containsString(sendingUser.getName()))));
+        onRow(2).onChildView(withId(R.id.message_text)).check(matches(withText(containsString(message))));
+        Espresso.unregisterIdlingResources(idlingResource);
     }
 
     /**

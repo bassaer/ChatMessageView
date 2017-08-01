@@ -24,7 +24,7 @@ public class MainActivityTest {
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void checkShowingMenuList() {
+    public void checkMenuList() {
         String[] menu = mActivityRule.getActivity().gettMenu();
         for(int i = 0; i < menu.length; i++) {
             onRow(i).check(matches(withText(menu[i])));
