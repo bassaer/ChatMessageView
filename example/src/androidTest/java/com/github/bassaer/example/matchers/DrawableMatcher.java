@@ -1,4 +1,4 @@
-package com.github.bassaer.example;
+package com.github.bassaer.example.matchers;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -15,7 +15,6 @@ import org.hamcrest.TypeSafeMatcher;
  * Custom matcher to test drawable resource
  * Created by nakayama on 2017/07/29.
  */
-
 public class DrawableMatcher extends TypeSafeMatcher<View> {
     private final int mExpectedId;
     private String mResourceName;

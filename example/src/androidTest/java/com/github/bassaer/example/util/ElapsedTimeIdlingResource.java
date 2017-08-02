@@ -1,4 +1,4 @@
-package com.github.bassaer.example;
+package com.github.bassaer.example.util;
 
 import android.support.test.espresso.IdlingResource;
 
