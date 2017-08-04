@@ -1,30 +1,30 @@
 package com.github.bassaer.example.matchers;
 
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
+import android.widget.ImageView;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Custom matcher to test background color of view
- * Created by nakayama on 2017/08/02.
+ * Custom matcher to test icon color of ImageView
+ * Created by nakayama on 2017/08/03.
  */
 
-public class BackgroundColorMatcher extends TypeSafeMatcher<View> {
+public class IconColorMatcher extends TypeSafeMatcher<View> {
     private int mExpectedColor;
 
-    public BackgroundColorMatcher(int expectedColor) {
+    public IconColorMatcher(int expectedColor) {
         mExpectedColor = expectedColor;
     }
-
     @Override
     protected boolean matchesSafely(View view) {
-        Drawable drawable = view.getBackground();
-        if (drawable instanceof ColorDrawable) {
-            ColorDrawable colorDrawable = (ColorDrawable) drawable;
-            return colorDrawable.getColor() == mExpectedColor;
+        if (view instanceof ImageView) {
+            Drawable wrappedDrawable = ((ImageView) view).getDrawable();
+            Drawable drawable = DrawableCompat.unwrap(wrappedDrawable);
+
         }
         return false;
     }

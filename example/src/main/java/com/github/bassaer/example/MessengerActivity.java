@@ -63,6 +63,8 @@ public class MessengerActivity extends Activity {
     private MessageList mMessageList;
     private ArrayList<User> mUsers;
 
+    private int mReplyDelay = -1;
+
     private static final int READ_REQUEST_CODE = 100;
 
     @Override
@@ -207,7 +209,9 @@ public class MessengerActivity extends Activity {
 
             // This is a demo bot
             // Return within 3 seconds
-            int sendDelay = (new Random().nextInt(4) + 1) * 1000;
+            if (mReplyDelay < 0) {
+                mReplyDelay = (new Random().nextInt(4) + 1) * 1000;
+            }
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -215,7 +219,7 @@ public class MessengerActivity extends Activity {
                     //Add message list
                     mMessageList.add(receivedMessage);
                 }
-            }, sendDelay);
+            }, mReplyDelay);
         }
     }
 
@@ -318,5 +322,10 @@ public class MessengerActivity extends Activity {
     @VisibleForTesting
     public ArrayList<User> getUsers() {
         return mUsers;
+    }
+
+
+    public void setReplyDelay(int replyDelay) {
+        mReplyDelay = replyDelay;
     }
 }

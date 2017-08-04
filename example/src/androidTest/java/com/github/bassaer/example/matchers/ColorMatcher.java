@@ -17,4 +17,8 @@ public class ColorMatcher {
     public static Matcher<View> withBackgroundColor(int color) {
         return new BackgroundColorMatcher(color);
     }
+
+    public static Matcher<View> withIconColor(int color) {
+        return new IconColorMatcher(color);
+    }
 }

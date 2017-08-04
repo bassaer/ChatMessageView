@@ -24,7 +24,6 @@ public class ChatBot {
             return "It's " + TimeUtils.calendarToString(Calendar.getInstance(), null) + ".";
         } else if (receive.contains("today")) {
             return "It's " + TimeUtils.calendarToString(Calendar.getInstance(), "M/d(E)");
-
         } else {
             String reply = "Lorem ipsum dolor sit amet";
             if (receive.length() > 7) {
