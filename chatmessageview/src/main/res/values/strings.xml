@@ -20,6 +20,8 @@
     <string name="default_date_cell_text">2016/08/08</string>
     <string name="default_user_name_1">Michael</string>
     <string name="default_user_name_2">Alice</string>
+    <string name="send">Send</string>
+    <string name="attach">Add attachment</string>
 
 
 </resources>
