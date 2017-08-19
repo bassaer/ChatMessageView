@@ -4,10 +4,10 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/chat_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:paddingBottom="@dimen/spacing_tiny"
         android:layout_weight="1">
 
@@ -18,7 +18,7 @@
             android:cacheColorHint="@android:color/transparent"
             android:listSelector="@android:color/transparent"/>
 
-    </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
     <LinearLayout
@@ -34,11 +34,11 @@
             android:layout_width="@dimen/icon_normal"
             android:layout_height="@dimen/icon_normal"
             android:src="@drawable/ic_action_add"
-            />
+            android:contentDescription="@string/attach" />
 
         <EditText
             android:id="@+id/message_edit_text"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/input_hint"/>
@@ -49,7 +49,7 @@
             android:layout_width="@dimen/icon_normal"
             android:layout_height="@dimen/icon_normal"
             android:src="@drawable/ic_action_send"
-            />
+            android:contentDescription="@string/send" />
 
     </LinearLayout>
 
