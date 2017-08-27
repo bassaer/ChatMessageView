@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -29,7 +29,7 @@ public class ChatView extends LinearLayout {
     private EditText mInputText;
     private ImageButton mSendButton;
     private ImageButton mOptionButton;
-    private FrameLayout mChatContainer;
+    private SwipeRefreshLayout mChatContainer;
     private InputMethodManager mInputMethodManager;
     private int mSendIconId = R.drawable.ic_action_send;
     private int mOptionIconId = R.drawable.ic_action_add;
@@ -55,7 +55,7 @@ public class ChatView extends LinearLayout {
         mInputText = (EditText) layout.findViewById(R.id.message_edit_text);
         mSendButton = (ImageButton) layout.findViewById(R.id.send_button);
         mOptionButton = (ImageButton) layout.findViewById(R.id.option_button);
-        mChatContainer = (FrameLayout) layout.findViewById(R.id.chat_container);
+        mChatContainer = (SwipeRefreshLayout) layout.findViewById(R.id.chat_container);
 
         mMessageView.setFocusableInTouchMode(true);
         //if touched Chat screen
@@ -119,14 +119,6 @@ public class ChatView extends LinearLayout {
      * @param message Sent message
      */
     public void send(Message message) {
-        Object lastItem = mMessageView.getLastChatObject();
-        if (lastItem instanceof Message) {
-            if (((Message) lastItem).getUser().getId() == message.getUser().getId()) {
-                //If send same person, hide username and icon.
-                message.setIconVisibility(false);
-                message.setUsernameVisibility(false);
-            }
-        }
         mMessageView.setMessage(message);
 
         //Hide keyboard after post
@@ -144,14 +136,6 @@ public class ChatView extends LinearLayout {
      * @param message Received message
      */
     public void receive(Message message) {
-        Object lastItem = mMessageView.getLastChatObject();
-        if (lastItem instanceof Message) {
-            if (((Message) lastItem).getUser().getId() == message.getUser().getId()) {
-                //If send same person, hide username and icon.
-                message.setIconVisibility(false);
-                message.setUsernameVisibility(false);
-            }
-        }
         mMessageView.setMessage(message);
         if (mAutoScroll) {
             mMessageView.scrollToEnd();
@@ -289,5 +273,13 @@ public class ChatView extends LinearLayout {
      */
     public void setAutoHidingKeyboard(boolean autoHidingKeyboard) {
         mAutoHidingKeyboard = autoHidingKeyboard;
+    }
+
+    public void setOnRefreshListener(final SwipeRefreshLayout.OnRefreshListener listener) {
+        mChatContainer.setOnRefreshListener(listener);
+    }
+
+    public void setRefreshing(boolean refreshing) {
+        mChatContainer.setRefreshing(refreshing);
     }
 }

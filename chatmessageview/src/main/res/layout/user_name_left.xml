@@ -4,7 +4,6 @@
     android:id="@+id/message_user_name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/spacing_small"
     android:layout_marginBottom="@dimen/spacing_line"
     android:layout_marginTop="@dimen/spacing_line"
     android:text="@string/unknown"

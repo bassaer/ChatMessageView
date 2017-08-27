@@ -7,10 +7,11 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.github.bassaer.chatmessageview.models.Message;
-import com.github.bassaer.chatmessageview.utils.TimeUtils;
+import com.github.bassaer.chatmessageview.utils.MessageDateComparator;
 import com.github.bassaer.chatmessageview.views.adapters.MessageAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -105,22 +106,29 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
      * Set date text before set message if sent at the different day
      * @param message new message
      */
-    public void setMessage(Message message){
-        if(mChatList.size() == 0){
+    public void setMessage(Message message) {
+        if (mChatList.size() == 0){
             mChatList.add(message.getDateSeparateText());
-        }else{
-            //Get previous message to compare date
-            Message prevMessage = mMessageList.get(mMessageList.size() - 1);
-
-            //This is just difference between days
-            if(TimeUtils.getDiffDays(prevMessage.getCreatedAt(), message.getCreatedAt()) != 0){
-                //Set date label because of different day
-                mChatList.add(message.getDateSeparateText());
+        } else {
+            String dateSeparateText = message.getDateSeparateText();
+            boolean dateExists = false;
+            for (Object item: mChatList) {
+                if (item instanceof String && item.equals(dateSeparateText)) {
+                    dateExists = true;
+                }
             }
 
+            if (!dateExists) {
+                //Set date label because of different day
+                mChatList.add(dateSeparateText);
+            }
         }
+
+        MessageDateComparator dateComparator = new MessageDateComparator();
         mChatList.add(message);
         mMessageList.add(message);
+        Collections.sort(mChatList, dateComparator);
+        Collections.sort(mMessageList, dateComparator);
         mMessageAdapter.notifyDataSetChanged();
 
     }
