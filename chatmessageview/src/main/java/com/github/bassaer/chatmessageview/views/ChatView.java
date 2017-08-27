@@ -56,6 +56,7 @@ public class ChatView extends LinearLayout {
         mSendButton = (ImageButton) layout.findViewById(R.id.send_button);
         mOptionButton = (ImageButton) layout.findViewById(R.id.option_button);
         mChatContainer = (SwipeRefreshLayout) layout.findViewById(R.id.chat_container);
+        mChatContainer.setEnabled(false);
 
         mMessageView.setFocusableInTouchMode(true);
         //if touched Chat screen
@@ -281,5 +282,17 @@ public class ChatView extends LinearLayout {
 
     public void setRefreshing(boolean refreshing) {
         mChatContainer.setRefreshing(refreshing);
+    }
+
+    public void setEnableSwipeRefresh(boolean enable) {
+        mChatContainer.setEnabled(enable);
+    }
+
+    public void addInputChangedListener(TextWatcher watcher) {
+        mInputText.addTextChangedListener(watcher);
+    }
+
+    public void scrollToEnd() {
+        mMessageView.scrollToEnd();
     }
 }
