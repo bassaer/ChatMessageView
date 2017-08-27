@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
@@ -77,9 +78,10 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         return mViewTypes.size();
     }
 
+    @NonNull
     @SuppressWarnings("deprecation")
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         Object item = getItem(position);
 
         if (item instanceof String) {
@@ -100,6 +102,18 @@ public class MessageAdapter extends ArrayAdapter<Object> {
             //Item is a message
             MessageViewHolder holder;
             final Message message = (Message) item;
+            if (position > 0) {
+                Object prevItem = getItem(position - 1);
+                if (prevItem instanceof Message) {
+                    final Message prevMessage = (Message) prevItem;
+                    if (prevMessage.getUser().getId() == message.getUser().getId()) {
+                        //If send same person, hide username and icon.
+                        message.setIconVisibility(false);
+                        message.setUsernameVisibility(false);
+                    }
+                }
+            }
+
             User user = message.getUser();
 
             //Bubble color
