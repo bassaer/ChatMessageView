@@ -10,42 +10,42 @@ import java.util.Locale;
 
 public class MessageDateComparator implements Comparator<Object> {
     @Override
-    public int compare(Object a, Object b) {
-        SimpleDateFormat f = new SimpleDateFormat("MMM. dd, yyyy", Locale.US);
-        Date d1 = new Date();
-        Date d2 = new Date();
+    public int compare(Object object1, Object object2) {
+        SimpleDateFormat format = new SimpleDateFormat("MMM. dd, yyyy", Locale.getDefault());
+        Date date1 = new Date();
+        Date date2 = new Date();
 
-        if (a instanceof String) {
+        if (object1 instanceof String) {
             try {
-                d1 = f.parse((String)a);
+                date1 = format.parse((String)object1);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         } else {
-            final Message m1 = (Message) a;
-            d1 = m1.getCreatedAt().getTime();
+            final Message message1 = (Message) object1;
+            date1 = message1.getCreatedAt().getTime();
         }
 
-        if (b instanceof String) {
+        if (object2 instanceof String) {
             try {
-                d2 = f.parse((String)b);
+                date2 = format.parse((String)object2);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         } else {
-            final Message m2 = (Message) b;
-            d2 = m2.getCreatedAt().getTime();
+            final Message message2 = (Message) object2;
+            date2 = message2.getCreatedAt().getTime();
         }
 
-        if (d1.equals(d2)) {
-            if (a instanceof String) {
+        if (date1.equals(date2)) {
+            if (object1 instanceof String) {
                 return -1;
             }
-            if (b instanceof String) {
+            if (object2 instanceof String) {
                 return 1;
             }
         } else {
-            return d1.compareTo(d2);
+            return date1.compareTo(date2);
         }
         return 0;
     }
