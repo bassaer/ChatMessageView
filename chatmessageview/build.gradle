@@ -32,7 +32,6 @@ version = libVersion
 def siteUrl = 'https://github.com/bassaer/ChatMessageView'
 def gitUrl = 'https://github.com/bassaer/ChatMessageView.git'
 
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def localProperties = project.rootProject.file('local.properties')
 
 bintray {
