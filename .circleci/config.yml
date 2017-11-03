@@ -11,7 +11,7 @@ jobs:
         - develop
     docker:
       # specify the version you desire here
-      - image: circleci/android:api-25-alpha
+      - image: circleci/android:api-26-alpha
 
     environment:
       # Customize the JVM maximum heap limit
@@ -28,8 +28,8 @@ jobs:
       - run:
           name: update android sdk
           command: |
-              echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository,android-25
-              echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+              echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository,android-26
+              echo y | android update sdk --no-ui --all --filter build-tools-26.0.0
       - run:
           name: gradle dependencies
           command: ./gradlew androidDependencies
