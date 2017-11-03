@@ -1,5 +1,6 @@
 # ChatMessageView
 
+[![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ChatMessageView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5032)
 [![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
@@ -21,6 +22,7 @@ This library aims to provide a chat UI view for Android.
 
 ## Gradle
 
+[![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView)
 [ ![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
 
 ```
