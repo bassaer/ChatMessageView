@@ -6,12 +6,12 @@ properties.load(project.rootProject.file('version.properties').newDataInputStrea
 def libVersion = properties.getProperty('version')
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 26
         versionCode 1
         versionName libVersion
     }
@@ -94,9 +94,9 @@ install {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile "com.android.support:appcompat-v7:26+"
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.android.support:support-v4:24.2.1'
+    compile "com.android.support:support-v4:26+"
 }
 
 task sourcesJar(type: Jar) {
