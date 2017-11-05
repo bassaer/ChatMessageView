@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.utils.MessageDateComparator;
+import com.github.bassaer.chatmessageview.utils.TimeUtils;
 import com.github.bassaer.chatmessageview.views.adapters.MessageAdapter;
 
 import java.util.ArrayList;
@@ -122,10 +123,24 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
      */
     public void addMessage(Message message) {
         mMessageList.add(message);
+        if (mMessageList.size() == 1) {
+            mChatList.add(message.getDateSeparateText());
+            mChatList.add(message);
+            return;
+        }
+        Message prevMessage = mMessageList.get(mMessageList.size() - 2);
+        if (TimeUtils.getDiffDays(prevMessage.getCreatedAt(), message.getCreatedAt()) != 0) {
+            mChatList.add(message.getDateSeparateText());
+        }
+        mChatList.add(message);
+    }
+
+    public void refresh() {
         sortMessages(mMessageList);
         mChatList.clear();
         mChatList.addAll(insertDateSeparator(mMessageList));
     }
+
 
     private List<Object> insertDateSeparator(List<Message> list) {
         List<Object> result = new ArrayList<>();
