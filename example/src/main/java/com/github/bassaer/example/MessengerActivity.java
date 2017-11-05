@@ -19,9 +19,11 @@ import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.models.User;
 import com.github.bassaer.chatmessageview.utils.ChatBot;
 import com.github.bassaer.chatmessageview.views.ChatView;
+import com.github.bassaer.chatmessageview.views.MessageView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -75,6 +77,9 @@ public class MessengerActivity extends Activity {
         initUsers();
 
         mChatView = (ChatView) findViewById(R.id.chat_view);
+
+        //Load saved messages
+        loadMessages();
 
         //Set UI parameters if you need
         mChatView.setRightBubbleColor(ContextCompat.getColor(this,RIGHT_BUBBLE_COLOR));
@@ -183,8 +188,7 @@ public class MessengerActivity extends Activity {
             }
         });
 
-        //Load saved messages
-        loadMessages();
+
 
     }
 
@@ -278,6 +282,7 @@ public class MessengerActivity extends Activity {
      * Load saved messages
      */
     private void loadMessages() {
+        List<Message> messages = new ArrayList<>();
         mMessageList = AppData.getMessageList(this);
         if (mMessageList == null) {
             mMessageList = new MessageList();
@@ -290,20 +295,19 @@ public class MessengerActivity extends Activity {
                         message.getUser().setIcon(user.getIcon());
                     }
                 }
-                if (!message.isDateCell()) {
-                    if (message.isRightMessage()) {
-                        message.hideIcon(true);
-                        mChatView.send(message);
-                    } else {
-                        mChatView.receive(message);
-                    }
+                if (!message.isDateCell() && message.isRightMessage()) {
+                    message.hideIcon(true);
 
                 }
                 message.setMessageStatusType(Message.MESSAGE_STATUS_ICON_RIGHT_ONLY);
                 message.setStatusIconFormatter(new MyMessageStatusFormatter(this));
                 message.setStatus(MyMessageStatusFormatter.STATUS_DELIVERED);
+                messages.add(message);
             }
         }
+        MessageView messageView = mChatView.getMessageView();
+        messageView.init(messages);
+        messageView.setSelection(messageView.getCount() - 1);
     }
 
     @Override

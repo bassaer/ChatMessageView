@@ -12,8 +12,12 @@ import com.github.bassaer.chatmessageview.views.adapters.MessageAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+
+import static com.github.bassaer.chatmessageview.utils.TimeUtils.getDiffDays;
 
 /**
  * Simple chat view
@@ -24,11 +28,11 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
     /**
      * All contents such as right message, left message, date label
      */
-    private ArrayList<Object> mChatList = new ArrayList<>();
+    private List<Object> mChatList = new ArrayList<>();
     /**
      * Only messages
      */
-    private ArrayList<Message> mMessageList = new ArrayList<>();
+    private List<Message> mMessageList = new ArrayList<>();
 
     private MessageAdapter mMessageAdapter;
 
@@ -67,14 +71,14 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
     }
 
 
-    public void init(ArrayList<Message> list) {
+    public void init(List<Message> list) {
         mChatList = new ArrayList<>();
         setChoiceMode(ListView.CHOICE_MODE_NONE);
 
         for(int i=0; i < list.size(); i++){
-            setMessage(list.get(i));
+            addMessage(list.get(i));
         }
-
+        sortMessages(mMessageList);
         init();
     }
 
@@ -103,34 +107,55 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
     }
 
     /**
-     * Set date text before set message if sent at the different day
+     * Set new message and refresh
      * @param message new message
      */
     public void setMessage(Message message) {
-        if (mChatList.size() == 0){
-            mChatList.add(message.getDateSeparateText());
-        } else {
-            String dateSeparateText = message.getDateSeparateText();
-            boolean dateExists = false;
-            for (Object item: mChatList) {
-                if (item instanceof String && item.equals(dateSeparateText)) {
-                    dateExists = true;
-                }
-            }
-
-            if (!dateExists) {
-                //Set date label because of different day
-                mChatList.add(dateSeparateText);
-            }
-        }
-
-        MessageDateComparator dateComparator = new MessageDateComparator();
-        mChatList.add(message);
-        mMessageList.add(message);
-        Collections.sort(mChatList, dateComparator);
-        Collections.sort(mMessageList, dateComparator);
+        addMessage(message);
         mMessageAdapter.notifyDataSetChanged();
+    }
 
+    /**
+     * Add message to chat list and message list.
+     * Set date text before set message if sent at the different day.
+     * @param message new message
+     */
+    public void addMessage(Message message) {
+        mMessageList.add(message);
+        sortMessages(mMessageList);
+        mChatList.clear();
+        mChatList.addAll(insertDateSeparator(mMessageList));
+    }
+
+    private List<Object> insertDateSeparator(List<Message> list) {
+        List<Object> result = new ArrayList<>();
+        if (list.size() == 0) {
+            return result;
+        }
+        result.add(list.get(0).getDateSeparateText());
+        result.add(list.get(0));
+        if (list.size() < 2) {
+            return result;
+        }
+        for (int i = 1; i < list.size(); i++) {
+            Message prevMessage = list.get(i -1);
+            Message currMessage = list.get(i);
+            if (getDiffDays(prevMessage.getCreatedAt(), currMessage.getCreatedAt()) != 0) {
+                result.add(currMessage.getDateSeparateText());
+            }
+            result.add(currMessage);
+        }
+        return result;
+    }
+
+    /**
+     * Sort messages
+     */
+    public void sortMessages(List<Message> list) {
+        MessageDateComparator dateComparator = new MessageDateComparator();
+        if (list != null) {
+            Collections.sort(list, dateComparator);
+        }
     }
 
 
