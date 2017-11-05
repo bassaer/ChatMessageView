@@ -295,4 +295,8 @@ public class ChatView extends LinearLayout {
     public void scrollToEnd() {
         mMessageView.scrollToEnd();
     }
+
+    public MessageView getMessageView() {
+        return mMessageView;
+    }
 }

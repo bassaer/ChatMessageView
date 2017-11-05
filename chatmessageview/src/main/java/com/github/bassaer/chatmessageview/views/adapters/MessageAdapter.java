@@ -21,6 +21,7 @@ import com.github.bassaer.chatmessageview.models.User;
 import com.github.bassaer.chatmessageview.views.RoundImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -32,8 +33,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MessageAdapter extends ArrayAdapter<Object> {
 
     private LayoutInflater mLayoutInflater;
-    private ArrayList<Object> mObjects;
-    private ArrayList<Object> mViewTypes = new ArrayList<>();
+    private List<Object> mObjects;
+    private List<Object> mViewTypes = new ArrayList<>();
 
     private Message.OnIconClickListener mOnIconClickListener;
     private Message.OnBubbleClickListener mOnBubbleClickListener;
@@ -57,7 +58,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
      */
     private int mMessageBottomMargin = 5;
 
-    public MessageAdapter(Context context, int resource, ArrayList<Object> objects) {
+    public MessageAdapter(Context context, int resource, List<Object> objects) {
         super(context, resource, objects);
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mObjects = objects;

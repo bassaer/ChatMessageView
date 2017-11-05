@@ -10,6 +10,7 @@ import com.github.bassaer.chatmessageview.models.User;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Wrapper class {@link ArrayList} for save data
@@ -43,6 +44,14 @@ public class MessageList {
 
     public Message get(int index) {
         return convertMessage(mMessages.get(index));
+    }
+
+    public List<Message> get() {
+        List<Message> list = new ArrayList<>();
+        for (SaveMessage message : mMessages) {
+            list.add(convertMessage(message));
+        }
+        return list;
     }
 
     public int size() {
