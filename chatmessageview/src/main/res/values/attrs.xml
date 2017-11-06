@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MessageView">
+        <attr name="message_font_size" format="dimension"/>
+        <attr name="user_name_font_size" format="dimension"/>
+        <attr name="time_label_font_size" format="dimension"/>
+        <attr name="message_max_width" format="dimension"/>
+    </declare-styleable>
+</resources>
