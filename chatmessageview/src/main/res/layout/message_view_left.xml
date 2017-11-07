@@ -52,10 +52,11 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/time_display_text"
+                    android:id="@+id/time_label_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/default_time_text"/>
+                    android:text="@string/default_time_text"
+                    android:textSize="@dimen/font_small"/>
 
             </LinearLayout>
         </LinearLayout>
