@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
 
+import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.utils.MessageDateComparator;
 import com.github.bassaer.chatmessageview.utils.TimeUtils;
@@ -50,24 +51,21 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     private Handler mHandler;
 
+    private Attribute mAttribute;
 
     public interface OnKeyboardAppearListener {
         void onKeyboardAppeared(boolean hasChanged);
     }
 
-    public MessageView(Context context, ArrayList<Message> messages) {
-        super(context);
-        init(messages);
-    }
-
-
     public MessageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mAttribute = new Attribute(context, attrs);
         init();
     }
 
     public MessageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mAttribute = new Attribute(context, attrs);
         init();
     }
 
@@ -83,12 +81,17 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         init();
     }
 
+    public void init(Attribute attribute) {
+        mAttribute = attribute;
+        init();
+    }
+
     /**
      * Initialize list
      */
     public void init() {
         setDividerHeight(0);
-        mMessageAdapter = new MessageAdapter(getContext(), 0, mChatList);
+        mMessageAdapter = new MessageAdapter(getContext(), 0, mChatList, mAttribute);
 
         setAdapter(mMessageAdapter);
 

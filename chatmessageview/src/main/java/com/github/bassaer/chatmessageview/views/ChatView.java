@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.github.bassaer.chatmessageview.R;
+import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.models.Message;
 
 /**
@@ -37,14 +38,17 @@ public class ChatView extends LinearLayout {
     private int mOptionIconColor = ContextCompat.getColor(getContext(), R.color.lightBlue500);
     private boolean mAutoScroll = true;
     private boolean mAutoHidingKeyboard = true;
+    private Attribute mAttribute;
 
     public ChatView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mAttribute = new Attribute(context, attrs);
         init(context);
     }
 
     public ChatView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mAttribute = new Attribute(context, attrs);
         init(context);
     }
 
@@ -57,6 +61,8 @@ public class ChatView extends LinearLayout {
         mOptionButton = (ImageButton) layout.findViewById(R.id.option_button);
         mChatContainer = (SwipeRefreshLayout) layout.findViewById(R.id.chat_container);
         mChatContainer.setEnabled(false);
+
+        mMessageView.init(mAttribute);
 
         mMessageView.setFocusableInTouchMode(true);
         //if touched Chat screen

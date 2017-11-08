@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.bassaer.chatmessageview.R;
+import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.models.User;
 import com.github.bassaer.chatmessageview.views.RoundImageView;
@@ -58,7 +60,9 @@ public class MessageAdapter extends ArrayAdapter<Object> {
      */
     private int mMessageBottomMargin = 5;
 
-    public MessageAdapter(Context context, int resource, List<Object> objects) {
+    private Attribute mAttribute;
+
+    public MessageAdapter(Context context, int resource, List<Object> objects, Attribute attribute) {
         super(context, resource, objects);
         mLayoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mObjects = objects;
@@ -66,6 +70,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         mViewTypes.add(Message.class);
         mLeftBubbleColor = ContextCompat.getColor(context, R.color.default_left_bubble_color);
         mRightBubbleColor = ContextCompat.getColor(context, R.color.default_right_bubble_color);
+        mAttribute = attribute;
     }
 
     @Override
@@ -99,6 +104,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
             }
             dateViewHolder.dateSeparatorText.setText(dateText);
             dateViewHolder.dateSeparatorText.setTextColor(mDateSeparatorColor);
+            dateViewHolder.dateSeparatorText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getDateSeparatorFontSize());
         } else {
             //Item is a message
             MessageViewHolder holder;
@@ -129,7 +135,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder = new MessageViewHolder();
                     holder.iconContainer = (FrameLayout) convertView.findViewById(R.id.user_icon_container);
                     holder.mainMessageContainer = (FrameLayout) convertView.findViewById(R.id.main_message_container);
-                    holder.timeText = (TextView) convertView.findViewById(R.id.time_display_text);
+                    holder.timeText = (TextView) convertView.findViewById(R.id.time_label_text);
                     holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
                     holder.statusContainer = (FrameLayout) convertView.findViewById(R.id.message_status_container);
                     convertView.setTag(holder);
@@ -213,7 +219,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder = new MessageViewHolder();
                     holder.iconContainer = (FrameLayout) convertView.findViewById(R.id.user_icon_container);
                     holder.mainMessageContainer = (FrameLayout) convertView.findViewById(R.id.main_message_container);
-                    holder.timeText = (TextView) convertView.findViewById(R.id.time_display_text);
+                    holder.timeText = (TextView) convertView.findViewById(R.id.time_label_text);
                     holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
                     holder.statusContainer = (FrameLayout) convertView.findViewById(R.id.message_status_container);
                     convertView.setTag(holder);
@@ -338,6 +344,10 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 }
             }
 
+            holder.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getMessageFontSize());
+            holder.messageText.setMaxWidth(mAttribute.getMessageMaxWidth());
+            holder.timeText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getTimeLabelFontSize());
+            holder.username.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getUsernameFontSize());
         }
 
         return convertView;
