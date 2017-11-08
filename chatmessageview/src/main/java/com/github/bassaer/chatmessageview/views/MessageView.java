@@ -1,11 +1,13 @@
 package com.github.bassaer.chatmessageview.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
 
+import com.github.bassaer.chatmessageview.R;
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.utils.MessageDateComparator;
 import com.github.bassaer.chatmessageview.utils.TimeUtils;
@@ -50,24 +52,21 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     private Handler mHandler;
 
+    private TypedArray mTypedArray;
 
     public interface OnKeyboardAppearListener {
         void onKeyboardAppeared(boolean hasChanged);
     }
 
-    public MessageView(Context context, ArrayList<Message> messages) {
-        super(context);
-        init(messages);
-    }
-
-
     public MessageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView);
         init();
     }
 
     public MessageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView);
         init();
     }
 
@@ -88,7 +87,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
      */
     public void init() {
         setDividerHeight(0);
-        mMessageAdapter = new MessageAdapter(getContext(), 0, mChatList);
+        mMessageAdapter = new MessageAdapter(getContext(), 0, mChatList, mTypedArray);
 
         setAdapter(mMessageAdapter);
 
