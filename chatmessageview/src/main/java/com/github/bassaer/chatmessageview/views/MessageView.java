@@ -1,13 +1,12 @@
 package com.github.bassaer.chatmessageview.views;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
 
-import com.github.bassaer.chatmessageview.R;
+import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.utils.MessageDateComparator;
 import com.github.bassaer.chatmessageview.utils.TimeUtils;
@@ -52,7 +51,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     private Handler mHandler;
 
-    private TypedArray mTypedArray;
+    private Attribute mAttribute;
 
     public interface OnKeyboardAppearListener {
         void onKeyboardAppeared(boolean hasChanged);
@@ -60,13 +59,13 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     public MessageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView);
+        mAttribute = new Attribute(context, attrs);
         init();
     }
 
     public MessageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView);
+        mAttribute = new Attribute(context, attrs);
         init();
     }
 
@@ -82,12 +81,17 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         init();
     }
 
+    public void init(Attribute attribute) {
+        mAttribute = attribute;
+        init();
+    }
+
     /**
      * Initialize list
      */
     public void init() {
         setDividerHeight(0);
-        mMessageAdapter = new MessageAdapter(getContext(), 0, mChatList, mTypedArray);
+        mMessageAdapter = new MessageAdapter(getContext(), 0, mChatList, mAttribute);
 
         setAdapter(mMessageAdapter);
 
