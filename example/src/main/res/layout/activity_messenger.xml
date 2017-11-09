@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -7,6 +8,11 @@
     <com.github.bassaer.chatmessageview.views.ChatView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:message_font_size="20sp"
+        app:date_separator_font_size="16sp"
+        app:time_label_font_size="16sp"
+        app:username_font_size="16sp"
+        app:message_max_width="200dp"/>
 
 </LinearLayout>

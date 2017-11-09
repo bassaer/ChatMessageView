@@ -107,7 +107,7 @@ public class MessengerActivityTest {
         for (int i = 1; i <=2; i++) {
             onRow(i).onChildView(withId(R.id.message_user_name))
                     .check(matches(withTextColor(MessengerActivity.USERNAME_TEXT_COLOR)));
-            onRow(i).onChildView(withId(R.id.time_display_text))
+            onRow(i).onChildView(withId(R.id.time_label_text))
                     .check(matches(withTextColor(MessengerActivity.SEND_TIME_TEXT_COLOR)));
         }
         Espresso.unregisterIdlingResources(idlingResource);
