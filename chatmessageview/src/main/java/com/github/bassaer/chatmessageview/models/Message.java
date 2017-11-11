@@ -5,11 +5,10 @@ import android.graphics.drawable.Drawable;
 
 import com.github.bassaer.chatmessageview.model.User;
 import com.github.bassaer.chatmessageview.util.DateFormatter;
-import com.github.bassaer.chatmessageview.utils.DefaultTimeFormatter;
+import com.github.bassaer.chatmessageview.util.DefaultTimeFormatter;
 import com.github.bassaer.chatmessageview.util.IMessageStatusIconFormatter;
 import com.github.bassaer.chatmessageview.util.IMessageStatusTextFormatter;
 import com.github.bassaer.chatmessageview.util.ITimeFormatter;
-import com.github.bassaer.chatmessageview.utils.SendTimeFormatter;
 
 import java.util.Calendar;
 
@@ -152,7 +151,7 @@ public class Message {
      */
     public Message() {
         mCreatedAt = Calendar.getInstance();
-        mSendTimeFormatter = new SendTimeFormatter();
+        mSendTimeFormatter = new DefaultTimeFormatter();
         mDateFormatter = new DateFormatter();
         mSendTimeFormatter = new DefaultTimeFormatter();
         mType = Type.TEXT;
