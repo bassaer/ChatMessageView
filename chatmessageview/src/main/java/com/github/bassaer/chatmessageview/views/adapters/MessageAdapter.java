@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.github.bassaer.chatmessageview.R;
 import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.models.Message;
-import com.github.bassaer.chatmessageview.models.User;
+import com.github.bassaer.chatmessageview.model.User;
 import com.github.bassaer.chatmessageview.views.RoundImageView;
 
 import java.util.ArrayList;

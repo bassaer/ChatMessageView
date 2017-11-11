@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.github.bassaer.chatmessageview.models.Message;
-import com.github.bassaer.chatmessageview.models.User;
+import com.github.bassaer.chatmessageview.model.User;
 import com.github.bassaer.chatmessageview.utils.ChatBot;
 import com.github.bassaer.chatmessageview.views.ChatView;
 import com.github.bassaer.chatmessageview.views.MessageView;

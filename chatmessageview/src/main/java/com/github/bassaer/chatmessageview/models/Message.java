@@ -3,6 +3,7 @@ package com.github.bassaer.chatmessageview.models;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
+import com.github.bassaer.chatmessageview.model.User;
 import com.github.bassaer.chatmessageview.utils.DateFormatter;
 import com.github.bassaer.chatmessageview.utils.DefaultTimeFormatter;
 import com.github.bassaer.chatmessageview.utils.IMessageStatusIconFormatter;
