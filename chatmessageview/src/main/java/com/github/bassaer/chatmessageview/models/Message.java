@@ -6,9 +6,9 @@ import android.graphics.drawable.Drawable;
 import com.github.bassaer.chatmessageview.model.User;
 import com.github.bassaer.chatmessageview.util.DateFormatter;
 import com.github.bassaer.chatmessageview.utils.DefaultTimeFormatter;
-import com.github.bassaer.chatmessageview.utils.IMessageStatusIconFormatter;
-import com.github.bassaer.chatmessageview.utils.IMessageStatusTextFormatter;
-import com.github.bassaer.chatmessageview.utils.ITimeFormatter;
+import com.github.bassaer.chatmessageview.util.IMessageStatusIconFormatter;
+import com.github.bassaer.chatmessageview.util.IMessageStatusTextFormatter;
+import com.github.bassaer.chatmessageview.util.ITimeFormatter;
 import com.github.bassaer.chatmessageview.utils.SendTimeFormatter;
 
 import java.util.Calendar;
