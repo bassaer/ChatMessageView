@@ -8,8 +8,8 @@ import android.widget.ListView;
 
 import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.models.Message;
-import com.github.bassaer.chatmessageview.utils.MessageDateComparator;
-import com.github.bassaer.chatmessageview.utils.TimeUtils;
+import com.github.bassaer.chatmessageview.util.MessageDateComparator;
+import com.github.bassaer.chatmessageview.util.TimeUtils;
 import com.github.bassaer.chatmessageview.views.adapters.MessageAdapter;
 
 import java.util.ArrayList;
@@ -17,9 +17,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-
-import static com.github.bassaer.chatmessageview.utils.TimeUtils.getDiffDays;
 
 /**
  * Simple chat view
@@ -132,7 +129,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
             return;
         }
         Message prevMessage = mMessageList.get(mMessageList.size() - 2);
-        if (TimeUtils.getDiffDays(prevMessage.getCreatedAt(), message.getCreatedAt()) != 0) {
+        if (TimeUtils.INSTANCE.getDiffDays(prevMessage.getCreatedAt(), message.getCreatedAt()) != 0) {
             mChatList.add(message.getDateSeparateText());
         }
         mChatList.add(message);
@@ -158,7 +155,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         for (int i = 1; i < list.size(); i++) {
             Message prevMessage = list.get(i -1);
             Message currMessage = list.get(i);
-            if (getDiffDays(prevMessage.getCreatedAt(), currMessage.getCreatedAt()) != 0) {
+            if (TimeUtils.getDiffDays(prevMessage.getCreatedAt(), currMessage.getCreatedAt()) != 0) {
                 result.add(currMessage.getDateSeparateText());
             }
             result.add(currMessage);

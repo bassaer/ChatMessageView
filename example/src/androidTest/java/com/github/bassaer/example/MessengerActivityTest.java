@@ -10,7 +10,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.bassaer.chatmessageview.model.User;
-import com.github.bassaer.chatmessageview.utils.TimeUtils;
+import com.github.bassaer.chatmessageview.util.TimeUtils;
 import com.github.bassaer.example.util.ElapsedTimeIdlingResource;
 
 import org.junit.After;
@@ -72,7 +72,7 @@ public class MessengerActivityTest {
         inputText(message);
         User sendingUser = mUsers.get(0);
         Calendar now = Calendar.getInstance();
-        String expectingDate = TimeUtils.calendarToString(now, "MMM. dd, yyyy");
+        String expectingDate = TimeUtils.INSTANCE.calendarToString(now, "MMM. dd, yyyy");
         onRow(0).onChildView(withId(R.id.date_separate_text)).check(matches(withText(expectingDate)));
         onRow(1).onChildView(withId(R.id.message_user_name)).check(matches(withText(sendingUser.getName())));
         onRow(1).onChildView(withId(R.id.message_text)).check(matches(withText(message)));
