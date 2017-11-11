@@ -5,9 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
-import com.github.bassaer.chatmessageview.models.LeftMessage;
-import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.model.User;
+import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.views.MessageView;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class SimpleChatActivity extends Activity {
                     .setMessageText(me.getName() + " " + i)
                     .setRightMessage(true)
                     .build();
-            Message message2 = new LeftMessage.Builder()
+            Message message2 = new Message.Builder()
                     .setUser(you)
                     .setMessageText(you.getName() + " " + i)
                     .setRightMessage(false)
