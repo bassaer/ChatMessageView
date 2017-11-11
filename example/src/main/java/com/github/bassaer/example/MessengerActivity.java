@@ -16,8 +16,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.github.bassaer.chatmessageview.models.Message;
-import com.github.bassaer.chatmessageview.models.User;
-import com.github.bassaer.chatmessageview.utils.ChatBot;
+import com.github.bassaer.chatmessageview.model.User;
+import com.github.bassaer.chatmessageview.util.ChatBot;
 import com.github.bassaer.chatmessageview.views.ChatView;
 import com.github.bassaer.chatmessageview.views.MessageView;
 
@@ -200,7 +200,7 @@ public class MessengerActivity extends Activity {
             final Message receivedMessage = new Message.Builder()
                     .setUser(mUsers.get(1))
                     .setRightMessage(false)
-                    .setMessageText(ChatBot.talk(mUsers.get(0).getName(), sendText))
+                    .setMessageText(ChatBot.INSTANCE.talk(mUsers.get(0).getName(), sendText))
                     .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
                     .setStatusTextFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
                     .setMessageStatusType(Message.MESSAGE_STATUS_ICON)
