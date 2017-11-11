@@ -1,6 +1,6 @@
 package com.github.bassaer.example;
 
-import com.github.bassaer.chatmessageview.utils.ITimeFormatter;
+import com.github.bassaer.chatmessageview.util.ITimeFormatter;
 
 import java.util.Calendar;
 

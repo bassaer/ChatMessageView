@@ -6,8 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
-import com.github.bassaer.chatmessageview.utils.IMessageStatusIconFormatter;
-import com.github.bassaer.chatmessageview.utils.IMessageStatusTextFormatter;
+import com.github.bassaer.chatmessageview.util.IMessageStatusIconFormatter;
+import com.github.bassaer.chatmessageview.util.IMessageStatusTextFormatter;
 
 /**
  * Message status format sample
