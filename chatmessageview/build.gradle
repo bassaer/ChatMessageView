@@ -25,6 +25,9 @@ android {
     lintOptions {
         abortOnError false
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 apply plugin: 'com.github.dcendents.android-maven'
@@ -110,7 +113,10 @@ task sourcesJar(type: Jar) {
 }
 
 task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
+    source = android.sourceSets.main.java.srcDirs.findAll {
+        //exclude kotlin files
+        !(it.name.contains('kotlin'))
+    }
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
