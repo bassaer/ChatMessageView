@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: "de.mannodermaus.android-junit5"
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('version.properties').newDataInputStream())
@@ -107,6 +108,9 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile "com.android.support:support-v4:26+"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    testImplementation junit5()
+    testImplementation junit5Params()
+    testCompileOnly junit5EmbeddedRuntime()
 }
 
 task sourcesJar(type: Jar) {
