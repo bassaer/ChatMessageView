@@ -240,6 +240,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder.username = (TextView) usernameView.findViewById(R.id.message_user_name);
                     holder.username.setText(user.getName());
                     holder.username.setTextColor(mUsernameTextColor);
+                    holder.username.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getUsernameFontSize());
                 }
 
                 // if false, icon is not shown.
@@ -347,7 +348,6 @@ public class MessageAdapter extends ArrayAdapter<Object> {
             holder.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getMessageFontSize());
             holder.messageText.setMaxWidth(mAttribute.getMessageMaxWidth());
             holder.timeText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getTimeLabelFontSize());
-            holder.username.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getUsernameFontSize());
         }
 
         return convertView;
