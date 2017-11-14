@@ -154,6 +154,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                     holder.username = (TextView) usernameView.findViewById(R.id.message_user_name);
                     holder.username.setText(user.getName());
                     holder.username.setTextColor(mUsernameTextColor);
+                    holder.username.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getUsernameFontSize());
                 }
 
                 // if false, icon is not shown.
