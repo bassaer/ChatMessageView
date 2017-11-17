@@ -346,8 +346,10 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 }
             }
 
-            holder.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getMessageFontSize());
-            holder.messageText.setMaxWidth(mAttribute.getMessageMaxWidth());
+            if(null != holder.messageText) {
+                holder.messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getMessageFontSize());
+                holder.messageText.setMaxWidth(mAttribute.getMessageMaxWidth());
+            }
             holder.timeText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getTimeLabelFontSize());
         }
 
