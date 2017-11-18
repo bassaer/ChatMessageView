@@ -74,7 +74,8 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         for(int i=0; i < list.size(); i++){
             addMessage(list.get(i));
         }
-        sortMessages(mMessageList);
+        //sortMessages(mMessageList);
+        refresh();
         init();
     }
 
@@ -113,6 +114,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
      */
     public void setMessage(Message message) {
         addMessage(message);
+        refresh();
         mMessageAdapter.notifyDataSetChanged();
     }
 
