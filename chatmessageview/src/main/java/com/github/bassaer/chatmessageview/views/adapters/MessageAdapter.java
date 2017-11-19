@@ -190,20 +190,35 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 }
 
                 //Set text or picture on message bubble
-                if (message.getType() == Message.Type.PICTURE) {
-                    //Set picture
-                    View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_right, holder.mainMessageContainer);
-                    holder.messagePicture = (RoundImageView) pictureBubble.findViewById(R.id.message_picture);
-                    holder.messagePicture.setImageBitmap(message.getPicture());
-                } else {
-                    //Set text
-                    View textBubble = mLayoutInflater.inflate(R.layout.message_text_right, holder.mainMessageContainer);
-                    holder.messageText = (TextView) textBubble.findViewById(R.id.message_text);
-                    holder.messageText.setText(message.getMessageText());
-                    //Set bubble color
-                    setColorDrawable(mRightBubbleColor, holder.messageText.getBackground());
-                    //Set message text color
-                    holder.messageText.setTextColor(mRightMessageTextColor);
+                switch (message.getType()) {
+                    case PICTURE:
+                        //Set picture
+                        View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_right, holder.mainMessageContainer);
+                        holder.messagePicture = pictureBubble.findViewById(R.id.message_picture);
+                        holder.messagePicture.setImageBitmap(message.getPicture());
+                        break;
+                    case LINK:
+                        //Set text
+                        View linkBubble = mLayoutInflater.inflate(R.layout.message_link_right, holder.mainMessageContainer);
+                        holder.messageLink = linkBubble.findViewById(R.id.message_link);
+                        holder.messageLink.setText(message.getMessageText());
+                        //Set bubble color
+                        setColorDrawable(mRightBubbleColor, holder.messageLink.getBackground());
+                        //Set message text color
+                        holder.messageLink.setTextColor(mRightMessageTextColor);
+                        break;
+                    case TEXT:
+                    default:
+                        //Set text
+                        View textBubble = mLayoutInflater.inflate(R.layout.message_text_right, holder.mainMessageContainer);
+                        holder.messageText = textBubble.findViewById(R.id.message_text);
+                        holder.messageText.setText(message.getMessageText());
+                        //Set bubble color
+                        setColorDrawable(mRightBubbleColor, holder.messageText.getBackground());
+                        //Set message text color
+                        holder.messageText.setTextColor(mRightMessageTextColor);
+                        break;
+
                 }
 
                 holder.timeText.setText(message.getTimeText());
@@ -276,20 +291,35 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 }
 
                 //Set text or picture on message bubble
-                if (message.getType() == Message.Type.PICTURE) {
-                    //Set picture
-                    View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_left, holder.mainMessageContainer);
-                    holder.messagePicture = (RoundImageView) pictureBubble.findViewById(R.id.message_picture);
-                    holder.messagePicture.setImageBitmap(message.getPicture());
-                } else {
-                    //Set text
-                    View textBubble = mLayoutInflater.inflate(R.layout.message_text_left, holder.mainMessageContainer);
-                    holder.messageText = (TextView) textBubble.findViewById(R.id.message_text);
-                    holder.messageText.setText(message.getMessageText());
-                    //Set bubble color
-                    setColorDrawable(mLeftBubbleColor, holder.messageText.getBackground());
-                    //Set message text color
-                    holder.messageText.setTextColor(mLeftMessageTextColor);
+                switch (message.getType()) {
+                    case PICTURE:
+                        //Set picture
+                        View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_left, holder.mainMessageContainer);
+                        holder.messagePicture = pictureBubble.findViewById(R.id.message_picture);
+                        holder.messagePicture.setImageBitmap(message.getPicture());
+                        break;
+                    case LINK:
+                        //Set link
+                        View linkBubble = mLayoutInflater.inflate(R.layout.message_link_left, holder.mainMessageContainer);
+                        holder.messageLink = linkBubble.findViewById(R.id.message_link);
+                        holder.messageLink.setText(message.getMessageText());
+                        //Set bubble color
+                        setColorDrawable(mLeftBubbleColor, holder.messageLink.getBackground());
+                        //Set message text color
+                        holder.messageLink.setTextColor(mLeftMessageTextColor);
+                        break;
+                    case TEXT:
+                    default:
+                        //Set text
+                        View textBubble = mLayoutInflater.inflate(R.layout.message_text_left, holder.mainMessageContainer);
+                        holder.messageText = textBubble.findViewById(R.id.message_text);
+                        holder.messageText.setText(message.getMessageText());
+                        //Set bubble color
+                        setColorDrawable(mLeftBubbleColor, holder.messageText.getBackground());
+                        //Set message text color
+                        holder.messageText.setTextColor(mLeftMessageTextColor);
+                        break;
+
                 }
 
                 holder.timeText.setText(message.getTimeText());
@@ -446,6 +476,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         CircleImageView icon;
         FrameLayout iconContainer;
         RoundImageView messagePicture;
+        TextView messageLink;
         TextView messageText;
         TextView timeText;
         TextView username;
