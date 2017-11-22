@@ -97,7 +97,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(R.layout.date_cell, null);
                 dateViewHolder = new DateViewHolder();
-                dateViewHolder.dateSeparatorText = (TextView) convertView.findViewById(R.id.date_separate_text);
+                dateViewHolder.dateSeparatorText = convertView.findViewById(R.id.date_separate_text);
                 convertView.setTag(dateViewHolder);
             } else {
                 dateViewHolder = (DateViewHolder) convertView.getTag();
@@ -123,21 +123,16 @@ public class MessageAdapter extends ArrayAdapter<Object> {
 
             User user = message.getUser();
 
-            //Bubble color
-            Drawable bubbleDrawable;
-            Drawable wrappedDrawable;
-            ColorStateList colorStateList;
-
             if (message.isRightMessage()) {
                 //Right message
                 if (convertView == null) {
                     convertView = mLayoutInflater.inflate(R.layout.message_view_right, null);
                     holder = new MessageViewHolder();
-                    holder.iconContainer = (FrameLayout) convertView.findViewById(R.id.user_icon_container);
-                    holder.mainMessageContainer = (FrameLayout) convertView.findViewById(R.id.main_message_container);
-                    holder.timeText = (TextView) convertView.findViewById(R.id.time_label_text);
-                    holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
-                    holder.statusContainer = (FrameLayout) convertView.findViewById(R.id.message_status_container);
+                    holder.iconContainer = convertView.findViewById(R.id.user_icon_container);
+                    holder.mainMessageContainer = convertView.findViewById(R.id.main_message_container);
+                    holder.timeText = convertView.findViewById(R.id.time_label_text);
+                    holder.usernameContainer = convertView.findViewById(R.id.message_user_name_container);
+                    holder.statusContainer = convertView.findViewById(R.id.message_status_container);
                     convertView.setTag(holder);
                 } else {
                     holder = (MessageViewHolder) convertView.getTag();
@@ -151,7 +146,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
 
                 if (user.getName() != null && message.getUsernameVisibility()) {
                     View usernameView = mLayoutInflater.inflate(R.layout.user_name_right, holder.usernameContainer);
-                    holder.username = (TextView) usernameView.findViewById(R.id.message_user_name);
+                    holder.username = usernameView.findViewById(R.id.message_user_name);
                     holder.username.setText(user.getName());
                     holder.username.setTextColor(mUsernameTextColor);
                     holder.username.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getUsernameFontSize());
@@ -160,7 +155,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 // if false, icon is not shown.
                 if (!message.isIconHided()) {
                     View iconView = mLayoutInflater.inflate(R.layout.user_icon_right, holder.iconContainer);
-                    holder.icon = (CircleImageView) iconView.findViewById(R.id.user_icon);
+                    holder.icon = iconView.findViewById(R.id.user_icon);
                     if (message.getIconVisibility()) {
                         //if false, set default icon.
                         if (user.getIcon() != null) {
@@ -178,32 +173,47 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 if (message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON || message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON_RIGHT_ONLY) {
                     //Show message status icon
                     View statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer);
-                    holder.statusIcon = (ImageView)statusIcon.findViewById(R.id.status_icon_image_view);
+                    holder.statusIcon = statusIcon.findViewById(R.id.status_icon_image_view);
                     holder.statusIcon.setImageDrawable(message.getStatusIcon());
                     setColorDrawable(mStatusColor, holder.statusIcon.getDrawable());
                 } else if (message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT || message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT_RIGHT_ONLY) {
                     //Show message status text
                     View statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer);
-                    holder.statusText = (TextView)statusText.findViewById(R.id.status_text_view);
+                    holder.statusText = statusText.findViewById(R.id.status_text_view);
                     holder.statusText.setText(message.getStatusText());
                     holder.statusText.setTextColor(mStatusColor);
                 }
 
                 //Set text or picture on message bubble
-                if (message.getType() == Message.Type.PICTURE) {
-                    //Set picture
-                    View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_right, holder.mainMessageContainer);
-                    holder.messagePicture = (RoundImageView) pictureBubble.findViewById(R.id.message_picture);
-                    holder.messagePicture.setImageBitmap(message.getPicture());
-                } else {
-                    //Set text
-                    View textBubble = mLayoutInflater.inflate(R.layout.message_text_right, holder.mainMessageContainer);
-                    holder.messageText = (TextView) textBubble.findViewById(R.id.message_text);
-                    holder.messageText.setText(message.getMessageText());
-                    //Set bubble color
-                    setColorDrawable(mRightBubbleColor, holder.messageText.getBackground());
-                    //Set message text color
-                    holder.messageText.setTextColor(mRightMessageTextColor);
+                switch (message.getType()) {
+                    case PICTURE:
+                        //Set picture
+                        View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_right, holder.mainMessageContainer);
+                        holder.messagePicture = pictureBubble.findViewById(R.id.message_picture);
+                        holder.messagePicture.setImageBitmap(message.getPicture());
+                        break;
+                    case LINK:
+                        //Set text
+                        View linkBubble = mLayoutInflater.inflate(R.layout.message_link_right, holder.mainMessageContainer);
+                        holder.messageLink = linkBubble.findViewById(R.id.message_link);
+                        holder.messageLink.setText(message.getMessageText());
+                        //Set bubble color
+                        setColorDrawable(mRightBubbleColor, holder.messageLink.getBackground());
+                        //Set message text color
+                        holder.messageLink.setTextColor(mRightMessageTextColor);
+                        break;
+                    case TEXT:
+                    default:
+                        //Set text
+                        View textBubble = mLayoutInflater.inflate(R.layout.message_text_right, holder.mainMessageContainer);
+                        holder.messageText = textBubble.findViewById(R.id.message_text);
+                        holder.messageText.setText(message.getMessageText());
+                        //Set bubble color
+                        setColorDrawable(mRightBubbleColor, holder.messageText.getBackground());
+                        //Set message text color
+                        holder.messageText.setTextColor(mRightMessageTextColor);
+                        break;
+
                 }
 
                 holder.timeText.setText(message.getTimeText());
@@ -218,11 +228,11 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 if (convertView == null) {
                     convertView = mLayoutInflater.inflate(R.layout.message_view_left, null);
                     holder = new MessageViewHolder();
-                    holder.iconContainer = (FrameLayout) convertView.findViewById(R.id.user_icon_container);
-                    holder.mainMessageContainer = (FrameLayout) convertView.findViewById(R.id.main_message_container);
-                    holder.timeText = (TextView) convertView.findViewById(R.id.time_label_text);
-                    holder.usernameContainer = (FrameLayout) convertView.findViewById(R.id.message_user_name_container);
-                    holder.statusContainer = (FrameLayout) convertView.findViewById(R.id.message_status_container);
+                    holder.iconContainer = convertView.findViewById(R.id.user_icon_container);
+                    holder.mainMessageContainer = convertView.findViewById(R.id.main_message_container);
+                    holder.timeText = convertView.findViewById(R.id.time_label_text);
+                    holder.usernameContainer = convertView.findViewById(R.id.message_user_name_container);
+                    holder.statusContainer = convertView.findViewById(R.id.message_status_container);
                     convertView.setTag(holder);
                 } else {
                     holder = (MessageViewHolder) convertView.getTag();
@@ -238,7 +248,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
 
                 if (user.getName() != null && message.getUsernameVisibility()) {
                     View usernameView = mLayoutInflater.inflate(R.layout.user_name_left, holder.usernameContainer);
-                    holder.username = (TextView) usernameView.findViewById(R.id.message_user_name);
+                    holder.username = usernameView.findViewById(R.id.message_user_name);
                     holder.username.setText(user.getName());
                     holder.username.setTextColor(mUsernameTextColor);
                     holder.username.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute.getUsernameFontSize());
@@ -247,7 +257,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 // if false, icon is not shown.
                 if (!message.isIconHided()) {
                     View iconView = mLayoutInflater.inflate(R.layout.user_icon_left, holder.iconContainer);
-                    holder.icon = (CircleImageView) iconView.findViewById(R.id.user_icon);
+                    holder.icon = iconView.findViewById(R.id.user_icon);
                     if (message.getIconVisibility()) {
                         //if false, set default icon.
                         if (user.getIcon() != null) {
@@ -264,32 +274,47 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 if (message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON || message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON_LEFT_ONLY) {
                     //Show message status icon
                     View statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer);
-                    holder.statusIcon = (ImageView)statusIcon.findViewById(R.id.status_icon_image_view);
+                    holder.statusIcon = statusIcon.findViewById(R.id.status_icon_image_view);
                     holder.statusIcon.setImageDrawable(message.getStatusIcon());
                     setColorDrawable(mStatusColor, holder.statusIcon.getDrawable());
                 } else if (message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT || message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT_LEFT_ONLY) {
                     //Show message status text
                     View statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer);
-                    holder.statusText = (TextView)statusText.findViewById(R.id.status_text_view);
+                    holder.statusText = statusText.findViewById(R.id.status_text_view);
                     holder.statusText.setText(message.getStatusText());
                     holder.statusText.setTextColor(mStatusColor);
                 }
 
                 //Set text or picture on message bubble
-                if (message.getType() == Message.Type.PICTURE) {
-                    //Set picture
-                    View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_left, holder.mainMessageContainer);
-                    holder.messagePicture = (RoundImageView) pictureBubble.findViewById(R.id.message_picture);
-                    holder.messagePicture.setImageBitmap(message.getPicture());
-                } else {
-                    //Set text
-                    View textBubble = mLayoutInflater.inflate(R.layout.message_text_left, holder.mainMessageContainer);
-                    holder.messageText = (TextView) textBubble.findViewById(R.id.message_text);
-                    holder.messageText.setText(message.getMessageText());
-                    //Set bubble color
-                    setColorDrawable(mLeftBubbleColor, holder.messageText.getBackground());
-                    //Set message text color
-                    holder.messageText.setTextColor(mLeftMessageTextColor);
+                switch (message.getType()) {
+                    case PICTURE:
+                        //Set picture
+                        View pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_left, holder.mainMessageContainer);
+                        holder.messagePicture = pictureBubble.findViewById(R.id.message_picture);
+                        holder.messagePicture.setImageBitmap(message.getPicture());
+                        break;
+                    case LINK:
+                        //Set link
+                        View linkBubble = mLayoutInflater.inflate(R.layout.message_link_left, holder.mainMessageContainer);
+                        holder.messageLink = linkBubble.findViewById(R.id.message_link);
+                        holder.messageLink.setText(message.getMessageText());
+                        //Set bubble color
+                        setColorDrawable(mLeftBubbleColor, holder.messageLink.getBackground());
+                        //Set message text color
+                        holder.messageLink.setTextColor(mLeftMessageTextColor);
+                        break;
+                    case TEXT:
+                    default:
+                        //Set text
+                        View textBubble = mLayoutInflater.inflate(R.layout.message_text_left, holder.mainMessageContainer);
+                        holder.messageText = textBubble.findViewById(R.id.message_text);
+                        holder.messageText.setText(message.getMessageText());
+                        //Set bubble color
+                        setColorDrawable(mLeftBubbleColor, holder.messageText.getBackground());
+                        //Set message text color
+                        holder.messageText.setTextColor(mLeftMessageTextColor);
+                        break;
+
                 }
 
                 holder.timeText.setText(message.getTimeText());
@@ -446,6 +471,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         CircleImageView icon;
         FrameLayout iconContainer;
         RoundImageView messagePicture;
+        TextView messageLink;
         TextView messageText;
         TextView timeText;
         TextView username;

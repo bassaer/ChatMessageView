@@ -22,7 +22,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/icon_normal"
+        android:layout_height="wrap_content"
         android:background="@color/blueGray50"
         android:orientation="horizontal"
         >
@@ -40,7 +40,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/input_hint"/>
+            android:hint="@string/input_hint"
+            android:maxLines="3"/>
 
         <ImageButton
             android:id="@+id/send_button"

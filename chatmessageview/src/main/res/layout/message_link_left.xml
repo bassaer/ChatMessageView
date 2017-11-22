@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_link"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/message_text_shape_left"
+    android:gravity="left"
+    android:maxWidth="@dimen/width_normal"
+    android:padding="@dimen/spacing_micro"
+    android:text="@string/default_text_long"
+    android:autoLink='web'
+    android:textSize="@dimen/font_normal"/>
