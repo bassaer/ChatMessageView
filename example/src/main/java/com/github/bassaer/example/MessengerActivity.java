@@ -97,6 +97,7 @@ public class MessengerActivity extends Activity {
         mChatView.setInputTextHint(INPUT_TEXT_HINT);
         mChatView.setMessageMarginTop(MESSAGE_MARGIN);
         mChatView.setMessageMarginBottom(MESSAGE_MARGIN);
+        mChatView.setMaxInputLine(5);
 
         mChatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
             @Override

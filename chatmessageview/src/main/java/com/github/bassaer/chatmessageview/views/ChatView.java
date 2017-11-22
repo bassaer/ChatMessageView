@@ -305,4 +305,8 @@ public class ChatView extends LinearLayout {
     public MessageView getMessageView() {
         return mMessageView;
     }
+
+    public void setMaxInputLine(int lines) {
+        mInputText.setMaxLines(lines);
+    }
 }
