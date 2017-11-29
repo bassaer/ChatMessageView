@@ -113,7 +113,11 @@ public class MessengerActivity extends Activity {
         mChatView.setOnBubbleLongClickListener(new Message.OnBubbleLongClickListener() {
             @Override
             public void onLongClick(Message message) {
-
+                Toast.makeText(
+                        MessengerActivity.this,
+                        "Long click : icon " + message.getUser().getName(),
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
 
