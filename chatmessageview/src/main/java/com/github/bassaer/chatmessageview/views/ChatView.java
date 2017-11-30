@@ -55,11 +55,11 @@ public class ChatView extends LinearLayout {
     private void init(Context context) {
         mInputMethodManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         View layout = LayoutInflater.from(context).inflate(R.layout.chat_view, this);
-        mMessageView = (MessageView) layout.findViewById(R.id.message_view);
-        mInputText = (EditText) layout.findViewById(R.id.message_edit_text);
-        mSendButton = (ImageButton) layout.findViewById(R.id.send_button);
-        mOptionButton = (ImageButton) layout.findViewById(R.id.option_button);
-        mChatContainer = (SwipeRefreshLayout) layout.findViewById(R.id.chat_container);
+        mMessageView = layout.findViewById(R.id.message_view);
+        mInputText = layout.findViewById(R.id.message_edit_text);
+        mSendButton = layout.findViewById(R.id.send_button);
+        mOptionButton = layout.findViewById(R.id.option_button);
+        mChatContainer = layout.findViewById(R.id.chat_container);
         mChatContainer.setEnabled(false);
 
         mMessageView.init(mAttribute);
