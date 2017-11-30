@@ -98,6 +98,7 @@ public class MessengerActivity extends Activity {
         mChatView.setMessageMarginTop(MESSAGE_MARGIN);
         mChatView.setMessageMarginBottom(MESSAGE_MARGIN);
         mChatView.setMaxInputLine(5);
+        mChatView.setUsernameFontSize(getResources().getDimension(R.dimen.font_small));
 
         mChatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
             @Override
