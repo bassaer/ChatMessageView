@@ -467,6 +467,11 @@ public class MessageAdapter extends ArrayAdapter<Object> {
         notifyDataSetChanged();
     }
 
+    public void setAttribute(Attribute attribute) {
+        mAttribute = attribute;
+        notifyDataSetChanged();
+    }
+
     class MessageViewHolder {
         CircleImageView icon;
         FrameLayout iconContainer;

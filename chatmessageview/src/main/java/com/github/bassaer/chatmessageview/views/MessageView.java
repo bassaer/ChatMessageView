@@ -273,4 +273,33 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
     public void setRefreshInterval(long refreshInterval) {
         mRefreshInterval = refreshInterval;
     }
+
+    public void setMessageFontSize(float size) {
+        mAttribute.setMessageFontSize(size);
+        setAttribute();
+    }
+
+    public void setUsernameFontSize(float size) {
+        mAttribute.setUsernameFontSize(size);
+        setAttribute();
+    }
+
+    public void setTimeLabelFontSize(float size) {
+        mAttribute.setTimeLabelFontSize(size);
+        setAttribute();
+    }
+
+    public void setMessageMaxWidth(int width) {
+        mAttribute.setMessageMaxWidth(width);
+        setAttribute();
+    }
+
+    public void setDateSeparatorFontSize(float size) {
+        mAttribute.setDateSeparatorFontSize(size);
+        setAttribute();
+    }
+
+    private void setAttribute() {
+        mMessageAdapter.setAttribute(mAttribute);
+    }
 }
