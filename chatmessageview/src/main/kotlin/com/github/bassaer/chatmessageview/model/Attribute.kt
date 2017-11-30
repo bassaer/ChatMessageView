@@ -9,11 +9,11 @@ import com.github.bassaer.chatmessageview.R
  * Created by nakayama on 2017/11/08.
  */
 class Attribute(context: Context, attrs: AttributeSet) {
-    val messageFontSize: Float
-    val usernameFontSize: Float
-    val timeLabelFontSize: Float
-    val messageMaxWidth: Int
-    val dateSeparatorFontSize: Float
+    var messageFontSize: Float
+    var usernameFontSize: Float
+    var timeLabelFontSize: Float
+    var messageMaxWidth: Int
+    var dateSeparatorFontSize: Float
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView)
@@ -39,5 +39,4 @@ class Attribute(context: Context, attrs: AttributeSet) {
         )
         typedArray.recycle()
     }
-
 }

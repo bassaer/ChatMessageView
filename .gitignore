@@ -48,6 +48,8 @@ captures/
 .idea/markdown-navigator.xml
 .idea/codeStyleSettings.xml
 
+projectFilesBackup/
+
 
 # Keystore files
 *.jks
