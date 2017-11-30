@@ -309,4 +309,24 @@ public class ChatView extends LinearLayout {
     public void setMaxInputLine(int lines) {
         mInputText.setMaxLines(lines);
     }
+
+    public void setMessageFontSize(float size) {
+        mMessageView.setMessageFontSize(size);
+    }
+
+    public void setUsernameFontSize(float size) {
+        mMessageView.setUsernameFontSize(size);
+    }
+
+    public void setTimeLabelFontSize(float size) {
+        mMessageView.setTimeLabelFontSize(size);
+    }
+
+    public void setMessageMaxWidth(int width) {
+        mMessageView.setMessageMaxWidth(width);
+    }
+
+    public void setDateSeparatorFontSize(float size) {
+        mMessageView.setDateSeparatorFontSize(size);
+    }
 }
