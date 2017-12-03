@@ -97,6 +97,8 @@ public class MessengerActivity extends Activity {
         mChatView.setInputTextHint(INPUT_TEXT_HINT);
         mChatView.setMessageMarginTop(MESSAGE_MARGIN);
         mChatView.setMessageMarginBottom(MESSAGE_MARGIN);
+        mChatView.setMaxInputLine(5);
+        mChatView.setUsernameFontSize(getResources().getDimension(R.dimen.font_small));
 
         mChatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
             @Override
@@ -112,7 +114,11 @@ public class MessengerActivity extends Activity {
         mChatView.setOnBubbleLongClickListener(new Message.OnBubbleLongClickListener() {
             @Override
             public void onLongClick(Message message) {
-
+                Toast.makeText(
+                        MessengerActivity.this,
+                        "Long click : icon " + message.getUser().getName(),
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
 

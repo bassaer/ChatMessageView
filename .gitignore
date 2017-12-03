@@ -49,6 +49,8 @@ captures/
 .idea/codeStyleSettings.xml
 projectFilesBackup/.idea
 
+projectFilesBackup/
+
 
 # Keystore files
 *.jks
