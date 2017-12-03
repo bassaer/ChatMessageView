@@ -3,7 +3,7 @@ package com.github.bassaer.chatmessageview.models;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-import com.github.bassaer.chatmessageview.model.User;
+import com.github.bassaer.chatmessageview.model.IChatUser;
 import com.github.bassaer.chatmessageview.util.DateFormatter;
 import com.github.bassaer.chatmessageview.util.DefaultTimeFormatter;
 import com.github.bassaer.chatmessageview.util.IMessageStatusIconFormatter;
@@ -21,7 +21,7 @@ public class Message {
     /**
      * Sender information
      */
-    private User mUser;
+    private IChatUser mUser;
 
     /**
      * Whether sender username is shown or not
@@ -167,7 +167,7 @@ public class Message {
             message = new Message();
         }
 
-        public Builder setUser(User user) {
+        public Builder setUser(IChatUser user) {
             message.setUser(user);
             return this;
         }
@@ -254,11 +254,11 @@ public class Message {
 
     }
 
-    public User getUser() {
+    public IChatUser getUser() {
         return mUser;
     }
 
-    public void setUser(User user) {
+    public void setUser(IChatUser user) {
         mUser = user;
     }
 
