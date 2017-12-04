@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.github.bassaer.chatmessageview.models.Message;
-import com.github.bassaer.chatmessageview.model.User;
+import com.github.bassaer.chatmessageview.model.IChatUser;
 import com.github.bassaer.chatmessageview.util.ChatBot;
 import com.github.bassaer.chatmessageview.views.ChatView;
 import com.github.bassaer.chatmessageview.views.MessageView;
@@ -296,8 +296,8 @@ public class MessengerActivity extends Activity {
             for (int i = 0; i < mMessageList.size(); i++) {
                 Message message = mMessageList.get(i);
                 //Set extra info because they were removed before save messages.
-                for (User user : mUsers) {
-                    if (message.getUser().getId() == user.getId()) {
+                for (IChatUser user : mUsers) {
+                    if (message.getUser().getId().equals(user.getId())) {
                         message.getUser().setIcon(user.getIcon());
                     }
                 }

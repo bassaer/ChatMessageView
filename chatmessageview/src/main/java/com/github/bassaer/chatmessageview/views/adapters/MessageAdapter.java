@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.github.bassaer.chatmessageview.R;
 import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.models.Message;
-import com.github.bassaer.chatmessageview.model.User;
+import com.github.bassaer.chatmessageview.model.IChatUser;
 import com.github.bassaer.chatmessageview.views.RoundImageView;
 
 import java.util.ArrayList;
@@ -113,7 +113,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 Object prevItem = getItem(position - 1);
                 if (prevItem instanceof Message) {
                     final Message prevMessage = (Message) prevItem;
-                    if (prevMessage.getUser().getId() == message.getUser().getId()) {
+                    if (prevMessage.getUser().getId().equals(message.getUser().getId())) {
                         //If send same person, hide username and icon.
                         message.setIconVisibility(false);
                         message.setUsernameVisibility(false);
@@ -121,7 +121,7 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 }
             }
 
-            User user = message.getUser();
+            IChatUser user = message.getUser();
 
             if (message.isRightMessage()) {
                 //Right message

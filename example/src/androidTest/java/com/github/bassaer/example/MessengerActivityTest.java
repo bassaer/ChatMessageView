@@ -9,7 +9,6 @@ import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.github.bassaer.chatmessageview.model.User;
 import com.github.bassaer.chatmessageview.util.TimeUtils;
 import com.github.bassaer.example.util.ElapsedTimeIdlingResource;
 
