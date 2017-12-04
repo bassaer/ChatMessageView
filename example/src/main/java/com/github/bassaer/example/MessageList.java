@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import com.github.bassaer.chatmessageview.models.Message;
-import com.github.bassaer.chatmessageview.model.User;
+import com.github.bassaer.chatmessageview.model.IChatUser;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class MessageList {
 
     private SaveMessage convertMessage(Message message) {
         SaveMessage saveMessage = new SaveMessage(
-                message.getUser().getId(),
+                Integer.valueOf(message.getUser().getId()),
                 message.getUser().getName(),
                 message.getMessageText(),
                 message.getCreatedAt(),
@@ -79,7 +79,7 @@ public class MessageList {
     }
 
     private Message convertMessage(SaveMessage saveMessage) {
-        User user = new User(saveMessage.getId(), saveMessage.getUsername(), null);
+        IChatUser user = new User(saveMessage.getId(), saveMessage.getUsername(), null);
 
         Message message = new Message.Builder()
                 .setUser(user)
