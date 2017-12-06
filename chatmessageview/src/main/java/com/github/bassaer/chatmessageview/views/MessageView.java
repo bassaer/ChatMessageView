@@ -131,7 +131,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
             return;
         }
         Message prevMessage = mMessageList.get(mMessageList.size() - 2);
-        if (TimeUtils.INSTANCE.getDiffDays(prevMessage.getCreatedAt(), message.getCreatedAt()) != 0) {
+        if (!TimeUtils.INSTANCE.isSameDay(prevMessage.getCreatedAt(), message.getCreatedAt())) {
             mChatList.add(message.getDateSeparateText());
         }
         mChatList.add(message);
@@ -157,7 +157,7 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         for (int i = 1; i < list.size(); i++) {
             Message prevMessage = list.get(i -1);
             Message currMessage = list.get(i);
-            if (TimeUtils.getDiffDays(prevMessage.getCreatedAt(), currMessage.getCreatedAt()) != 0) {
+            if (!TimeUtils.isSameDay(prevMessage.getCreatedAt(), currMessage.getCreatedAt())) {
                 result.add(currMessage.getDateSeparateText());
             }
             result.add(currMessage);
