@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class MessageList {
 
-    private ArrayList<SaveMessage> mMessages;
+    private List<SaveMessage> mMessages;
 
     public MessageList() {
         mMessages = new ArrayList<>();
@@ -32,7 +32,7 @@ public class MessageList {
         return messages;
     }
 
-    public void setMessages(ArrayList<Message> messages) {
+    public void setMessages(List<Message> messages) {
         for (Message message : messages) {
             mMessages.add(convertMessage(message));
         }

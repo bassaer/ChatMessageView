@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ChatMessageView</string>
     <string name="error">Error</string>
+    <string name="options">Options</string>
+    <string name="clear_messages">Clear Messages</string>
+    <string name="send_picture">Send Picture</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.github.bassaer.example;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,8 +17,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Toast;
 
-import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.model.IChatUser;
+import com.github.bassaer.chatmessageview.models.Message;
 import com.github.bassaer.chatmessageview.util.ChatBot;
 import com.github.bassaer.chatmessageview.views.ChatView;
 import com.github.bassaer.chatmessageview.views.MessageView;
@@ -116,9 +118,10 @@ public class MessengerActivity extends Activity {
             public void onLongClick(Message message) {
                 Toast.makeText(
                         MessengerActivity.this,
-                        "Long click : icon " + message.getUser().getName(),
+                        "Removed this message \n" + message.getMessageText(),
                         Toast.LENGTH_SHORT
                 ).show();
+                mChatView.getMessageView().remove(message);
             }
         });
 
@@ -181,21 +184,25 @@ public class MessengerActivity extends Activity {
         mChatView.setOnClickOptionButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                    intent = new Intent(Intent.ACTION_GET_CONTENT);
-                } else {
-                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                }
-                intent.setType("image/*");
-
-                startActivityForResult(intent, READ_REQUEST_CODE);
+                showDialog();
             }
         });
 
 
 
+    }
+
+    private void openGallery() {
+        Intent intent;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+        }
+        intent.setType("image/*");
+
+        startActivityForResult(intent, READ_REQUEST_CODE);
     }
 
     private void receiveMessage(String sendText) {
@@ -326,6 +333,8 @@ public class MessengerActivity extends Activity {
     public void onPause() {
         super.onPause();
         //Save message
+        mMessageList = new MessageList();
+        mMessageList.setMessages(mChatView.getMessageView().getMessageList());
         AppData.putMessageList(this, mMessageList);
     }
 
@@ -337,5 +346,29 @@ public class MessengerActivity extends Activity {
 
     public void setReplyDelay(int replyDelay) {
         mReplyDelay = replyDelay;
+    }
+
+    private void showDialog() {
+        final String[] items = {
+                getString(R.string.send_picture),
+                getString(R.string.clear_messages)
+        };
+
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.options))
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int position) {
+                        switch (position) {
+                            case 0 :
+                                openGallery();
+                                break;
+                            case 1:
+                                mChatView.getMessageView().removeAll();
+                                break;
+                        }
+                    }
+                })
+                .show();
     }
 }
