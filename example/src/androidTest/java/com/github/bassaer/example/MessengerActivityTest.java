@@ -45,7 +45,6 @@ public class MessengerActivityTest {
 
     private Context mContext;
     private List<User> mUsers;
-    private Intent mIntent;
 
     @Rule
     public ActivityTestRule<MessengerActivity> mActivityRule
@@ -53,10 +52,9 @@ public class MessengerActivityTest {
 
     @Before
     public void setUp() throws Exception {
-        mIntent = new Intent();
         mContext = InstrumentationRegistry.getTargetContext();
         AppData.reset(mContext);
-        mActivityRule.launchActivity(mIntent);
+        mActivityRule.launchActivity(new Intent());
         mUsers = mActivityRule.getActivity().getUsers();
     }
 
@@ -94,23 +92,6 @@ public class MessengerActivityTest {
         onRow(2).onChildView(withId(R.id.message_text)).check(matches(withText(containsString(message))));
         Espresso.unregisterIdlingResources(idlingResource);
     }
-
-//    @Test
-//    public void checkViewColors() throws Exception {
-//        String message = "Hello";
-//        inputText(message);
-//        long waitingTime = 3000;
-//        IdlingResource idlingResource = new ElapsedTimeIdlingResource(waitingTime);
-//        Espresso.registerIdlingResources(idlingResource);
-//        onRow(0).onChildView(withId(R.id.date_separate_text)).check(matches(ColorMatcher.withTextColor(MessengerActivity.DATA_SEPARATOR_COLOR)));
-//        for (int i = 1; i <=2; i++) {
-//            onRow(i).onChildView(withId(R.id.message_user_name))
-//                    .check(matches(ColorMatcher.withTextColor(MessengerActivity.USERNAME_TEXT_COLOR)));
-//            onRow(i).onChildView(withId(R.id.time_label_text))
-//                    .check(matches(ColorMatcher.withTextColor(MessengerActivity.SEND_TIME_TEXT_COLOR)));
-//        }
-//        Espresso.unregisterIdlingResources(idlingResource);
-//    }
 
     @Test
     public void checkSendingMessageInSequence() {
