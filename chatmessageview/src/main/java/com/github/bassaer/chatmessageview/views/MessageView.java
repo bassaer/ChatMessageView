@@ -141,6 +141,17 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
         sortMessages(mMessageList);
         mChatList.clear();
         mChatList.addAll(insertDateSeparator(mMessageList));
+        mMessageAdapter.notifyDataSetChanged();
+    }
+
+    public void remove(Message message) {
+        mMessageList.remove(message);
+        refresh();
+    }
+
+    public void removeAll() {
+        mMessageList.clear();
+        refresh();
     }
 
 
@@ -301,5 +312,9 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
 
     private void setAttribute() {
         mMessageAdapter.setAttribute(mAttribute);
+    }
+
+    public List<Message> getMessageList() {
+        return mMessageList;
     }
 }
