@@ -313,4 +313,8 @@ public class MessageView extends ListView implements View.OnFocusChangeListener{
     private void setAttribute() {
         mMessageAdapter.setAttribute(mAttribute);
     }
+
+    public List<Message> getMessageList() {
+        return mMessageList;
+    }
 }
