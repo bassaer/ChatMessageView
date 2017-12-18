@@ -78,7 +78,7 @@ public class MessengerActivity extends Activity {
 
         initUsers();
 
-        mChatView = (ChatView) findViewById(R.id.chat_view);
+        mChatView = findViewById(R.id.chat_view);
 
         //Load saved messages
         loadMessages();
