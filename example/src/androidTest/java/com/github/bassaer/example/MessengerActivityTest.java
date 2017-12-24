@@ -26,6 +26,7 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -41,7 +42,6 @@ import static org.hamcrest.Matchers.containsString;
  */
 @RunWith(AndroidJUnit4.class)
 public class MessengerActivityTest {
-    private MessageList mMessageList;
 
     private Context mContext;
     private List<User> mUsers;
@@ -108,6 +108,25 @@ public class MessengerActivityTest {
             onRow(i).onChildView(withId(R.id.message_text)).check(matches(withText(String.valueOf(messageCounter))));
             messageCounter++;
         }
+    }
+
+    @Test
+    public void checkDeleteMessage() {
+        final String[] messages = {"message1", "message2", "message3"};
+        inputText(messages[0]);
+        inputText(messages[1]);
+        inputText(messages[2]);
+
+        long waitingTime = 3000;
+        IdlingResource idlingResource = new ElapsedTimeIdlingResource(waitingTime);
+        Espresso.registerIdlingResources(idlingResource);
+        // Remove message2
+        onRow(3).onChildView(withId(R.id.message_text)).perform(longClick());
+        // Remove reply for message2
+        onRow(3).onChildView(withId(R.id.message_text)).perform(longClick());
+        // message3 should be shown at 3rd message
+        onRow(3).onChildView(withId(R.id.message_text)).check(matches(withText(messages[2])));
+        Espresso.unregisterIdlingResources(idlingResource);
     }
 
 
