@@ -10,6 +10,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.bassaer.chatmessageview.util.TimeUtils;
+import com.github.bassaer.example.matcher.MessageListMatcher;
 import com.github.bassaer.example.util.ElapsedTimeIdlingResource;
 
 import org.junit.After;
@@ -128,6 +129,24 @@ public class MessengerActivityTest {
         onRow(3).onChildView(withId(R.id.message_text)).check(matches(withText(messages[2])));
         Espresso.unregisterIdlingResources(idlingResource);
     }
+
+    @Test
+    public void checkDeleteAllMessages() {
+        final String[] messages = {"message1", "message2", "message3"};
+        inputText(messages[0]);
+        inputText(messages[1]);
+        inputText(messages[2]);
+
+        long waitingTime = 3000;
+        IdlingResource idlingResource = new ElapsedTimeIdlingResource(waitingTime);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(R.id.option_button)).perform(click());
+        // Remove all messages
+        onView(withText(R.string.clear_messages)).perform(click());
+        onView(withId(R.id.message_view)).check(matches(MessageListMatcher.withListSize(0)));
+        Espresso.unregisterIdlingResources(idlingResource);
+    }
+
 
 
     /**
