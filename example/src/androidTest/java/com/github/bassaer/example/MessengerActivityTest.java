@@ -10,6 +10,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.bassaer.chatmessageview.util.TimeUtils;
+import com.github.bassaer.example.matcher.MessageListMatcher;
 import com.github.bassaer.example.util.ElapsedTimeIdlingResource;
 
 import org.junit.After;
@@ -26,6 +27,7 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -41,11 +43,9 @@ import static org.hamcrest.Matchers.containsString;
  */
 @RunWith(AndroidJUnit4.class)
 public class MessengerActivityTest {
-    private MessageList mMessageList;
 
     private Context mContext;
     private List<User> mUsers;
-    private Intent mIntent;
 
     @Rule
     public ActivityTestRule<MessengerActivity> mActivityRule
@@ -53,10 +53,9 @@ public class MessengerActivityTest {
 
     @Before
     public void setUp() throws Exception {
-        mIntent = new Intent();
         mContext = InstrumentationRegistry.getTargetContext();
         AppData.reset(mContext);
-        mActivityRule.launchActivity(mIntent);
+        mActivityRule.launchActivity(new Intent());
         mUsers = mActivityRule.getActivity().getUsers();
     }
 
@@ -95,23 +94,6 @@ public class MessengerActivityTest {
         Espresso.unregisterIdlingResources(idlingResource);
     }
 
-//    @Test
-//    public void checkViewColors() throws Exception {
-//        String message = "Hello";
-//        inputText(message);
-//        long waitingTime = 3000;
-//        IdlingResource idlingResource = new ElapsedTimeIdlingResource(waitingTime);
-//        Espresso.registerIdlingResources(idlingResource);
-//        onRow(0).onChildView(withId(R.id.date_separate_text)).check(matches(ColorMatcher.withTextColor(MessengerActivity.DATA_SEPARATOR_COLOR)));
-//        for (int i = 1; i <=2; i++) {
-//            onRow(i).onChildView(withId(R.id.message_user_name))
-//                    .check(matches(ColorMatcher.withTextColor(MessengerActivity.USERNAME_TEXT_COLOR)));
-//            onRow(i).onChildView(withId(R.id.time_label_text))
-//                    .check(matches(ColorMatcher.withTextColor(MessengerActivity.SEND_TIME_TEXT_COLOR)));
-//        }
-//        Espresso.unregisterIdlingResources(idlingResource);
-//    }
-
     @Test
     public void checkSendingMessageInSequence() {
 
@@ -128,6 +110,43 @@ public class MessengerActivityTest {
             messageCounter++;
         }
     }
+
+    @Test
+    public void checkDeleteMessage() {
+        final String[] messages = {"message1", "message2", "message3"};
+        inputText(messages[0]);
+        inputText(messages[1]);
+        inputText(messages[2]);
+
+        long waitingTime = 3000;
+        IdlingResource idlingResource = new ElapsedTimeIdlingResource(waitingTime);
+        Espresso.registerIdlingResources(idlingResource);
+        // Remove message2
+        onRow(3).onChildView(withId(R.id.message_text)).perform(longClick());
+        // Remove reply for message2
+        onRow(3).onChildView(withId(R.id.message_text)).perform(longClick());
+        // message3 should be shown at 3rd message
+        onRow(3).onChildView(withId(R.id.message_text)).check(matches(withText(messages[2])));
+        Espresso.unregisterIdlingResources(idlingResource);
+    }
+
+    @Test
+    public void checkDeleteAllMessages() {
+        final String[] messages = {"message1", "message2", "message3"};
+        inputText(messages[0]);
+        inputText(messages[1]);
+        inputText(messages[2]);
+
+        long waitingTime = 3000;
+        IdlingResource idlingResource = new ElapsedTimeIdlingResource(waitingTime);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(R.id.option_button)).perform(click());
+        // Remove all messages
+        onView(withText(R.string.clear_messages)).perform(click());
+        onView(withId(R.id.message_view)).check(matches(MessageListMatcher.withListSize(0)));
+        Espresso.unregisterIdlingResources(idlingResource);
+    }
+
 
 
     /**

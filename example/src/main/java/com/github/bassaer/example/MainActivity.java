@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
 
 
-        ListView menuList = (ListView) findViewById(R.id.menu_list);
+        ListView menuList = findViewById(R.id.menu_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_expandable_list_item_1, mMenu);
         menuList.setAdapter(adapter);
