@@ -66,7 +66,7 @@ jobs:
               adb shell input keyevent 82
       - run:
           name: Run UI test
-          command: ./gradlew connectedAndroidTest
+          command: ./gradlew connectedAndroidTest -PdisablePreDex
 
       - run:
           name: Distribute Bintray
