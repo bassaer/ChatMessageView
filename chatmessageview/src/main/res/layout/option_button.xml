@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/option_button"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="@dimen/icon_normal"
+    android:layout_height="@dimen/icon_normal"
+    android:contentDescription="@string/attach"
+    android:src="@drawable/ic_action_add"/>
