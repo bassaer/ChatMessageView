@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -58,9 +59,13 @@ public class ChatView extends LinearLayout {
         mMessageView = layout.findViewById(R.id.message_view);
         mInputText = layout.findViewById(R.id.message_edit_text);
         mSendButton = layout.findViewById(R.id.send_button);
-        mOptionButton = layout.findViewById(R.id.option_button);
         mChatContainer = layout.findViewById(R.id.chat_container);
         mChatContainer.setEnabled(false);
+        if (mAttribute.isOptionButtonEnable()) {
+            FrameLayout optionButtonContainer = layout.findViewById(R.id.option_button_container);
+            View optionView = LayoutInflater.from(context).inflate(R.layout.option_button, optionButtonContainer);
+            mOptionButton = optionView.findViewById(R.id.option_button);
+        }
 
         mMessageView.init(mAttribute);
 
@@ -162,7 +167,9 @@ public class ChatView extends LinearLayout {
     }
 
     public void setOnClickOptionButtonListener(View.OnClickListener listener) {
-        mOptionButton.setOnClickListener(listener);
+        if (mOptionButton != null) {
+            mOptionButton.setOnClickListener(listener);
+        }
     }
 
     public void setBackgroundColor(int color) {
@@ -176,8 +183,10 @@ public class ChatView extends LinearLayout {
     }
 
     public void setOptionButtonColor(int color) {
-        mOptionIconColor = color;
-        mOptionButton.setImageDrawable(getColoredDrawable(color, mOptionIconId));
+        if (mOptionButton != null) {
+            mOptionIconColor = color;
+            mOptionButton.setImageDrawable(getColoredDrawable(color, mOptionIconId));
+        }
     }
 
     public Drawable getColoredDrawable(int color, int iconId) {
@@ -329,4 +338,5 @@ public class ChatView extends LinearLayout {
     public void setDateSeparatorFontSize(float size) {
         mMessageView.setDateSeparatorFontSize(size);
     }
+
 }
