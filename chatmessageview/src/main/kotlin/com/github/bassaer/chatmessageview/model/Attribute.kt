@@ -14,6 +14,7 @@ class Attribute(context: Context, attrs: AttributeSet) {
     var timeLabelFontSize: Float
     var messageMaxWidth: Int
     var dateSeparatorFontSize: Float
+    var isOptionButtonEnable: Boolean
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView)
@@ -36,6 +37,10 @@ class Attribute(context: Context, attrs: AttributeSet) {
         this.dateSeparatorFontSize = typedArray.getDimension(
                 R.styleable.MessageView_date_separator_font_size,
                 context.resources.getDimension(R.dimen.font_small)
+        )
+        this.isOptionButtonEnable = typedArray.getBoolean(
+                R.styleable.MessageView_option_button_enable,
+                false
         )
         typedArray.recycle()
     }
