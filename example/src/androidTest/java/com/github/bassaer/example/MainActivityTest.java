@@ -1,5 +1,6 @@
 package com.github.bassaer.example;
 
+import android.app.KeyguardManager;
 import android.support.test.espresso.DataInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
+import static android.content.Context.KEYGUARD_SERVICE;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -29,15 +31,16 @@ public class MainActivityTest {
 
     @Before
     public void setUp() {
-        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+        final MainActivity activity = mActivityRule.getActivity();
+        KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock lock = keyguardManager.newKeyguardLock(KEYGUARD_SERVICE);
+        lock.disableKeyguard();
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mActivityRule.getActivity()
-                        .getWindow()
-                        .addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
                                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                        );
+                                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         });
     }

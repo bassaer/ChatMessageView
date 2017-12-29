@@ -1,5 +1,6 @@
 package com.github.bassaer.example;
 
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
@@ -24,6 +25,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
+import static android.content.Context.KEYGUARD_SERVICE;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -57,19 +59,18 @@ public class MessengerActivityTest {
         mContext = InstrumentationRegistry.getTargetContext();
         AppData.reset(mContext);
         mActivityRule.launchActivity(new Intent());
-        mUsers = mActivityRule.getActivity().getUsers();
+        final MessengerActivity activity = mActivityRule.getActivity();
+        KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock lock = keyguardManager.newKeyguardLock(KEYGUARD_SERVICE);
+        lock.disableKeyguard();
+        mUsers = activity.getUsers();
 
-        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mActivityRule.getActivity()
-                        .getWindow()
-                        .addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
                                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                );
-
-
+                                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         });
     }
