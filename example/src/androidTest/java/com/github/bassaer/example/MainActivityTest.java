@@ -1,6 +1,7 @@
 package com.github.bassaer.example;
 
 import android.app.KeyguardManager;
+import android.support.test.annotation.UiThreadTest;
 import android.support.test.espresso.DataInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -29,13 +30,14 @@ public class MainActivityTest {
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
 
+    @UiThreadTest
     @Before
-    public void setUp() {
+    public void setUp() throws Throwable {
         final MainActivity activity = mActivityRule.getActivity();
         KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock lock = keyguardManager.newKeyguardLock(KEYGUARD_SERVICE);
         lock.disableKeyguard();
-        activity.runOnUiThread(new Runnable() {
+        mActivityRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
