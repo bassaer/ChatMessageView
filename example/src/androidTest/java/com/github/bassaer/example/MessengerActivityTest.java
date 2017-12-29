@@ -4,6 +4,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.annotation.UiThreadTest;
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
@@ -54,8 +55,9 @@ public class MessengerActivityTest {
     public ActivityTestRule<MessengerActivity> mActivityRule
             = new ActivityTestRule<>(MessengerActivity.class, true, false);
 
+    @UiThreadTest
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Throwable {
         mContext = InstrumentationRegistry.getTargetContext();
         AppData.reset(mContext);
         mActivityRule.launchActivity(new Intent());
@@ -65,7 +67,7 @@ public class MessengerActivityTest {
         lock.disableKeyguard();
         mUsers = activity.getUsers();
 
-        activity.runOnUiThread(new Runnable() {
+        mActivityRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
