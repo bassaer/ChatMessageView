@@ -1,16 +1,13 @@
 package com.github.bassaer.example;
 
-import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.annotation.UiThreadTest;
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.WindowManager;
 
 import com.github.bassaer.chatmessageview.util.TimeUtils;
 import com.github.bassaer.example.matcher.MessageListMatcher;
@@ -26,7 +23,6 @@ import java.util.Calendar;
 import java.util.List;
 
 
-import static android.content.Context.KEYGUARD_SERVICE;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -55,26 +51,12 @@ public class MessengerActivityTest {
     public ActivityTestRule<MessengerActivity> mActivityRule
             = new ActivityTestRule<>(MessengerActivity.class, true, false);
 
-    @UiThreadTest
     @Before
-    public void setUp() throws Throwable {
+    public void setUp() throws Exception {
         mContext = InstrumentationRegistry.getTargetContext();
         AppData.reset(mContext);
         mActivityRule.launchActivity(new Intent());
-        final MessengerActivity activity = mActivityRule.getActivity();
-        KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(KEYGUARD_SERVICE);
-        KeyguardManager.KeyguardLock lock = keyguardManager.newKeyguardLock(KEYGUARD_SERVICE);
-        lock.disableKeyguard();
-        mUsers = activity.getUsers();
-
-        mActivityRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-                                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            }
-        });
+        mUsers = mActivityRule.getActivity().getUsers();
     }
 
     @After

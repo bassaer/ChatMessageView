@@ -1,19 +1,13 @@
 package com.github.bassaer.example;
 
-import android.app.KeyguardManager;
-import android.support.test.annotation.UiThreadTest;
 import android.support.test.espresso.DataInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.WindowManager;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
-import static android.content.Context.KEYGUARD_SERVICE;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -28,24 +22,6 @@ import static org.hamcrest.Matchers.anything;
 public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
-
-
-    @UiThreadTest
-    @Before
-    public void setUp() throws Throwable {
-        final MainActivity activity = mActivityRule.getActivity();
-        KeyguardManager keyguardManager = (KeyguardManager) activity.getSystemService(KEYGUARD_SERVICE);
-        KeyguardManager.KeyguardLock lock = keyguardManager.newKeyguardLock(KEYGUARD_SERVICE);
-        lock.disableKeyguard();
-        mActivityRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-                                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            }
-        });
-    }
 
     @Test
     public void checkMenuList() {
