@@ -8,7 +8,6 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.WindowManager;
 
 import com.github.bassaer.chatmessageview.util.TimeUtils;
 import com.github.bassaer.example.matcher.MessageListMatcher;
@@ -58,20 +57,6 @@ public class MessengerActivityTest {
         AppData.reset(mContext);
         mActivityRule.launchActivity(new Intent());
         mUsers = mActivityRule.getActivity().getUsers();
-
-        mActivityRule.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mActivityRule.getActivity()
-                        .getWindow()
-                        .addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-                                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                );
-
-
-            }
-        });
     }
 
     @After
