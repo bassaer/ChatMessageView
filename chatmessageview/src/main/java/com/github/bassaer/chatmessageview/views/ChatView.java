@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import com.github.bassaer.chatmessageview.R;
 import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.model.Message;
+import com.github.bassaer.chatmessageview.view.MessageView;
 
 /**
  * Chat view with edit view and send button

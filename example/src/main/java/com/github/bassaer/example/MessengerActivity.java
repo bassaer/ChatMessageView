@@ -21,7 +21,7 @@ import com.github.bassaer.chatmessageview.model.IChatUser;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.util.ChatBot;
 import com.github.bassaer.chatmessageview.views.ChatView;
-import com.github.bassaer.chatmessageview.views.MessageView;
+import com.github.bassaer.chatmessageview.view.MessageView;
 
 import java.io.IOException;
 import java.util.ArrayList;

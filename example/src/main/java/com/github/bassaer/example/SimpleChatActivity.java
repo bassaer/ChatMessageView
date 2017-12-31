@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.github.bassaer.chatmessageview.model.Message;
-import com.github.bassaer.chatmessageview.views.MessageView;
+import com.github.bassaer.chatmessageview.view.MessageView;
 
 import java.util.ArrayList;
 
