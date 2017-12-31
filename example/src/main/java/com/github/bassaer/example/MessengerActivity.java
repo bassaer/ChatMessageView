@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.github.bassaer.chatmessageview.model.IChatUser;
-import com.github.bassaer.chatmessageview.models.Message;
+import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.util.ChatBot;
 import com.github.bassaer.chatmessageview.views.ChatView;
 import com.github.bassaer.chatmessageview.views.MessageView;
@@ -160,7 +160,7 @@ public class MessengerActivity extends Activity {
                         .hideIcon(true)
                         .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
                         .setStatusTextFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
-                        .setMessageStatusType(Message.MESSAGE_STATUS_ICON)
+                        .setMessageStatusType(Message.Companion.getMESSAGE_STATUS_ICON())
                         .setStatus(MyMessageStatusFormatter.STATUS_DELIVERED)
                         .build();
 
@@ -216,7 +216,7 @@ public class MessengerActivity extends Activity {
                     .setMessageText(ChatBot.INSTANCE.talk(mUsers.get(0).getName(), sendText))
                     .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
                     .setStatusTextFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
-                    .setMessageStatusType(Message.MESSAGE_STATUS_ICON)
+                    .setMessageStatusType(Message.Companion.getMESSAGE_STATUS_ICON())
                     .setStatus(MyMessageStatusFormatter.STATUS_DELIVERED)
                     .build();
 
@@ -257,7 +257,7 @@ public class MessengerActivity extends Activity {
                     .setPicture(picture)
                     .setType(Message.Type.PICTURE)
                     .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
-                    .setMessageStatusType(Message.MESSAGE_STATUS_ICON)
+                    .setMessageStatusType(Message.Companion.getMESSAGE_STATUS_ICON())
                     .setStatus(MyMessageStatusFormatter.STATUS_DELIVERED)
                     .build();
             mChatView.send(message);
@@ -312,7 +312,7 @@ public class MessengerActivity extends Activity {
                     message.hideIcon(true);
 
                 }
-                message.setMessageStatusType(Message.MESSAGE_STATUS_ICON_RIGHT_ONLY);
+                message.setMessageStatusType(Message.Companion.getMESSAGE_STATUS_ICON_RIGHT_ONLY());
                 message.setStatusIconFormatter(new MyMessageStatusFormatter(this));
                 message.setStatus(MyMessageStatusFormatter.STATUS_DELIVERED);
                 messages.add(message);

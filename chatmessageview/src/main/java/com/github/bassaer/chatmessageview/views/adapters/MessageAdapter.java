@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.github.bassaer.chatmessageview.R;
 import com.github.bassaer.chatmessageview.models.Attribute;
-import com.github.bassaer.chatmessageview.models.Message;
+import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.model.IChatUser;
 import com.github.bassaer.chatmessageview.views.RoundImageView;
 
@@ -170,13 +170,13 @@ public class MessageAdapter extends ArrayAdapter<Object> {
 
 
                 //Show message status
-                if (message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON || message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON_RIGHT_ONLY) {
+                if (message.getMessageStatusType() == Message.Companion.getMESSAGE_STATUS_ICON() || message.getMessageStatusType() == Message.Companion.getMESSAGE_STATUS_ICON_RIGHT_ONLY()) {
                     //Show message status icon
                     View statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer);
                     holder.statusIcon = statusIcon.findViewById(R.id.status_icon_image_view);
                     holder.statusIcon.setImageDrawable(message.getStatusIcon());
                     setColorDrawable(mStatusColor, holder.statusIcon.getDrawable());
-                } else if (message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT || message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT_RIGHT_ONLY) {
+                } else if (message.getMessageStatusType() == Message.Companion.getMESSAGE_STATUS_TEXT() || message.getMessageStatusType() == Message.Companion.getMESSAGE_STATUS_TEXT_RIGHT_ONLY()) {
                     //Show message status text
                     View statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer);
                     holder.statusText = statusText.findViewById(R.id.status_text_view);
@@ -271,13 +271,13 @@ public class MessageAdapter extends ArrayAdapter<Object> {
                 }
 
                 //Show message status
-                if (message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON || message.getMessageStatusType() == Message.MESSAGE_STATUS_ICON_LEFT_ONLY) {
+                if (message.getMessageStatusType() == Message.Companion.getMESSAGE_STATUS_ICON() || message.getMessageStatusType() == Message.Companion.getMESSAGE_STATUS_ICON_LEFT_ONLY()) {
                     //Show message status icon
                     View statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer);
                     holder.statusIcon = statusIcon.findViewById(R.id.status_icon_image_view);
                     holder.statusIcon.setImageDrawable(message.getStatusIcon());
                     setColorDrawable(mStatusColor, holder.statusIcon.getDrawable());
-                } else if (message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT || message.getMessageStatusType() == Message.MESSAGE_STATUS_TEXT_LEFT_ONLY) {
+                } else if (message.getMessageStatusType() == Message.Companion.getMESSAGE_STATUS_TEXT() || message.getMessageStatusType() == Message.Companion.getMESSAGE_STATUS_TEXT_LEFT_ONLY()) {
                     //Show message status text
                     View statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer);
                     holder.statusText = statusText.findViewById(R.id.status_text_view);

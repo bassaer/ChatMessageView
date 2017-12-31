@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.github.bassaer.chatmessageview.models.Attribute;
-import com.github.bassaer.chatmessageview.models.Message;
+import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.util.MessageDateComparator;
 import com.github.bassaer.chatmessageview.util.TimeUtils;
 import com.github.bassaer.chatmessageview.views.adapters.MessageAdapter;
