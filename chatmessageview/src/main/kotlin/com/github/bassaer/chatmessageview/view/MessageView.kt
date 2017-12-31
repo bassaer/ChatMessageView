@@ -9,7 +9,6 @@ import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
 import com.github.bassaer.chatmessageview.util.MessageDateComparator
 import com.github.bassaer.chatmessageview.util.TimeUtils
-import com.github.bassaer.chatmessageview.views.adapters.MessageAdapter
 import java.util.*
 
 /**
@@ -295,6 +294,6 @@ class MessageView : ListView, View.OnFocusChangeListener {
     }
 
     private fun setAttribute() {
-        mMessageAdapter!!.setAttribute(mAttribute)
+        mMessageAdapter!!.setAttribute(mAttribute!!)
     }
 }
