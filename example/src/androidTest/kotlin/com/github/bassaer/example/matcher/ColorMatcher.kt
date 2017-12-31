@@ -1,7 +1,6 @@
 package com.github.bassaer.example.matcher
 
 import android.view.View
-import com.github.bassaer.example.matchers.TextColorMatcher
 import org.hamcrest.Matcher
 
 /**
