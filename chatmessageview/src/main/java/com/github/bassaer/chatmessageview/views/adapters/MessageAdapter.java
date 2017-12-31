@@ -20,7 +20,7 @@ import com.github.bassaer.chatmessageview.R;
 import com.github.bassaer.chatmessageview.models.Attribute;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.model.IChatUser;
-import com.github.bassaer.chatmessageview.views.RoundImageView;
+import com.github.bassaer.chatmessageview.view.RoundImageView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,7 @@
     android:layout_width="@dimen/width_normal"
     android:layout_height="@dimen/width_normal"
     android:background="@android:color/transparent">
-    <com.github.bassaer.chatmessageview.views.RoundImageView
+    <com.github.bassaer.chatmessageview.view.RoundImageView
         android:id="@+id/message_picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
