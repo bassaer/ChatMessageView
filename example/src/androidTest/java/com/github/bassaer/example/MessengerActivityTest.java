@@ -33,7 +33,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.github.bassaer.example.matchers.ImageViewDrawableMatcher.withDrawable;
+import static com.github.bassaer.example.matcher.ImageViewDrawableMatcher.withDrawable;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.containsString;
 
