@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
-import com.github.bassaer.chatmessageview.models.Message;
+import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.model.IChatUser;
 
 import java.io.ByteArrayOutputStream;

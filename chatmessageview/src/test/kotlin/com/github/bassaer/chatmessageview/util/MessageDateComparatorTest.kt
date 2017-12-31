@@ -1,7 +1,7 @@
 package com.github.bassaer.chatmessageview.util
 
 
-import com.github.bassaer.chatmessageview.models.Message
+import com.github.bassaer.chatmessageview.model.Message
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.*

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.bassaer.chatmessageview.views.RoundImageView
+<com.github.bassaer.chatmessageview.view.RoundImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/message_picture"
     android:layout_width="@dimen/width_normal"
