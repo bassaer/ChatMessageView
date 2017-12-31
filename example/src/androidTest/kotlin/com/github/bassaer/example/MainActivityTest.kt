@@ -1,5 +1,6 @@
 package com.github.bassaer.example
 
+import android.content.Intent
 import android.support.test.espresso.DataInteraction
 import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.assertion.ViewAssertions.matches
@@ -8,6 +9,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.hamcrest.Matchers.anything
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +22,12 @@ import org.junit.runner.RunWith
 class MainActivityTest {
 
     @get:Rule
-    var mActivityRule = ActivityTestRule(MainActivity::class.java)
+    private var mActivityRule = ActivityTestRule(MainActivity::class.java)
+
+    @Before
+    fun setUp() {
+        mActivityRule.launchActivity(Intent())
+    }
 
     @Test
     fun checkMenuList() {
