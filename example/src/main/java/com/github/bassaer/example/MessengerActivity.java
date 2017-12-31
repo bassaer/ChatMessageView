@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.github.bassaer.chatmessageview.model.IChatUser;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.util.ChatBot;
-import com.github.bassaer.chatmessageview.views.ChatView;
+import com.github.bassaer.chatmessageview.view.ChatView;
 import com.github.bassaer.chatmessageview.view.MessageView;
 
 import java.io.IOException;
