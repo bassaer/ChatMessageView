@@ -132,10 +132,10 @@ class MessengerActivityTest {
         val waitingTime: Long = 3000
         val idlingResource = ElapsedTimeIdlingResource(waitingTime)
         Espresso.registerIdlingResources(idlingResource)
-        onView(withId(R.id.option_button)).perform(click())
+        onView(withId(R.id.optionButton)).perform(click())
         // Remove all messages
         onView(withText(R.string.clear_messages)).perform(click())
-        onView(withId(R.id.message_view)).check(matches(MessageListMatcher.withListSize(0)))
+        onView(withId(R.id.messageView)).check(matches(MessageListMatcher.withListSize(0)))
         Espresso.unregisterIdlingResources(idlingResource)
     }
 
@@ -146,18 +146,18 @@ class MessengerActivityTest {
      */
     private fun inputText(text: String) {
         //Reset input
-        onView(withId(R.id.message_edit_text)).perform(replaceText(""))
+        onView(withId(R.id.inputBox)).perform(replaceText(""))
         //Type text
-        onView(withId(R.id.message_edit_text)).perform(typeText(text))
+        onView(withId(R.id.inputBox)).perform(typeText(text))
         //Close keyboard
-        onView(withId(R.id.message_edit_text)).perform(closeSoftKeyboard())
+        onView(withId(R.id.inputBox)).perform(closeSoftKeyboard())
         //Tap button
-        onView(withId(R.id.send_button)).perform(click())
+        onView(withId(R.id.sendButton)).perform(click())
     }
 
     private fun onRow(position: Int): DataInteraction {
         return onData(anything())
-                .inAdapterView(withId(R.id.message_view)).atPosition(position)
+                .inAdapterView(withId(R.id.messageView)).atPosition(position)
     }
 
 }

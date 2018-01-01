@@ -12,79 +12,70 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.LinearLayout
 import com.github.bassaer.chatmessageview.R
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
+import kotlinx.android.synthetic.main.chat_view.view.*
+import kotlinx.android.synthetic.main.option_button.view.*
 
 /**
  * Chat view with edit view and send button
  * Created by nakayama on 2016/08/08.
  */
 class ChatView : LinearLayout {
-    var messageView: MessageView? = null
-        private set
-    private var mInputText: EditText? = null
-    private var mSendButton: ImageButton? = null
-    private var mOptionButton: ImageButton? = null
-    private var mChatContainer: SwipeRefreshLayout? = null
-    private var mInputMethodManager: InputMethodManager? = null
-    private var mSendIconId = R.drawable.ic_action_send
-    private var mOptionIconId = R.drawable.ic_action_add
-    private var mSendIconColor = ContextCompat.getColor(context, R.color.lightBlue500)
-    private var mOptionIconColor = ContextCompat.getColor(context, R.color.lightBlue500)
-    private var mAutoScroll = true
-    private var mAutoHidingKeyboard = true
-    private var mAttribute: Attribute? = null
+    private lateinit var inputMethodManager: InputMethodManager
+    private var sendIconId = R.drawable.ic_action_send
+    private var optionIconId = R.drawable.ic_action_add
+    private var sendIconColor = ContextCompat.getColor(context, R.color.lightBlue500)
+    private var optionIconColor = ContextCompat.getColor(context, R.color.lightBlue500)
+    private var isEnableAutoScroll = true
+    private var isEnableAutoHidingKeyboard = true
+    private var attribute: Attribute
 
     var inputText: String
-        get() = mInputText!!.text.toString()
-        set(input) = mInputText!!.setText(input)
+        get() = inputBox.text.toString()
+        set(input) = inputBox.setText(input)
 
     val isEnabledSendButton: Boolean
-        get() = mSendButton!!.isEnabled
+        get() = sendButton.isEnabled
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        mAttribute = Attribute(context, attrs)
+        attribute = Attribute(context, attrs)
         init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        mAttribute = Attribute(context, attrs)
+        attribute = Attribute(context, attrs)
         init(context)
     }
 
     private fun init(context: Context) {
-        mInputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val layout = LayoutInflater.from(context).inflate(R.layout.chat_view, this)
-        messageView = layout.findViewById(R.id.message_view)
-        mInputText = layout.findViewById(R.id.message_edit_text)
-        mSendButton = layout.findViewById(R.id.send_button)
-        mChatContainer = layout.findViewById(R.id.chat_container)
-        mChatContainer!!.isEnabled = false
-        if (mAttribute!!.isOptionButtonEnable) {
-            val optionButtonContainer = layout.findViewById<FrameLayout>(R.id.option_button_container)
-            val optionView = LayoutInflater.from(context).inflate(R.layout.option_button, optionButtonContainer)
-            mOptionButton = optionView.findViewById(R.id.option_button)
+        inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        LayoutInflater.from(context).inflate(R.layout.chat_view, this)
+        chatContainer.isEnabled = false
+        if (attribute.isOptionButtonEnable) {
+            LayoutInflater.from(context).inflate(R.layout.option_button, optionButtonContainer)
         }
 
-        messageView!!.init(mAttribute!!)
+        messageView.init(attribute)
 
-        messageView!!.isFocusableInTouchMode = true
+        messageView.isFocusableInTouchMode = true
         //if touched Chat screen
-        messageView!!.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l -> hideKeyboard() }
+        messageView.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ -> hideKeyboard() }
 
         //if touched empty space
-        mChatContainer!!.setOnClickListener { hideKeyboard() }
+        chatContainer.setOnClickListener { hideKeyboard() }
 
 
-        messageView!!.setOnKeyboardAppearListener(object : MessageView.OnKeyboardAppearListener {
+        messageView.setOnKeyboardAppearListener(object : MessageView.OnKeyboardAppearListener {
             override fun onKeyboardAppeared(hasChanged: Boolean) {
                 //Appeared keyboard
                 if (hasChanged) {
                     Handler().postDelayed({
                         //Scroll to end
-                        messageView!!.scrollToEnd()
+                        messageView.scrollToEnd()
                     }, 500)
                 }
             }
@@ -95,21 +86,21 @@ class ChatView : LinearLayout {
     /**
      * Hide software keyboard
      */
-    fun hideKeyboard() {
+    private fun hideKeyboard() {
         //Hide keyboard
-        mInputMethodManager!!.hideSoftInputFromWindow(
-                messageView!!.windowToken,
+        inputMethodManager.hideSoftInputFromWindow(
+                messageView.windowToken,
                 InputMethodManager.HIDE_NOT_ALWAYS)
         //Move focus to background
-        messageView!!.requestFocus()
+        messageView.requestFocus()
     }
 
     fun setLeftBubbleColor(color: Int) {
-        messageView!!.setLeftBubbleColor(color)
+        messageView.setLeftBubbleColor(color)
     }
 
     fun setRightBubbleColor(color: Int) {
-        messageView!!.setRightBubbleColor(color)
+        messageView.setRightBubbleColor(color)
     }
 
 
@@ -118,15 +109,15 @@ class ChatView : LinearLayout {
      * @param message Sent message
      */
     fun send(message: Message) {
-        messageView!!.setMessage(message)
+        messageView.setMessage(message)
 
         //Hide keyboard after post
-        if (mAutoHidingKeyboard) {
+        if (isEnableAutoHidingKeyboard) {
             hideKeyboard()
         }
         //Scroll to bottom after post
-        if (mAutoScroll) {
-            messageView!!.scrollToEnd()
+        if (isEnableAutoScroll) {
+            messageView.scrollToEnd()
         }
     }
 
@@ -135,40 +126,36 @@ class ChatView : LinearLayout {
      * @param message Received message
      */
     fun receive(message: Message) {
-        messageView!!.setMessage(message)
-        if (mAutoScroll) {
-            messageView!!.scrollToEnd()
+        messageView.setMessage(message)
+        if (isEnableAutoScroll) {
+            messageView.scrollToEnd()
         }
     }
 
     fun setOnClickSendButtonListener(listener: View.OnClickListener) {
-        mSendButton!!.setOnClickListener(listener)
+        sendButton.setOnClickListener(listener)
     }
 
     fun setOnClickOptionButtonListener(listener: View.OnClickListener) {
-        if (mOptionButton != null) {
-            mOptionButton!!.setOnClickListener(listener)
-        }
+        optionButton?.setOnClickListener(listener)
     }
 
     override fun setBackgroundColor(color: Int) {
-        messageView!!.setBackgroundColor(color)
-        mChatContainer!!.setBackgroundColor(color)
+        messageView.setBackgroundColor(color)
+        chatContainer.setBackgroundColor(color)
     }
 
     fun setSendButtonColor(color: Int) {
-        mSendIconColor = color
-        mSendButton!!.setImageDrawable(getColoredDrawable(color, mSendIconId))
+        sendIconColor = color
+        sendButton.setImageDrawable(getColoredDrawable(color, sendIconId))
     }
 
     fun setOptionButtonColor(color: Int) {
-        if (mOptionButton != null) {
-            mOptionIconColor = color
-            mOptionButton!!.setImageDrawable(getColoredDrawable(color, mOptionIconId))
-        }
+            optionIconColor = color
+            optionButton.setImageDrawable(getColoredDrawable(color, optionIconId))
     }
 
-    fun getColoredDrawable(color: Int, iconId: Int): Drawable {
+    private fun getColoredDrawable(color: Int, iconId: Int): Drawable {
         val colorStateList = ColorStateList.valueOf(color)
         val icon = ContextCompat.getDrawable(context, iconId)
         val wrappedDrawable = DrawableCompat.wrap(icon)
@@ -177,57 +164,57 @@ class ChatView : LinearLayout {
     }
 
     fun setSendIcon(resId: Int) {
-        mSendIconId = resId
-        setSendButtonColor(mSendIconColor)
+        sendIconId = resId
+        setSendButtonColor(sendIconColor)
     }
 
     fun setOptionIcon(resId: Int) {
-        mOptionIconId = resId
-        setOptionButtonColor(mOptionIconColor)
+        optionIconId = resId
+        setOptionButtonColor(optionIconColor)
     }
 
     fun setInputTextHint(hint: String) {
-        mInputText!!.hint = hint
+        inputBox.hint = hint
     }
 
     fun setUsernameTextColor(color: Int) {
-        messageView!!.setUsernameTextColor(color)
+        messageView.setUsernameTextColor(color)
     }
 
     fun setSendTimeTextColor(color: Int) {
-        messageView!!.setSendTimeTextColor(color)
+        messageView.setSendTimeTextColor(color)
     }
 
     fun setDateSeparatorColor(color: Int) {
-        messageView!!.setDateSeparatorTextColor(color)
+        messageView.setDateSeparatorTextColor(color)
     }
 
     fun setRightMessageTextColor(color: Int) {
-        messageView!!.setRightMessageTextColor(color)
+        messageView.setRightMessageTextColor(color)
     }
 
     fun setMessageStatusTextColor(color: Int) {
-        messageView!!.setMessageStatusColor(color)
+        messageView.setMessageStatusColor(color)
     }
 
     fun setOnBubbleClickListener(listener: Message.OnBubbleClickListener) {
-        messageView!!.setOnBubbleClickListener(listener)
+        messageView.setOnBubbleClickListener(listener)
     }
 
     fun setOnBubbleLongClickListener(listener: Message.OnBubbleLongClickListener) {
-        messageView!!.setOnBubbleLongClickListener(listener)
+        messageView.setOnBubbleLongClickListener(listener)
     }
 
     fun setOnIconClickListener(listener: Message.OnIconClickListener) {
-        messageView!!.setOnIconClickListener(listener)
+        messageView.setOnIconClickListener(listener)
     }
 
     fun setOnIconLongClickListener(listener: Message.OnIconLongClickListener) {
-        messageView!!.setOnIconLongClickListener(listener)
+        messageView.setOnIconLongClickListener(listener)
     }
 
     fun setLeftMessageTextColor(color: Int) {
-        messageView!!.setLeftMessageTextColor(color)
+        messageView.setLeftMessageTextColor(color)
     }
 
     /**
@@ -235,15 +222,15 @@ class ChatView : LinearLayout {
      * @param enable Whether auto scroll is enable or not
      */
     fun setAutoScroll(enable: Boolean) {
-        mAutoScroll = enable
+        isEnableAutoScroll = enable
     }
 
     fun setMessageMarginTop(px: Int) {
-        messageView!!.setMessageMarginTop(px)
+        messageView.setMessageMarginTop(px)
     }
 
     fun setMessageMarginBottom(px: Int) {
-        messageView!!.setMessageMarginBottom(px)
+        messageView.setMessageMarginBottom(px)
     }
 
     /**
@@ -251,11 +238,11 @@ class ChatView : LinearLayout {
      * @param watcher behavior when text view status is changed
      */
     fun addTextWatcher(watcher: TextWatcher) {
-        mInputText!!.addTextChangedListener(watcher)
+        inputBox.addTextChangedListener(watcher)
     }
 
     fun setEnableSendButton(enable: Boolean) {
-        mSendButton!!.isEnabled = enable
+        sendButton.isEnabled = enable
     }
 
     /**
@@ -263,51 +250,52 @@ class ChatView : LinearLayout {
      * @param autoHidingKeyboard if true, keyboard will be hided after post
      */
     fun setAutoHidingKeyboard(autoHidingKeyboard: Boolean) {
-        mAutoHidingKeyboard = autoHidingKeyboard
+        this.isEnableAutoHidingKeyboard = autoHidingKeyboard
     }
 
     fun setOnRefreshListener(listener: SwipeRefreshLayout.OnRefreshListener) {
-        mChatContainer!!.setOnRefreshListener(listener)
+        chatContainer.setOnRefreshListener(listener)
     }
 
     fun setRefreshing(refreshing: Boolean) {
-        mChatContainer!!.isRefreshing = refreshing
+        chatContainer.isRefreshing = refreshing
     }
 
     fun setEnableSwipeRefresh(enable: Boolean) {
-        mChatContainer!!.isEnabled = enable
+        chatContainer.isEnabled = enable
     }
 
     fun addInputChangedListener(watcher: TextWatcher) {
-        mInputText!!.addTextChangedListener(watcher)
+        inputBox.addTextChangedListener(watcher)
     }
 
     fun scrollToEnd() {
-        messageView!!.scrollToEnd()
+        messageView.scrollToEnd()
     }
 
     fun setMaxInputLine(lines: Int) {
-        mInputText!!.maxLines = lines
+        inputBox.maxLines = lines
     }
 
     fun setMessageFontSize(size: Float) {
-        messageView!!.setMessageFontSize(size)
+        messageView.setMessageFontSize(size)
     }
 
     fun setUsernameFontSize(size: Float) {
-        messageView!!.setUsernameFontSize(size)
+        messageView.setUsernameFontSize(size)
     }
 
     fun setTimeLabelFontSize(size: Float) {
-        messageView!!.setTimeLabelFontSize(size)
+        messageView.setTimeLabelFontSize(size)
     }
 
     fun setMessageMaxWidth(width: Int) {
-        messageView!!.setMessageMaxWidth(width)
+        messageView.setMessageMaxWidth(width)
     }
 
     fun setDateSeparatorFontSize(size: Float) {
-        messageView!!.setDateSeparatorFontSize(size)
+        messageView.setDateSeparatorFontSize(size)
     }
 
+    fun getMessageView(): MessageView = messageView
 }
