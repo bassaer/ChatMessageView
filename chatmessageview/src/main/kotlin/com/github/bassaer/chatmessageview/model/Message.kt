@@ -14,7 +14,7 @@ class Message {
     /**
      * Sender information
      */
-    var user: IChatUser? = null
+    lateinit var user: IChatUser
 
     /**
      * Whether sender username is shown or not
