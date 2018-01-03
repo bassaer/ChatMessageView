@@ -1,9 +1,9 @@
 package com.github.bassaer.chatmessageview.util
 
 import org.hamcrest.CoreMatchers.startsWith
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import org.junit.Test
 
 /**
  * Created by nakayama on 2017/11/11.

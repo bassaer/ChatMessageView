@@ -154,7 +154,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
 
     private fun insertDateSeparator(list: List<Message>): List<Any> {
         val result = ArrayList<Any>()
-        if (list.size == 0) {
+        if (list.isEmpty()) {
             return result
         }
         result.add(list[0].dateSeparateText)
