@@ -10,6 +10,7 @@ import com.github.bassaer.chatmessageview.models.Attribute
 import com.github.bassaer.chatmessageview.util.MessageDateComparator
 import com.github.bassaer.chatmessageview.util.TimeUtils
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Simple chat view
@@ -20,70 +21,51 @@ class MessageView : ListView, View.OnFocusChangeListener {
     /**
      * All contents such as right message, left message, date label
      */
-    private var mChatList: MutableList<Any> = ArrayList()
+    private var chatList: MutableList<Any> = ArrayList()
     /**
      * Only messages
      */
-    private val mMessageList = ArrayList<Message>()
+    val messageList = ArrayList<Message>()
 
-    private var mMessageAdapter: MessageAdapter? = null
+    private lateinit var messageAdapter: MessageAdapter
 
-    private var mOnKeyboardAppearListener: OnKeyboardAppearListener? = null
+    private lateinit var keyboardAppearListener: OnKeyboardAppearListener
 
     /**
      * MessageView is refreshed at this time
      */
-    private var mRefreshInterval: Long = 60000
-    /**
-     * Refresh scheduler
-     */
-    private var mRefreshTimer: Timer? = null
+    private var refreshInterval: Long = 60000
 
-    private var mHandler: Handler? = null
-
-    private var mAttribute: Attribute? = null
-
-    /**
-     * Return last object (right message or left message or date text)
-     * @return last object of chat
-     */
-    val lastChatObject: Any?
-        get() = if (mChatList.size == 0) {
-            null
-        } else mChatList[mChatList.size - 1]
-
-    val messageList: List<Message>
-        get() = mMessageList
+    private var attribute: Attribute
 
     interface OnKeyboardAppearListener {
         fun onKeyboardAppeared(hasChanged: Boolean)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        mAttribute = Attribute(context, attrs)
+        attribute = Attribute(context, attrs)
         init()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        mAttribute = Attribute(context, attrs)
+        attribute = Attribute(context, attrs)
         init()
     }
 
 
     fun init(list: List<Message>) {
-        mChatList = ArrayList()
+        chatList = ArrayList()
         choiceMode = ListView.CHOICE_MODE_NONE
 
         for (i in list.indices) {
             addMessage(list[i])
         }
-        //sortMessages(mMessageList);
         refresh()
         init()
     }
 
     fun init(attribute: Attribute) {
-        mAttribute = attribute
+        this.attribute = attribute
         init()
     }
 
@@ -92,17 +74,17 @@ class MessageView : ListView, View.OnFocusChangeListener {
      */
     fun init() {
         dividerHeight = 0
-        mMessageAdapter = MessageAdapter(context, 0, mChatList, mAttribute)
+        messageAdapter = MessageAdapter(context, 0, chatList, attribute)
 
-        adapter = mMessageAdapter
+        adapter = messageAdapter
 
-        mHandler = Handler()
-        mRefreshTimer = Timer(true)
-        mRefreshTimer!!.schedule(object : TimerTask() {
+        val handler = Handler()
+        val refreshTimer = Timer(true)
+        refreshTimer.schedule(object : TimerTask() {
             override fun run() {
-                mHandler!!.post { mMessageAdapter!!.notifyDataSetChanged() }
+                handler.post { messageAdapter.notifyDataSetChanged() }
             }
-        }, 1000, mRefreshInterval)
+        }, 1000, refreshInterval)
     }
 
     /**
@@ -112,7 +94,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
     fun setMessage(message: Message) {
         addMessage(message)
         refresh()
-        mMessageAdapter!!.notifyDataSetChanged()
+        messageAdapter.notifyDataSetChanged()
     }
 
     /**
@@ -120,37 +102,36 @@ class MessageView : ListView, View.OnFocusChangeListener {
      * Set date text before set message if sent at the different day.
      * @param message new message
      */
-    fun addMessage(message: Message) {
-        mMessageList.add(message)
-        if (mMessageList.size == 1) {
-            mChatList.add(message.dateSeparateText)
-            mChatList.add(message)
+    private fun addMessage(message: Message) {
+        messageList.add(message)
+        if (messageList.size == 1) {
+            chatList.add(message.dateSeparateText)
+            chatList.add(message)
             return
         }
-        val prevMessage = mMessageList[mMessageList.size - 2]
+        val prevMessage = messageList[messageList.size - 2]
         if (!TimeUtils.isSameDay(prevMessage.createdAt, message.createdAt)) {
-            mChatList.add(message.dateSeparateText)
+            chatList.add(message.dateSeparateText)
         }
-        mChatList.add(message)
+        chatList.add(message)
     }
 
-    fun refresh() {
-        sortMessages(mMessageList)
-        mChatList.clear()
-        mChatList.addAll(insertDateSeparator(mMessageList))
-        mMessageAdapter!!.notifyDataSetChanged()
+    private fun refresh() {
+        sortMessages(messageList)
+        chatList.clear()
+        chatList.addAll(insertDateSeparator(messageList))
+        messageAdapter.notifyDataSetChanged()
     }
 
     fun remove(message: Message) {
-        mMessageList.remove(message)
+        messageList.remove(message)
         refresh()
     }
 
     fun removeAll() {
-        mMessageList.clear()
+        messageList.clear()
         refresh()
     }
-
 
     private fun insertDateSeparator(list: List<Message>): List<Any> {
         val result = ArrayList<Any>()
@@ -176,24 +157,23 @@ class MessageView : ListView, View.OnFocusChangeListener {
     /**
      * Sort messages
      */
-    fun sortMessages(list: List<Message>?) {
+    private fun sortMessages(list: List<Message>?) {
         val dateComparator = MessageDateComparator()
         if (list != null) {
             Collections.sort(list, dateComparator)
         }
     }
 
-
     fun setOnKeyboardAppearListener(listener: OnKeyboardAppearListener) {
-        mOnKeyboardAppearListener = listener
+        keyboardAppearListener = listener
     }
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
 
         // if ListView became smaller
-        if (mOnKeyboardAppearListener != null && height < oldHeight) {
-            mOnKeyboardAppearListener!!.onKeyboardAppeared(true)
+        if (keyboardAppearListener != null && height < oldHeight) {
+            keyboardAppearListener.onKeyboardAppeared(true)
         }
     }
 
@@ -209,91 +189,91 @@ class MessageView : ListView, View.OnFocusChangeListener {
     }
 
     fun setLeftBubbleColor(color: Int) {
-        mMessageAdapter!!.setLeftBubbleColor(color)
+        messageAdapter.setLeftBubbleColor(color)
     }
 
     fun setRightBubbleColor(color: Int) {
-        mMessageAdapter!!.setRightBubbleColor(color)
+        messageAdapter.setRightBubbleColor(color)
     }
 
     fun setUsernameTextColor(color: Int) {
-        mMessageAdapter!!.setUsernameTextColor(color)
+        messageAdapter.setUsernameTextColor(color)
     }
 
     fun setSendTimeTextColor(color: Int) {
-        mMessageAdapter!!.setSendTimeTextColor(color)
+        messageAdapter.setSendTimeTextColor(color)
     }
 
     fun setMessageStatusColor(color: Int) {
-        mMessageAdapter!!.setStatusColor(color)
+        messageAdapter.setStatusColor(color)
     }
 
     fun setDateSeparatorTextColor(color: Int) {
-        mMessageAdapter!!.setDateSeparatorColor(color)
+        messageAdapter.setDateSeparatorColor(color)
     }
 
     fun setRightMessageTextColor(color: Int) {
-        mMessageAdapter!!.setRightMessageTextColor(color)
+        messageAdapter.setRightMessageTextColor(color)
     }
 
     fun setLeftMessageTextColor(color: Int) {
-        mMessageAdapter!!.setLeftMessageTextColor(color)
+        messageAdapter.setLeftMessageTextColor(color)
     }
 
     fun setOnBubbleClickListener(listener: Message.OnBubbleClickListener) {
-        mMessageAdapter!!.setOnBubbleClickListener(listener)
+        messageAdapter.setOnBubbleClickListener(listener)
     }
 
     fun setOnBubbleLongClickListener(listener: Message.OnBubbleLongClickListener) {
-        mMessageAdapter!!.setOnBubbleLongClickListener(listener)
+        messageAdapter.setOnBubbleLongClickListener(listener)
     }
 
     fun setOnIconClickListener(listener: Message.OnIconClickListener) {
-        mMessageAdapter!!.setOnIconClickListener(listener)
+        messageAdapter.setOnIconClickListener(listener)
     }
 
     fun setOnIconLongClickListener(listener: Message.OnIconLongClickListener) {
-        mMessageAdapter!!.setOnIconLongClickListener(listener)
+        messageAdapter.setOnIconLongClickListener(listener)
     }
 
     fun setMessageMarginTop(px: Int) {
-        mMessageAdapter!!.setMessageTopMargin(px)
+        messageAdapter.setMessageTopMargin(px)
     }
 
     fun setMessageMarginBottom(px: Int) {
-        mMessageAdapter!!.setMessageBottomMargin(px)
+        messageAdapter.setMessageBottomMargin(px)
     }
 
     fun setRefreshInterval(refreshInterval: Long) {
-        mRefreshInterval = refreshInterval
+        this.refreshInterval = refreshInterval
     }
 
     fun setMessageFontSize(size: Float) {
-        mAttribute!!.messageFontSize = size
+        attribute.messageFontSize = size
         setAttribute()
     }
 
     fun setUsernameFontSize(size: Float) {
-        mAttribute!!.usernameFontSize = size
+        attribute.usernameFontSize = size
         setAttribute()
     }
 
     fun setTimeLabelFontSize(size: Float) {
-        mAttribute!!.timeLabelFontSize = size
+        attribute.timeLabelFontSize = size
         setAttribute()
     }
 
     fun setMessageMaxWidth(width: Int) {
-        mAttribute!!.messageMaxWidth = width
+        attribute.messageMaxWidth = width
         setAttribute()
     }
 
     fun setDateSeparatorFontSize(size: Float) {
-        mAttribute!!.dateSeparatorFontSize = size
+        attribute.dateSeparatorFontSize = size
         setAttribute()
     }
 
     private fun setAttribute() {
-        mMessageAdapter!!.setAttribute(mAttribute!!)
+        messageAdapter.setAttribute(attribute)
     }
 }

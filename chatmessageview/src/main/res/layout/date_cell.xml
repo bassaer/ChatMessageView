@@ -4,26 +4,14 @@
               android:gravity="center"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    
-    <!--<View-->
-        <!--android:id="@+id/date_separate_text_left_bar"-->
-        <!--android:background="@android:color/darker_gray"-->
-        <!--android:layout_width="@dimen/width_small"-->
-        <!--android:layout_height="@dimen/line_height"/>-->
 
-    <TextView
-        android:id="@+id/date_separate_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/font_small"
-        android:layout_margin="@dimen/spacing_small"
-        android:text="@string/default_date_cell_text"/>
-
-    <!--<View-->
-        <!-- -->
-        <!--android:background="@android:color/darker_gray"-->
-        <!--android:layout_width="@dimen/width_small"-->
-        <!--android:layout_height="@dimen/line_height"/>-->
+<TextView
+    android:id="@+id/dateLabelText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:textSize="@dimen/font_small"
+    android:layout_margin="@dimen/spacing_small"
+    android:text="@string/default_date_cell_text"/>
 
 </LinearLayout>

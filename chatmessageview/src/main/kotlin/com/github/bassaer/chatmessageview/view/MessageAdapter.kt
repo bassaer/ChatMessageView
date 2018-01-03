@@ -1,5 +1,6 @@
 package com.github.bassaer.chatmessageview.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -18,6 +19,7 @@ import com.github.bassaer.chatmessageview.R
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.date_cell.view.*
 import java.util.*
 
 
@@ -25,79 +27,76 @@ import java.util.*
  * Custom list adapter for the chat timeline
  * Created by nakayama on 2016/08/08.
  */
-class MessageAdapter(context: Context, resource: Int, private val mObjects: List<Any>, private var mAttribute: Attribute?) : ArrayAdapter<Any>(context, resource, mObjects) {
+class MessageAdapter(context: Context, resource: Int, private val objects: List<Any>, private var attribute: Attribute) : ArrayAdapter<Any>(context, resource, objects) {
 
-    private val mLayoutInflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private val mViewTypes = ArrayList<Any>()
+    private val viewTypes = ArrayList<Any>()
+    private var layoutInflater = LayoutInflater.from(context)
+    private lateinit var iconClickListener: Message.OnIconClickListener
+    private lateinit var bubbleClickListener: Message.OnBubbleClickListener
+    private lateinit var iconLongClickListener: Message.OnIconLongClickListener
+    private lateinit var bubbleLongClickListener: Message.OnBubbleLongClickListener
 
-    private var mOnIconClickListener: Message.OnIconClickListener? = null
-    private var mOnBubbleClickListener: Message.OnBubbleClickListener? = null
-    private var mOnIconLongClickListener: Message.OnIconLongClickListener? = null
-    private var mOnBubbleLongClickListener: Message.OnBubbleLongClickListener? = null
-
-    private var mUsernameTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
-    private var mSendTimeTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
-    private var mDateSeparatorColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
-    private var mRightMessageTextColor = Color.WHITE
-    private var mLeftMessageTextColor = Color.BLACK
-    private var mLeftBubbleColor: Int = 0
-    private var mRightBubbleColor: Int = 0
-    private var mStatusColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
+    private var usernameTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
+    private var sendTimeTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
+    private var dateLabelColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
+    private var rightMessageTextColor = Color.WHITE
+    private var leftMessageTextColor = Color.BLACK
+    private var leftBubbleColor: Int = 0
+    private var rightBubbleColor: Int = 0
+    private var statusColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     /**
      * Default message item margin top
      */
-    private var mMessageTopMargin = 5
+    private var messageTopMargin = 5
     /**
      * Default message item margin bottom
      */
-    private var mMessageBottomMargin = 5
+    private var messageBottomMargin = 5
 
     init {
-        mViewTypes.add(String::class.java)
-        mViewTypes.add(Message::class.java)
-        mLeftBubbleColor = ContextCompat.getColor(context, R.color.default_left_bubble_color)
-        mRightBubbleColor = ContextCompat.getColor(context, R.color.default_right_bubble_color)
+        viewTypes.add(String::class.java)
+        viewTypes.add(Message::class.java)
+        leftBubbleColor = ContextCompat.getColor(context, R.color.default_left_bubble_color)
+        rightBubbleColor = ContextCompat.getColor(context, R.color.default_right_bubble_color)
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = mObjects[position]
-        return mViewTypes.indexOf(item)
+        val item = objects[position]
+        return viewTypes.indexOf(item)
     }
 
     override fun getViewTypeCount(): Int {
-        return mViewTypes.size
+        return viewTypes.size
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        return getView(position, convertView)
-    }
-
-    fun getView(position: Int, convertView: View?): View {
-        var convertView = convertView
+    @SuppressLint("InflateParams")
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val item = getItem(position)
+        var view = convertView
 
         if (item is String) {
             // item is Date label
-            val dateViewHolder: DateViewHolder
-            if (convertView == null) {
-                convertView = mLayoutInflater.inflate(R.layout.date_cell, null)
+            lateinit var dateViewHolder: DateViewHolder
+            view?.let {
+                dateViewHolder = it.tag as DateViewHolder
+            } ?: let {
+                view = layoutInflater.inflate(R.layout.date_cell, null)
                 dateViewHolder = DateViewHolder()
-                dateViewHolder.dateSeparatorText = convertView!!.findViewById(R.id.date_separate_text)
-                convertView.tag = dateViewHolder
-            } else {
-                dateViewHolder = convertView.tag as DateViewHolder
+                dateViewHolder.dateLabelText = view?.dateLabelText
+                view?.tag = dateViewHolder
             }
-            dateViewHolder.dateSeparatorText!!.text = item
-            dateViewHolder.dateSeparatorText!!.setTextColor(mDateSeparatorColor)
-            dateViewHolder.dateSeparatorText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute!!.dateSeparatorFontSize)
+
+            dateViewHolder.dateLabelText?.text = item
+            dateViewHolder.dateLabelText?.setTextColor(dateLabelColor)
+            dateViewHolder.dateLabelText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.dateSeparatorFontSize)
+
         } else {
             //Item is a message
-            val holder: MessageViewHolder
-            val message = item as Message
+            lateinit var messageViewHolder: MessageViewHolder
+            val message: Message = item as Message
             if (position > 0) {
-                val prevItem = getItem(position - 1)
-                if (prevItem is Message) {
-                    if (prevItem.user!!.getId() == message.user!!.getId()) {
+                getItem(position - 1).let {
+                    if (it is Message && it.user.getId() == message.user.getId()) {
                         //If send same person, hide username and icon.
                         message.iconVisibility = false
                         message.usernameVisibility = false
@@ -107,256 +106,161 @@ class MessageAdapter(context: Context, resource: Int, private val mObjects: List
 
             val user = message.user
 
-            if (message.isRightMessage) {
-                //Right message
-                if (convertView == null) {
-                    convertView = mLayoutInflater.inflate(R.layout.message_view_right, null)
-                    holder = MessageViewHolder()
-                    holder.iconContainer = convertView!!.findViewById(R.id.user_icon_container)
-                    holder.mainMessageContainer = convertView.findViewById(R.id.main_message_container)
-                    holder.timeText = convertView.findViewById(R.id.time_label_text)
-                    holder.usernameContainer = convertView.findViewById(R.id.message_user_name_container)
-                    holder.statusContainer = convertView.findViewById(R.id.message_status_container)
-                    convertView.tag = holder
-                } else {
-                    holder = convertView.tag as MessageViewHolder
+            view?.let {
+                messageViewHolder = it.tag as MessageViewHolder
+            } ?: run {
+                view = layoutInflater
+                        .inflate(if (message.isRightMessage) R.layout.message_view_right else R.layout.message_view_left,
+                                null)
+                messageViewHolder = MessageViewHolder()
+                messageViewHolder.iconContainer = view?.findViewById(R.id.userIconContainer)
+                messageViewHolder.mainMessageContainer = view?.findViewById(R.id.mainMessageContainer)
+                messageViewHolder.timeText = view?.findViewById(R.id.timeLabelText)
+                messageViewHolder.usernameContainer = view?.findViewById(R.id.usernameContainer)
+                messageViewHolder.statusContainer = view?.findViewById(R.id.statusContainer)
+                view?.tag = messageViewHolder
+            }
+
+            //Remove view in each container
+            messageViewHolder.iconContainer?.removeAllViews()
+            messageViewHolder.usernameContainer?.removeAllViews()
+            messageViewHolder.statusContainer?.removeAllViews()
+            messageViewHolder.mainMessageContainer?.removeAllViews()
+
+            if (user.getName() != null && message.usernameVisibility) {
+                layoutInflater.inflate(
+                        if (message.isRightMessage) R.layout.user_name_right else R.layout.user_name_left,
+                        messageViewHolder.usernameContainer).let {
+                    messageViewHolder.username = it.findViewById(R.id.message_user_name)
+                    messageViewHolder.username?.text = user.getName()
+                    messageViewHolder.username?.setTextColor(usernameTextColor)
+                    messageViewHolder.username?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.usernameFontSize)
                 }
-
-                //Remove view in each container
-                holder.iconContainer!!.removeAllViews()
-                holder.usernameContainer!!.removeAllViews()
-                holder.statusContainer!!.removeAllViews()
-                holder.mainMessageContainer!!.removeAllViews()
-
-                if (user!!.getName() != null && message.usernameVisibility) {
-                    val usernameView = mLayoutInflater.inflate(R.layout.user_name_right, holder.usernameContainer)
-                    holder.username = usernameView.findViewById(R.id.message_user_name)
-                    holder.username!!.text = user.getName()
-                    holder.username!!.setTextColor(mUsernameTextColor)
-                    holder.username!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute!!.usernameFontSize)
-                }
-
-                // if false, icon is not shown.
-                if (!message.isIconHided) {
-                    val iconView = mLayoutInflater.inflate(R.layout.user_icon_right, holder.iconContainer)
-                    holder.icon = iconView.findViewById(R.id.user_icon)
-                    if (message.iconVisibility) {
-                        //if false, set default icon.
-                        if (user.getIcon() != null) {
-                            holder.icon!!.setImageBitmap(user.getIcon())
-                        }
-
-                    } else {
-                        //Show nothing
-                        holder.icon!!.visibility = View.INVISIBLE
-                    }
-                }
-
-
-                //Show message status
-                if (message.messageStatusType == Message.MESSAGE_STATUS_ICON || message.messageStatusType == Message.MESSAGE_STATUS_ICON_RIGHT_ONLY) {
-                    //Show message status icon
-                    val statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer)
-                    holder.statusIcon = statusIcon.findViewById(R.id.status_icon_image_view)
-                    holder.statusIcon!!.setImageDrawable(message.statusIcon)
-                    setColorDrawable(mStatusColor, holder.statusIcon!!.drawable)
-                } else if (message.messageStatusType == Message.MESSAGE_STATUS_TEXT || message.messageStatusType == Message.MESSAGE_STATUS_TEXT_RIGHT_ONLY) {
-                    //Show message status text
-                    val statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer)
-                    holder.statusText = statusText.findViewById(R.id.status_text_view)
-                    holder.statusText!!.text = message.statusText
-                    holder.statusText!!.setTextColor(mStatusColor)
-                }
-
-                //Set text or picture on message bubble
-                when (message.type) {
-                    Message.Type.PICTURE -> {
-                        //Set picture
-                        val pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_right, holder.mainMessageContainer)
-                        holder.messagePicture = pictureBubble.findViewById(R.id.message_picture)
-                        holder.messagePicture!!.setImageBitmap(message.picture)
-                    }
-                    Message.Type.LINK -> {
-                        //Set text
-                        val linkBubble = mLayoutInflater.inflate(R.layout.message_link_right, holder.mainMessageContainer)
-                        holder.messageLink = linkBubble.findViewById(R.id.message_link)
-                        holder.messageLink!!.text = message.messageText
-                        //Set bubble color
-                        setColorDrawable(mRightBubbleColor, holder.messageLink!!.background)
-                        //Set message text color
-                        holder.messageLink!!.setTextColor(mRightMessageTextColor)
-                    }
-                    Message.Type.TEXT -> {
-                        //Set text
-                        val textBubble = mLayoutInflater.inflate(R.layout.message_text_right, holder.mainMessageContainer)
-                        holder.messageText = textBubble.findViewById(R.id.message_text)
-                        holder.messageText!!.text = message.messageText
-                        //Set bubble color
-                        setColorDrawable(mRightBubbleColor, holder.messageText!!.background)
-                        //Set message text color
-                        holder.messageText!!.setTextColor(mRightMessageTextColor)
-                    }
-                    else -> {
-                        val textBubble = mLayoutInflater.inflate(R.layout.message_text_right, holder.mainMessageContainer)
-                        holder.messageText = textBubble.findViewById(R.id.message_text)
-                        holder.messageText!!.text = message.messageText
-                        setColorDrawable(mRightBubbleColor, holder.messageText!!.background)
-                        holder.messageText!!.setTextColor(mRightMessageTextColor)
-                    }
-                }
-
-                holder.timeText!!.text = message.timeText
-
-                holder.timeText!!.setTextColor(mSendTimeTextColor)
-
-                //Set Padding
-                convertView.setPadding(0, mMessageTopMargin, 0, mMessageBottomMargin)
-
-            } else {
-                //Left message
-                if (convertView == null) {
-                    convertView = mLayoutInflater.inflate(R.layout.message_view_left, null)
-                    holder = MessageViewHolder()
-                    holder.iconContainer = convertView!!.findViewById(R.id.user_icon_container)
-                    holder.mainMessageContainer = convertView.findViewById(R.id.main_message_container)
-                    holder.timeText = convertView.findViewById(R.id.time_label_text)
-                    holder.usernameContainer = convertView.findViewById(R.id.message_user_name_container)
-                    holder.statusContainer = convertView.findViewById(R.id.message_status_container)
-                    convertView.tag = holder
-                } else {
-                    holder = convertView.tag as MessageViewHolder
-                }
-
-
-                //Remove view in each container
-                holder.iconContainer!!.removeAllViews()
-                holder.usernameContainer!!.removeAllViews()
-                holder.statusContainer!!.removeAllViews()
-                holder.mainMessageContainer!!.removeAllViews()
-
-
-                if (user!!.getName() != null && message.usernameVisibility) {
-                    val usernameView = mLayoutInflater.inflate(R.layout.user_name_left, holder.usernameContainer)
-                    holder.username = usernameView.findViewById(R.id.message_user_name)
-                    holder.username!!.text = user.getName()
-                    holder.username!!.setTextColor(mUsernameTextColor)
-                    holder.username!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute!!.usernameFontSize)
-                }
-
-                // if false, icon is not shown.
-                if (!message.isIconHided) {
-                    val iconView = mLayoutInflater.inflate(R.layout.user_icon_left, holder.iconContainer)
-                    holder.icon = iconView.findViewById(R.id.user_icon)
-                    if (message.iconVisibility) {
-                        //if false, set default icon.
-                        if (user.getIcon() != null) {
-                            holder.icon!!.setImageBitmap(user.getIcon())
-                        }
-                    } else {
-                        //Show nothing
-                        holder.icon!!.setImageBitmap(null)
-                    }
-
-                }
-
-                //Show message status
-                if (message.messageStatusType == Message.MESSAGE_STATUS_ICON || message.messageStatusType == Message.MESSAGE_STATUS_ICON_LEFT_ONLY) {
-                    //Show message status icon
-                    val statusIcon = mLayoutInflater.inflate(R.layout.message_status_icon, holder.statusContainer)
-                    holder.statusIcon = statusIcon.findViewById(R.id.status_icon_image_view)
-                    holder.statusIcon!!.setImageDrawable(message.statusIcon)
-                    setColorDrawable(mStatusColor, holder.statusIcon!!.drawable)
-                } else if (message.messageStatusType == Message.MESSAGE_STATUS_TEXT || message.messageStatusType == Message.MESSAGE_STATUS_TEXT_LEFT_ONLY) {
-                    //Show message status text
-                    val statusText = mLayoutInflater.inflate(R.layout.message_status_text, holder.statusContainer)
-                    holder.statusText = statusText.findViewById(R.id.status_text_view)
-                    holder.statusText!!.text = message.statusText
-                    holder.statusText!!.setTextColor(mStatusColor)
-                }
-
-                //Set text or picture on message bubble
-                when (message.type) {
-                    Message.Type.PICTURE -> {
-                        //Set picture
-                        val pictureBubble = mLayoutInflater.inflate(R.layout.message_picture_left, holder.mainMessageContainer)
-                        holder.messagePicture = pictureBubble.findViewById(R.id.message_picture)
-                        holder.messagePicture!!.setImageBitmap(message.picture)
-                    }
-                    Message.Type.LINK -> {
-                        //Set link
-                        val linkBubble = mLayoutInflater.inflate(R.layout.message_link_left, holder.mainMessageContainer)
-                        holder.messageLink = linkBubble.findViewById(R.id.message_link)
-                        holder.messageLink!!.text = message.messageText
-                        //Set bubble color
-                        setColorDrawable(mLeftBubbleColor, holder.messageLink!!.background)
-                        //Set message text color
-                        holder.messageLink!!.setTextColor(mLeftMessageTextColor)
-                    }
-                    Message.Type.TEXT -> {
-                        //Set text
-                        val textBubble = mLayoutInflater.inflate(R.layout.message_text_left, holder.mainMessageContainer)
-                        holder.messageText = textBubble.findViewById(R.id.message_text)
-                        holder.messageText!!.text = message.messageText
-                        //Set bubble color
-                        setColorDrawable(mLeftBubbleColor, holder.messageText!!.background)
-                        //Set message text color
-                        holder.messageText!!.setTextColor(mLeftMessageTextColor)
-                    }
-                    else -> {
-                        val textBubble = mLayoutInflater.inflate(R.layout.message_text_left, holder.mainMessageContainer)
-                        holder.messageText = textBubble.findViewById(R.id.message_text)
-                        holder.messageText!!.text = message.messageText
-                        setColorDrawable(mLeftBubbleColor, holder.messageText!!.background)
-                        holder.messageText!!.setTextColor(mLeftMessageTextColor)
-                    }
-                }
-
-                holder.timeText!!.text = message.timeText
-                holder.timeText!!.setTextColor(mSendTimeTextColor)
-
-                //Set Padding
-                convertView.setPadding(0, mMessageTopMargin, 0, mMessageBottomMargin)
 
             }
 
-            if (holder.mainMessageContainer != null) {
-                //Set bubble click listener
-                if (mOnBubbleClickListener != null) {
-                    holder.mainMessageContainer!!.setOnClickListener { mOnBubbleClickListener!!.onClick(message) }
+            // if false, icon is not shown.
+            if (!message.isIconHided) {
+                layoutInflater.inflate(if (message.isRightMessage) R.layout.user_icon_right else R.layout.user_icon_left,
+                        messageViewHolder.iconContainer).let {
+                    messageViewHolder.icon = it.findViewById(R.id.user_icon)
                 }
 
-                //Set bubble long click listener
-                if (mOnBubbleLongClickListener != null) {
-                    holder.mainMessageContainer!!.setOnLongClickListener {
-                        mOnBubbleLongClickListener!!.onLongClick(message)
-                        true//ignore onclick event
+                if (message.iconVisibility) {
+                    //if false, set default icon.
+                    if (user.getIcon() != null) {
+                        messageViewHolder.icon?.setImageBitmap(user.getIcon())
                     }
+
+                } else {
+                    //Show nothing
+                    messageViewHolder.icon?.visibility = View.INVISIBLE
+                }
+            }
+
+
+            //Show message status
+            if (message.messageStatusType == Message.MESSAGE_STATUS_ICON || message.messageStatusType == Message.MESSAGE_STATUS_ICON_RIGHT_ONLY) {
+                //Show message status icon
+                layoutInflater.inflate(R.layout.message_status_icon, messageViewHolder.statusContainer).let {
+                    messageViewHolder.statusIcon = it.findViewById(R.id.status_icon_image_view)
+                    messageViewHolder.statusIcon?.setImageDrawable(message.statusIcon)
+                    setColorDrawable(statusColor, messageViewHolder.statusIcon?.drawable)
+                }
+
+            } else if (message.messageStatusType == Message.MESSAGE_STATUS_TEXT || message.messageStatusType == Message.MESSAGE_STATUS_TEXT_RIGHT_ONLY) {
+                //Show message status text
+                layoutInflater.inflate(R.layout.message_status_text, messageViewHolder.statusContainer).let {
+                    messageViewHolder.statusText = it.findViewById(R.id.status_text_view)
+                    messageViewHolder.statusText?.text = message.statusText
+                    messageViewHolder.statusText?.setTextColor(statusColor)
+                }
+            }
+
+            //Set text or picture on message bubble
+            when (message.type) {
+                Message.Type.PICTURE -> {
+                    //Set picture
+                    layoutInflater.inflate(
+                            if (message.isRightMessage) R.layout.message_picture_right else R.layout.message_picture_left,
+                            messageViewHolder.mainMessageContainer).let {
+                        messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
+                        messageViewHolder.messagePicture?.setImageBitmap(message.picture)
+                    }
+
+                }
+                Message.Type.LINK -> {
+                    //Set text
+                    layoutInflater.inflate(
+                            if (message.isRightMessage) R.layout.message_link_right else R.layout.message_link_left,
+                            messageViewHolder.mainMessageContainer).let {
+                        messageViewHolder.messageLink = it.findViewById(R.id.message_link)
+                        messageViewHolder.messageLink?.text = message.messageText
+                        //Set bubble color
+                        setColorDrawable(
+                                if (message.isRightMessage) rightBubbleColor else leftBubbleColor,
+                                messageViewHolder.messageLink?.background
+                        )
+                        //Set message text color
+                        messageViewHolder.messageLink?.setTextColor(
+                                if (message.isRightMessage) rightMessageTextColor else leftMessageTextColor
+                        )
+                    }
+
+                } else -> {
+                    layoutInflater.inflate(
+                            if (message.isRightMessage) R.layout.message_text_right else R.layout.message_text_left,
+                            messageViewHolder.mainMessageContainer).let {
+                        messageViewHolder.messageText = it.findViewById(R.id.message_text)
+                        messageViewHolder.messageText?.text = message.messageText
+                        setColorDrawable(
+                                if (message.isRightMessage) rightBubbleColor else leftBubbleColor,
+                                messageViewHolder.messageText?.background
+                        )
+                        messageViewHolder.messageText?.setTextColor(
+                                if (message.isRightMessage) rightMessageTextColor else leftMessageTextColor
+                        )
+                    }
+                }
+            }
+
+            messageViewHolder.timeText?.text = message.timeText
+
+            messageViewHolder.timeText?.setTextColor(sendTimeTextColor)
+
+            //Set Padding
+            view?.setPadding(0, messageTopMargin, 0, messageBottomMargin)
+
+            if (messageViewHolder.mainMessageContainer != null) {
+                //Set bubble click listener
+                messageViewHolder.mainMessageContainer?.setOnClickListener { bubbleClickListener.onClick(message) }
+
+
+                //Set bubble long click listener
+                messageViewHolder.mainMessageContainer?.setOnLongClickListener {
+                    bubbleLongClickListener.onLongClick(message)
+                    true//ignore onclick event
                 }
             }
 
             //Set icon events if icon is shown
-            if (message.iconVisibility && holder.icon != null) {
+            if (message.iconVisibility && messageViewHolder.icon != null) {
                 //Set icon click listener
-                if (mOnIconClickListener != null) {
-                    holder.icon!!.setOnClickListener { mOnIconClickListener!!.onIconClick(message) }
+                messageViewHolder.icon?.setOnClickListener { iconClickListener.onIconClick(message) }
+
+                messageViewHolder.icon?.setOnLongClickListener {
+                    iconLongClickListener.onIconLongClick(message)
+                    true
                 }
 
-                if (mOnIconLongClickListener != null) {
-                    holder.icon!!.setOnLongClickListener {
-                        mOnIconLongClickListener!!.onIconLongClick(message)
-                        true
-                    }
-                }
             }
 
-            if (null != holder.messageText) {
-                holder.messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute!!.messageFontSize)
-                holder.messageText!!.maxWidth = mAttribute!!.messageMaxWidth
-            }
-            holder.timeText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mAttribute!!.timeLabelFontSize)
+            messageViewHolder.messageText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.messageFontSize)
+            messageViewHolder.messageText?.maxWidth = attribute.messageMaxWidth
+            messageViewHolder.timeText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.timeLabelFontSize)
         }
 
-        return convertView
+        return view!!
     }
 
     /**
@@ -364,7 +268,7 @@ class MessageAdapter(context: Context, resource: Int, private val mObjects: List
      * @param color setting color
      * @param drawable which be set color
      */
-    fun setColorDrawable(color: Int, drawable: Drawable?) {
+    private fun setColorDrawable(color: Int, drawable: Drawable?) {
         if (drawable == null) {
             return
         }
@@ -378,7 +282,7 @@ class MessageAdapter(context: Context, resource: Int, private val mObjects: List
      * @param color left bubble color
      */
     fun setLeftBubbleColor(color: Int) {
-        mLeftBubbleColor = color
+        leftBubbleColor = color
         notifyDataSetChanged()
     }
 
@@ -387,66 +291,66 @@ class MessageAdapter(context: Context, resource: Int, private val mObjects: List
      * @param color right bubble color
      */
     fun setRightBubbleColor(color: Int) {
-        mRightBubbleColor = color
+        rightBubbleColor = color
         notifyDataSetChanged()
     }
 
     fun setOnIconClickListener(onIconClickListener: Message.OnIconClickListener) {
-        mOnIconClickListener = onIconClickListener
+        iconClickListener = onIconClickListener
     }
 
     fun setOnBubbleClickListener(onBubbleClickListener: Message.OnBubbleClickListener) {
-        mOnBubbleClickListener = onBubbleClickListener
+        bubbleClickListener = onBubbleClickListener
     }
 
     fun setOnIconLongClickListener(onIconLongClickListener: Message.OnIconLongClickListener) {
-        mOnIconLongClickListener = onIconLongClickListener
+        iconLongClickListener = onIconLongClickListener
     }
 
     fun setOnBubbleLongClickListener(onBubbleLongClickListener: Message.OnBubbleLongClickListener) {
-        mOnBubbleLongClickListener = onBubbleLongClickListener
+        bubbleLongClickListener = onBubbleLongClickListener
     }
 
     fun setUsernameTextColor(usernameTextColor: Int) {
-        mUsernameTextColor = usernameTextColor
+        this.usernameTextColor = usernameTextColor
         notifyDataSetChanged()
     }
 
     fun setSendTimeTextColor(sendTimeTextColor: Int) {
-        mSendTimeTextColor = sendTimeTextColor
+        this.sendTimeTextColor = sendTimeTextColor
         notifyDataSetChanged()
     }
 
     fun setDateSeparatorColor(dateSeparatorColor: Int) {
-        mDateSeparatorColor = dateSeparatorColor
+        this.dateLabelColor = dateSeparatorColor
         notifyDataSetChanged()
     }
 
     fun setRightMessageTextColor(rightMessageTextColor: Int) {
-        mRightMessageTextColor = rightMessageTextColor
+        this.rightMessageTextColor = rightMessageTextColor
         notifyDataSetChanged()
     }
 
     fun setLeftMessageTextColor(leftMessageTextColor: Int) {
-        mLeftMessageTextColor = leftMessageTextColor
+        this.leftMessageTextColor = leftMessageTextColor
         notifyDataSetChanged()
     }
 
     fun setMessageTopMargin(messageTopMargin: Int) {
-        mMessageTopMargin = messageTopMargin
+        this.messageTopMargin = messageTopMargin
     }
 
     fun setMessageBottomMargin(messageBottomMargin: Int) {
-        mMessageBottomMargin = messageBottomMargin
+        this.messageBottomMargin = messageBottomMargin
     }
 
     fun setStatusColor(statusTextColor: Int) {
-        mStatusColor = statusTextColor
+        statusColor = statusTextColor
         notifyDataSetChanged()
     }
 
     fun setAttribute(attribute: Attribute) {
-        mAttribute = attribute
+        this.attribute = attribute
         notifyDataSetChanged()
     }
 
@@ -463,10 +367,11 @@ class MessageAdapter(context: Context, resource: Int, private val mObjects: List
         var statusContainer: FrameLayout? = null
         var statusIcon: ImageView? = null
         var statusText: TextView? = null
+
     }
 
     internal inner class DateViewHolder {
-        var dateSeparatorText: TextView? = null
+        var dateLabelText: TextView? = null
     }
 
 
