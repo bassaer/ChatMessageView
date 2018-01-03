@@ -8,7 +8,7 @@ import com.github.bassaer.chatmessageview.R
  * View attribute
  * Created by nakayama on 2017/11/08.
  */
-class Attribute(context: Context, attrs: AttributeSet) {
+class Attribute(context: Context, attrs: AttributeSet?) {
     var messageFontSize: Float
     var usernameFontSize: Float
     var timeLabelFontSize: Float

@@ -32,6 +32,11 @@ android {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 apply plugin: 'com.github.dcendents.android-maven'
@@ -105,14 +110,15 @@ install {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile "com.android.support:appcompat-v7:26+"
+    compile "com.android.support:appcompat-v7:26.1.0"
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile "com.android.support:support-v4:26+"
+    compile "com.android.support:support-v4:26.1.0"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    testImplementation junit5()
-    testImplementation junit5Params()
-    testCompileOnly junit5EmbeddedRuntime()
+    testImplementation "org.robolectric:robolectric:3.6.1"
+    testCompile "org.mockito:mockito-core:2.13.0"
 }
+
+
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -156,4 +162,5 @@ uploadArchives {
 }
 repositories {
     mavenCentral()
+    google()
 }
