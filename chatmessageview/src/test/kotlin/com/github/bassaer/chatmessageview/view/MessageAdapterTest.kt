@@ -61,11 +61,11 @@ internal class MessageAdapterTest {
         val messageArray: Array<View?> = arrayOfNulls(messageList.size)
 
         for (i in 0 until messageList.size) {
-            messageArray[i] = messageAdapter.getView(i, null)
+            messageArray[i] = messageAdapter.getView(i, null, null)
         }
 
         // Date label
-        val dateLabel = messageArray[0]?.findViewById<TextView>(R.id.date_separate_text)
+        val dateLabel = messageArray[0]?.findViewById<TextView>(R.id.dateLabelText)
         var expectingText: String? = messageList[0] as String
         assertEquals(expectingText, dateLabel?.text)
 
