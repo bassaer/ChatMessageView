@@ -1,6 +1,7 @@
 package com.github.bassaer.chatmessageview.util
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import junit.framework.Assert.assertEquals
+import org.junit.Test
 import java.util.*
 
 /**
@@ -9,7 +10,7 @@ import java.util.*
  */
 internal class DateFormatterTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun getFormattedTimeText() {
         val formatter = DateFormatter()
         val calendar = Calendar.getInstance()

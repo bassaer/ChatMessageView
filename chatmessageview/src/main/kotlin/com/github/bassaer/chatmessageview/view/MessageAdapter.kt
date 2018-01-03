@@ -69,6 +69,10 @@ class MessageAdapter(context: Context, resource: Int, private val mObjects: List
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        return getView(position, convertView)
+    }
+
+    fun getView(position: Int, convertView: View?): View {
         var convertView = convertView
         val item = getItem(position)
 
