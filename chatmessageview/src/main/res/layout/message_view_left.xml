@@ -7,7 +7,7 @@
               android:paddingTop="@dimen/spacing_micro">
 
     <FrameLayout
-        android:id="@+id/user_icon_container"
+        android:id="@+id/userIconContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -21,7 +21,7 @@
         >
 
         <FrameLayout
-            android:id="@+id/message_user_name_container"
+            android:id="@+id/usernameContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"/>
@@ -32,7 +32,7 @@
             android:orientation="horizontal">
 
             <FrameLayout
-                android:id="@+id/main_message_container"
+                android:id="@+id/mainMessageContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -47,12 +47,12 @@
                 android:gravity="bottom|start">
 
                 <FrameLayout
-                    android:id="@+id/message_status_container"
+                    android:id="@+id/statusContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/time_label_text"
+                    android:id="@+id/timeLabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_time_text"

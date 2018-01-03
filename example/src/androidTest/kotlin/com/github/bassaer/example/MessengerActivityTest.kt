@@ -62,7 +62,7 @@ class MessengerActivityTest {
         val sendingUser = mUsers!![0]
         val now = Calendar.getInstance()
         val expectingDate = TimeUtils.calendarToString(now, "MMM. dd, yyyy")
-        onRow(0).onChildView(withId(R.id.date_separate_text)).check(matches(withText(expectingDate)))
+        onRow(0).onChildView(withId(R.id.dateLabelText)).check(matches(withText(expectingDate)))
         onRow(1).onChildView(withId(R.id.message_user_name)).check(matches(withText(sendingUser.getName())))
         onRow(1).onChildView(withId(R.id.message_text)).check(matches(withText(message)))
     }
