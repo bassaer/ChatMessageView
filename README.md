@@ -46,7 +46,7 @@ Only MessageView
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.github.bassaer.chatmessageview.views.MessageView
+    <com.github.bassaer.chatmessageview.view.MessageView
         android:id="@+id/message_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -63,7 +63,7 @@ ChatView has MessageView and text box.
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.github.bassaer.chatmessageview.views.ChatView
+    <com.github.bassaer.chatmessageview.view.ChatView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
