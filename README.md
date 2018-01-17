@@ -27,7 +27,7 @@ This library aims to provide a chat UI view for Android.
 
 ```
 dependencies {
-    compile 'com.github.bassaer:chatmessageview:1.8.5'
+    compile 'com.github.bassaer:chatmessageview:1.8.6'
 }
 
 ```
@@ -46,7 +46,7 @@ Only MessageView
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.github.bassaer.chatmessageview.views.MessageView
+    <com.github.bassaer.chatmessageview.view.MessageView
         android:id="@+id/message_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -63,7 +63,7 @@ ChatView has MessageView and text box.
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.github.bassaer.chatmessageview.views.ChatView
+    <com.github.bassaer.chatmessageview.view.ChatView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
