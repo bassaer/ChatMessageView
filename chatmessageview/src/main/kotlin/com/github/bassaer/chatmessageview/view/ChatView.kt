@@ -140,6 +140,23 @@ class ChatView : LinearLayout {
         optionButton?.setOnClickListener(listener)
     }
 
+    var inputType: Int
+        get() = inputBox.inputType
+        set(type) {
+            inputBox.inputType = type
+        }
+
+
+    var inputTextColor: Int
+        get() = inputBox.currentTextColor
+        set(color) {
+            inputBox.setTextColor(color)
+        }
+
+    fun setInputTextSize(unit: Int, size: Float) {
+        inputBox.setTextSize(unit, size)
+    }
+
     override fun setBackgroundColor(color: Int) {
         messageView.setBackgroundColor(color)
         chatContainer.setBackgroundColor(color)

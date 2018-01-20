@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 
@@ -101,6 +103,10 @@ public class MessengerActivity extends Activity {
         mChatView.setMessageMarginBottom(MESSAGE_MARGIN);
         mChatView.setMaxInputLine(5);
         mChatView.setUsernameFontSize(getResources().getDimension(R.dimen.font_small));
+        mChatView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        mChatView.setInputTextColor(ContextCompat.getColor(this, R.color.red500));
+        mChatView.setInputTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+
 
         mChatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
             @Override
