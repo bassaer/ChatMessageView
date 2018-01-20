@@ -172,7 +172,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
 
         // if ListView became smaller
-        if (keyboardAppearListener != null && height < oldHeight) {
+        if (::keyboardAppearListener.isInitialized && height < oldHeight) {
             keyboardAppearListener.onKeyboardAppeared(true)
         }
     }

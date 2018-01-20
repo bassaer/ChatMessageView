@@ -53,7 +53,7 @@ public class SimpleChatActivity extends Activity {
             messages.add(message2);
         }
 
-        MessageView messageView = (MessageView)findViewById(R.id.messageView);
+        MessageView messageView = findViewById(R.id.message_view);
         messageView.init(messages);
 
     }
