@@ -31,10 +31,10 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
     private val viewTypes = ArrayList<Any>()
     private var layoutInflater = LayoutInflater.from(context)
-    private lateinit var iconClickListener: Message.OnIconClickListener
-    private lateinit var bubbleClickListener: Message.OnBubbleClickListener
-    private lateinit var iconLongClickListener: Message.OnIconLongClickListener
-    private lateinit var bubbleLongClickListener: Message.OnBubbleLongClickListener
+    private var iconClickListener: Message.OnIconClickListener? = null
+    private var bubbleClickListener: Message.OnBubbleClickListener? = null
+    private var iconLongClickListener: Message.OnIconLongClickListener? = null
+    private var bubbleLongClickListener: Message.OnBubbleLongClickListener? = null
 
     private var usernameTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var sendTimeTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
@@ -233,12 +233,12 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
             if (messageViewHolder.mainMessageContainer != null) {
                 //Set bubble click listener
-                messageViewHolder.mainMessageContainer?.setOnClickListener { bubbleClickListener.onClick(message) }
+                messageViewHolder.mainMessageContainer?.setOnClickListener { bubbleClickListener?.onClick(message) }
 
 
                 //Set bubble long click listener
                 messageViewHolder.mainMessageContainer?.setOnLongClickListener {
-                    bubbleLongClickListener.onLongClick(message)
+                    bubbleLongClickListener?.onLongClick(message)
                     true//ignore onclick event
                 }
             }
@@ -246,10 +246,10 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
             //Set icon events if icon is shown
             if (message.iconVisibility && messageViewHolder.icon != null) {
                 //Set icon click listener
-                messageViewHolder.icon?.setOnClickListener { iconClickListener.onIconClick(message) }
+                messageViewHolder.icon?.setOnClickListener { iconClickListener?.onIconClick(message) }
 
                 messageViewHolder.icon?.setOnLongClickListener {
-                    iconLongClickListener.onIconLongClick(message)
+                    iconLongClickListener?.onIconLongClick(message)
                     true
                 }
 
