@@ -91,6 +91,7 @@ public class MessengerActivity extends Activity {
         mChatView.setBackgroundColor(ContextCompat.getColor(this, BACKGROUND_COLOR));
         mChatView.setSendButtonColor(ContextCompat.getColor(this, SEND_BUTTON_COLOR));
         mChatView.setSendIcon(SEND_ICON);
+        mChatView.setOptionIcon(R.drawable.ic_account_circle);
         mChatView.setOptionButtonColor(OPTION_BUTTON_COLOR);
         mChatView.setRightMessageTextColor(RIGHT_MESSAGE_TEXT_COLOR);
         mChatView.setLeftMessageTextColor(LEFT_MESSAGE_TEXT_COLOR);
@@ -105,7 +106,7 @@ public class MessengerActivity extends Activity {
         mChatView.setUsernameFontSize(getResources().getDimension(R.dimen.font_small));
         mChatView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         mChatView.setInputTextColor(ContextCompat.getColor(this, R.color.red500));
-        mChatView.setInputTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+        mChatView.setInputTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
 
         mChatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
@@ -193,9 +194,6 @@ public class MessengerActivity extends Activity {
                 showDialog();
             }
         });
-
-
-
     }
 
     private void openGallery() {
