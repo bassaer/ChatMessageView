@@ -68,7 +68,6 @@ class ChatView : LinearLayout {
         //if touched empty space
         chatContainer.setOnClickListener { hideKeyboard() }
 
-
         messageView.setOnKeyboardAppearListener(object : MessageView.OnKeyboardAppearListener {
             override fun onKeyboardAppeared(hasChanged: Boolean) {
                 //Appeared keyboard
@@ -168,8 +167,8 @@ class ChatView : LinearLayout {
     }
 
     fun setOptionButtonColor(color: Int) {
-            optionIconColor = color
-            optionButton.setImageDrawable(getColoredDrawable(color, optionIconId))
+        optionIconColor = color
+        optionButton.setImageDrawable(getColoredDrawable(color, optionIconId))
     }
 
     private fun getColoredDrawable(color: Int, iconId: Int): Drawable {
