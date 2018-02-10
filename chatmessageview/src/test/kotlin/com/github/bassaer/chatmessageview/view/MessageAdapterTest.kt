@@ -38,13 +38,13 @@ internal class MessageAdapterTest {
         val sender = ChatUser(0, "User1", senderIcon)
         val receiver = ChatUser(1, "User2", receiverIcon)
         val message1 = Message.Builder()
-                .setRightMessage(true)
-                .setMessageText("message1")
+                .setRight(true)
+                .setText("message1")
                 .setUser(sender)
                 .build()
         val message2 = Message.Builder()
-                .setRightMessage(false)
-                .setMessageText("message2")
+                .setRight(false)
+                .setText("message2")
                 .setUser(receiver)
                 .build()
 
@@ -72,7 +72,7 @@ internal class MessageAdapterTest {
         // Check Messages
         for (i in 1 until messageArray.size) {
             val messageText = messageArray[i]?.findViewById<TextView>(R.id.message_text)
-            expectingText = (messageList[i] as Message).messageText
+            expectingText = (messageList[i] as Message).text
             assertEquals(expectingText, messageText?.text)
         }
     }

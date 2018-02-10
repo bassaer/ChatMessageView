@@ -113,7 +113,7 @@ public class MessengerActivity extends Activity {
             public void onClick(Message message) {
                 Toast.makeText(
                         MessengerActivity.this,
-                        "click : " + message.getUser().getName() + " - " + message.getMessageText(),
+                        "click : " + message.getUser().getName() + " - " + message.getText(),
                         Toast.LENGTH_SHORT
                 ).show();
             }
@@ -124,7 +124,7 @@ public class MessengerActivity extends Activity {
             public void onLongClick(Message message) {
                 Toast.makeText(
                         MessengerActivity.this,
-                        "Removed this message \n" + message.getMessageText(),
+                        "Removed this message \n" + message.getText(),
                         Toast.LENGTH_SHORT
                 ).show();
                 mChatView.getMessageView().remove(message);
@@ -161,12 +161,12 @@ public class MessengerActivity extends Activity {
                 //new message
                 Message message = new Message.Builder()
                         .setUser(mUsers.get(0))
-                        .setRightMessage(true)
-                        .setMessageText(mChatView.getInputText())
+                        .setRight(true)
+                        .setText(mChatView.getInputText())
                         .hideIcon(true)
                         .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
                         .setStatusTextFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
-                        .setMessageStatusType(Message.Companion.getMESSAGE_STATUS_ICON())
+                        .setStatusStyle(Message.Companion.getSTATUS_ICON())
                         .setStatus(MyMessageStatusFormatter.STATUS_DELIVERED)
                         .build();
 
@@ -181,7 +181,7 @@ public class MessengerActivity extends Activity {
                 //Reset edit text
                 mChatView.setInputText("");
 
-                receiveMessage(message.getMessageText());
+                receiveMessage(message.getText());
             }
 
         });
@@ -218,16 +218,16 @@ public class MessengerActivity extends Activity {
             //Receive message
             final Message receivedMessage = new Message.Builder()
                     .setUser(mUsers.get(1))
-                    .setRightMessage(false)
-                    .setMessageText(ChatBot.INSTANCE.talk(mUsers.get(0).getName(), sendText))
+                    .setRight(false)
+                    .setText(ChatBot.INSTANCE.talk(mUsers.get(0).getName(), sendText))
                     .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
                     .setStatusTextFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
-                    .setMessageStatusType(Message.Companion.getMESSAGE_STATUS_ICON())
+                    .setStatusStyle(Message.Companion.getSTATUS_ICON())
                     .setStatus(MyMessageStatusFormatter.STATUS_DELIVERED)
                     .build();
 
             if (sendText.equals( Message.Type.PICTURE.name())) {
-                receivedMessage.setMessageText("Nice!");
+                receivedMessage.setText("Nice!");
             }
 
             // This is a demo bot
@@ -256,14 +256,14 @@ public class MessengerActivity extends Activity {
         try {
             Bitmap picture = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
             Message message = new Message.Builder()
-                    .setRightMessage(true)
-                    .setMessageText(Message.Type.PICTURE.name())
+                    .setRight(true)
+                    .setText(Message.Type.PICTURE.name())
                     .setUser(mUsers.get(0))
                     .hideIcon(true)
                     .setPicture(picture)
                     .setType(Message.Type.PICTURE)
                     .setStatusIconFormatter(new MyMessageStatusFormatter(MessengerActivity.this))
-                    .setMessageStatusType(Message.Companion.getMESSAGE_STATUS_ICON())
+                    .setStatusStyle(Message.Companion.getSTATUS_ICON())
                     .setStatus(MyMessageStatusFormatter.STATUS_DELIVERED)
                     .build();
             mChatView.send(message);
@@ -314,11 +314,11 @@ public class MessengerActivity extends Activity {
                         message.getUser().setIcon(user.getIcon());
                     }
                 }
-                if (!message.isDateCell() && message.isRightMessage()) {
+                if (!message.isDateCell() && message.isRight()) {
                     message.hideIcon(true);
 
                 }
-                message.setMessageStatusType(Message.Companion.getMESSAGE_STATUS_ICON_RIGHT_ONLY());
+                message.setStatusStyle(Message.Companion.getSTATUS_ICON_RIGHT_ONLY());
                 message.setStatusIconFormatter(new MyMessageStatusFormatter(this));
                 message.setStatus(MyMessageStatusFormatter.STATUS_DELIVERED);
                 messages.add(message);
