@@ -33,17 +33,17 @@ class Message {
     /**
      * Whether the message is shown right side or not.
      */
-    var isRightMessage: Boolean = false
+    var isRight: Boolean = false
 
     /**
      * Message content text
      */
-    var messageText: String? = null
+    var text: String? = null
 
     /**
      * The time message that was created
      */
-    var createdAt = Calendar.getInstance()
+    var sendTime = Calendar.getInstance()
 
     /**
      * Whether cell of list view is date separator text or not.
@@ -70,7 +70,7 @@ class Message {
     /**
      * Message status type such as icon, text, or none.
      */
-    var messageStatusType = MESSAGE_STATUS_NONE
+    var statusStyle = STATUS_NONE
 
     /**
      * Message status icon formatter
@@ -93,16 +93,16 @@ class Message {
     var type: Type? = null
 
     val timeText: String
-        get() = mSendTimeFormatter!!.getFormattedTimeText(createdAt!!)
+        get() = mSendTimeFormatter!!.getFormattedTimeText(sendTime!!)
 
     val dateSeparateText: String
-        get() = mDateFormatter!!.getFormattedTimeText(createdAt!!)
+        get() = mDateFormatter!!.getFormattedTimeText(sendTime!!)
 
     val statusIcon: Drawable
-        get() = statusIconFormatter!!.getStatusIcon(status, isRightMessage)
+        get() = statusIconFormatter!!.getStatusIcon(status, isRight)
 
     val statusText: String
-        get() = statusTextFormatter!!.getStatusText(status, isRightMessage)
+        get() = statusTextFormatter!!.getStatusText(status, isRight)
 
     /**
      * Message Types
@@ -119,7 +119,7 @@ class Message {
      * Constructor
      */
     init {
-        createdAt = Calendar.getInstance()
+        sendTime = Calendar.getInstance()
         mSendTimeFormatter = DefaultTimeFormatter()
         mDateFormatter = DateFormatter()
         mSendTimeFormatter = DefaultTimeFormatter()
@@ -153,18 +153,18 @@ class Message {
         }
 
 
-        fun setRightMessage(isRight: Boolean): Builder {
-            message.isRightMessage = isRight
+        fun setRight(isRight: Boolean): Builder {
+            message.isRight = isRight
             return this
         }
 
-        fun setMessageText(messageText: String): Builder {
-            message.messageText = messageText
+        fun setText(text: String): Builder {
+            message.text = text
             return this
         }
 
-        fun setCreatedAt(calendar: Calendar): Builder {
-            message.createdAt = calendar
+        fun setSendTime(calendar: Calendar): Builder {
+            message.sendTime = calendar
             return this
         }
 
@@ -188,8 +188,8 @@ class Message {
             return this
         }
 
-        fun setMessageStatusType(messageStatusType: Int): Builder {
-            message.messageStatusType = messageStatusType
+        fun setStatusStyle(statusStyle: Int): Builder {
+            message.statusStyle = statusStyle
             return this
         }
 
@@ -260,37 +260,37 @@ class Message {
         /**
          * Message status is not shown.
          */
-        val MESSAGE_STATUS_NONE = 0
+        val STATUS_NONE = 0
 
         /**
          * Show message status icon.
          */
-        val MESSAGE_STATUS_ICON = 1
+        val STATUS_ICON = 1
 
         /**
          * Show message status text.
          * ex. seen, fail, delivered
          */
-        val MESSAGE_STATUS_TEXT = 2
+        val STATUS_TEXT = 2
 
         /**
          * Show message status icon only right message
          */
-        val MESSAGE_STATUS_ICON_RIGHT_ONLY = 3
+        val STATUS_ICON_RIGHT_ONLY = 3
 
         /**
          * Show message status icon only left message
          */
-        val MESSAGE_STATUS_ICON_LEFT_ONLY = 4
+        val STATUS_ICON_LEFT_ONLY = 4
 
         /**
          * Show message status text only right message
          */
-        val MESSAGE_STATUS_TEXT_RIGHT_ONLY = 5
+        val STATUS_TEXT_RIGHT_ONLY = 5
 
         /**
          * Show message status text only left message
          */
-        val MESSAGE_STATUS_TEXT_LEFT_ONLY = 6
+        val STATUS_TEXT_LEFT_ONLY = 6
     }
 }

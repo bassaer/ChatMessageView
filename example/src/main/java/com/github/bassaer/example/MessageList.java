@@ -62,9 +62,9 @@ public class MessageList {
         SaveMessage saveMessage = new SaveMessage(
                 Integer.valueOf(message.getUser().getId()),
                 message.getUser().getName(),
-                message.getMessageText(),
-                message.getCreatedAt(),
-                message.isRightMessage());
+                message.getText(),
+                message.getSendTime(),
+                message.isRight());
 
         saveMessage.setType(message.getType());
 
@@ -83,9 +83,9 @@ public class MessageList {
 
         Message message = new Message.Builder()
                 .setUser(user)
-                .setMessageText(saveMessage.getContent())
-                .setRightMessage(saveMessage.isRightMessage())
-                .setCreatedAt(saveMessage.getCreatedAt())
+                .setText(saveMessage.getContent())
+                .setRight(saveMessage.isRightMessage())
+                .setSendTime(saveMessage.getCreatedAt())
                 .setType(saveMessage.getType())
                 .build();
 

@@ -5,10 +5,10 @@ import java.util.*
 
 class MessageDateComparator : Comparator<Message> {
     override fun compare(first: Message, second: Message): Int {
-        if (first.createdAt.before(second.createdAt)) {
+        if (first.sendTime.before(second.sendTime)) {
             return -1
         }
-        return if (first.createdAt.after(second.createdAt)) {
+        return if (first.sendTime.after(second.sendTime)) {
             1
         } else 0
     }
