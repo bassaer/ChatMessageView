@@ -78,6 +78,13 @@ class Message {
     var statusIconFormatter: IMessageStatusIconFormatter? = null
 
     /**
+     *  Status Colorizer Enabled
+     *  Can be used to disable the status icon colorizer so status icon keeps original color.
+     *  Use when updating status icon to another drawable and you don't want it's color to be altered
+     */
+    var statusColorizeEnabled: Boolean = true
+
+    /**
      * Message status text formatter
      */
     var statusTextFormatter: IMessageStatusTextFormatter? = null
@@ -190,6 +197,11 @@ class Message {
 
         fun setMessageStatusType(messageStatusType: Int): Builder {
             message.messageStatusType = messageStatusType
+            return this
+        }
+
+        fun setStatusColorizerEnabled(enabled: Boolean): Builder {
+            message.statusColorizeEnabled = enabled
             return this
         }
 
