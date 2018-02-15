@@ -214,6 +214,14 @@ class ChatView : LinearLayout {
         messageView.setMessageStatusColor(color)
     }
 
+    fun setMessageStatusColor(color: Int){
+        messageView.setMessageStatusColor(color)
+    }
+
+    fun updateMessageStatus(message: Message, status: Int) {
+        messageView.updateMessageStatus(message, status)
+    }
+
     fun setOnBubbleClickListener(listener: Message.OnBubbleClickListener) {
         messageView.setOnBubbleClickListener(listener)
     }
