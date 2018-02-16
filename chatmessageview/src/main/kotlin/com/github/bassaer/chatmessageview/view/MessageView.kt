@@ -110,7 +110,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
             return
         }
         val prevMessage = messageList[messageList.size - 2]
-        if (!TimeUtils.isSameDay(prevMessage.createdAt, message.createdAt)) {
+        if (!TimeUtils.isSameDay(prevMessage.sendTime, message.sendTime)) {
             chatList.add(message.dateSeparateText)
         }
         chatList.add(message)
@@ -146,7 +146,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
         for (i in 1 until list.size) {
             val prevMessage = list[i - 1]
             val currMessage = list[i]
-            if (!TimeUtils.isSameDay(prevMessage.createdAt, currMessage.createdAt)) {
+            if (!TimeUtils.isSameDay(prevMessage.sendTime, currMessage.sendTime)) {
                 result.add(currMessage.dateSeparateText)
             }
             result.add(currMessage)

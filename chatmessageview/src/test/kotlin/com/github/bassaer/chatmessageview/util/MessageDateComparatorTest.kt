@@ -23,13 +23,13 @@ internal class MessageDateComparatorTest {
     fun compareDifferentDays() {
         newCalendar.set(2017, 10, 11)
         oldCalendar.set(2017, 10, 12)
-        newMessage.createdAt = newCalendar
-        oldMessage.createdAt = oldCalendar
+        newMessage.sendTime = newCalendar
+        oldMessage.sendTime = oldCalendar
         assertEquals(messageDateComparator.compare(newMessage, oldMessage), -1)
         newCalendar.set(2017, 10, 11)
         oldCalendar.set(2017, 9, 12)
-        newMessage.createdAt = newCalendar
-        oldMessage.createdAt = oldCalendar
+        newMessage.sendTime = newCalendar
+        oldMessage.sendTime = oldCalendar
         assertEquals(messageDateComparator.compare(newMessage, oldMessage), 1)
     }
 
@@ -37,13 +37,13 @@ internal class MessageDateComparatorTest {
     fun compareSameDaysDifferentHour() {
         newCalendar.set(2017, 10, 11, 10,1)
         oldCalendar.set(2017, 10, 11, 22,1)
-        newMessage.createdAt = newCalendar
-        oldMessage.createdAt = oldCalendar
+        newMessage.sendTime = newCalendar
+        oldMessage.sendTime = oldCalendar
         assertEquals(messageDateComparator.compare(newMessage, oldMessage), -1)
         newCalendar.set(2017, 10, 11, 23,2)
         oldCalendar.set(2017, 10, 11, 23,1)
-        newMessage.createdAt = newCalendar
-        oldMessage.createdAt = oldCalendar
+        newMessage.sendTime = newCalendar
+        oldMessage.sendTime = oldCalendar
         assertEquals(messageDateComparator.compare(newMessage, oldMessage), 1)
     }
 
@@ -52,8 +52,8 @@ internal class MessageDateComparatorTest {
     fun compareSameDaySameHour() {
         newCalendar.set(2017, 10, 10, 20,45)
         oldCalendar.set(2017, 10, 10,20,45)
-        newMessage.createdAt = newCalendar
-        oldMessage.createdAt = oldCalendar
+        newMessage.sendTime = newCalendar
+        oldMessage.sendTime = oldCalendar
         assertEquals(messageDateComparator.compare(newMessage, oldMessage), 0)
     }
 
