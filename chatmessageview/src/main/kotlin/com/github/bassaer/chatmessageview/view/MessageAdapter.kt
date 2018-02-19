@@ -40,6 +40,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     private var usernameTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var sendTimeTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var dateLabelColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
+    private var activityMessageTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var rightMessageTextColor = Color.WHITE
     private var leftMessageTextColor = Color.BLACK
     private var leftBubbleColor: Int = 0
@@ -107,8 +108,8 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
             }
 
             chatActivityMessageViewHolder.activityMessageLabelText?.text = chatActivityMessage.message
-            chatActivityMessageViewHolder.activityMessageLabelText?.setTextColor(dateLabelColor)
-            chatActivityMessageViewHolder.activityMessageLabelText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.dateSeparatorFontSize)
+            chatActivityMessageViewHolder.activityMessageLabelText?.setTextColor(activityMessageTextColor)
+            chatActivityMessageViewHolder.activityMessageLabelText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.chatActivityMessageFontSize)
 
         } else {
             //Item is a message
@@ -344,6 +345,11 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
     fun setDateSeparatorColor(dateSeparatorColor: Int) {
         this.dateLabelColor = dateSeparatorColor
+        notifyDataSetChanged()
+    }
+
+    fun setActivityMessageColor(activityMessageColor: Int) {
+        this.activityMessageTextColor = activityMessageColor
         notifyDataSetChanged()
     }
 
