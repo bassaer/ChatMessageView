@@ -5,6 +5,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ListView
+import com.github.bassaer.chatmessageview.model.ChatActivityMessage
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
 import com.github.bassaer.chatmessageview.util.MessageDateComparator
@@ -162,6 +163,14 @@ class MessageView : ListView, View.OnFocusChangeListener {
         if (list != null) {
             Collections.sort(list, dateComparator)
         }
+    }
+
+    /**
+     * Adds an activity message. E.g: "John has joined the chat"
+     */
+    fun addChatActivityMessage(activityMessage: ChatActivityMessage) {
+        chatList.add(activityMessage)
+        messageAdapter.notifyDataSetChanged()
     }
 
     fun setOnKeyboardAppearListener(listener: OnKeyboardAppearListener) {

@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.github.bassaer.chatmessageview.R
+import com.github.bassaer.chatmessageview.model.ChatActivityMessage
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
 import de.hdodenhof.circleimageview.CircleImageView
@@ -56,6 +57,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     init {
         viewTypes.add(String::class.java)
         viewTypes.add(Message::class.java)
+        viewTypes.add(ChatActivityMessage::class.java)
         leftBubbleColor = ContextCompat.getColor(context, R.color.default_left_bubble_color)
         rightBubbleColor = ContextCompat.getColor(context, R.color.default_right_bubble_color)
     }
@@ -89,6 +91,24 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
             dateViewHolder.dateLabelText?.text = item
             dateViewHolder.dateLabelText?.setTextColor(dateLabelColor)
             dateViewHolder.dateLabelText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.dateSeparatorFontSize)
+
+        } else if (item is ChatActivityMessage) {
+
+            lateinit var chatActivityMessageViewHolder: ChatActivityMessageViewHolder
+            val chatActivityMessage: ChatActivityMessage = item
+
+            view?.let {
+                chatActivityMessageViewHolder = it.tag as ChatActivityMessageViewHolder
+            } ?: let {
+                view = layoutInflater.inflate(R.layout.chat_activity_message_cell, null)
+                chatActivityMessageViewHolder = ChatActivityMessageViewHolder()
+                chatActivityMessageViewHolder.activityMessageLabelText = view?.findViewById(R.id.activityMessageLabelText)
+                view?.tag = chatActivityMessageViewHolder
+            }
+
+            chatActivityMessageViewHolder.activityMessageLabelText?.text = chatActivityMessage.message
+            chatActivityMessageViewHolder.activityMessageLabelText?.setTextColor(dateLabelColor)
+            chatActivityMessageViewHolder.activityMessageLabelText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.dateSeparatorFontSize)
 
         } else {
             //Item is a message
@@ -207,7 +227,8 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                         )
                     }
 
-                } else -> {
+                }
+                else -> {
                     layoutInflater.inflate(
                             if (message.isRightMessage) R.layout.message_text_right else R.layout.message_text_left,
                             messageViewHolder.mainMessageContainer).let {
@@ -372,6 +393,10 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
     internal inner class DateViewHolder {
         var dateLabelText: TextView? = null
+    }
+
+    internal inner class ChatActivityMessageViewHolder {
+        var activityMessageLabelText: TextView? = null
     }
 
 

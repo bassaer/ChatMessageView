@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import com.github.bassaer.chatmessageview.R
+import com.github.bassaer.chatmessageview.model.ChatActivityMessage
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
 import kotlinx.android.synthetic.main.chat_view.view.*
@@ -132,6 +133,17 @@ class ChatView : LinearLayout {
         }
     }
 
+    /**
+     * Set message to be shown centered in the chat view.
+     * @param chatActivityMessage Message to be shown
+     */
+    fun showChatActivityMessage(chatActivityMessage: ChatActivityMessage) {
+        messageView.addChatActivityMessage(chatActivityMessage)
+        if (isEnableAutoScroll) {
+            messageView.scrollToEnd()
+        }
+    }
+
     fun setOnClickSendButtonListener(listener: View.OnClickListener) {
         sendButton.setOnClickListener(listener)
     }
@@ -168,8 +180,8 @@ class ChatView : LinearLayout {
     }
 
     fun setOptionButtonColor(color: Int) {
-            optionIconColor = color
-            optionButton.setImageDrawable(getColoredDrawable(color, optionIconId))
+        optionIconColor = color
+        optionButton.setImageDrawable(getColoredDrawable(color, optionIconId))
     }
 
     private fun getColoredDrawable(color: Int, iconId: Int): Drawable {
