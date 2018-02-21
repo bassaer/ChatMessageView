@@ -138,7 +138,7 @@ class ChatView : LinearLayout {
      * @param chatActivityMessage Message to be shown
      */
     fun showChatActivityMessage(chatActivityMessage: ChatActivityMessage) {
-        messageView.addChatActivityMessage(chatActivityMessage)
+        messageView.setChatActivityMessage(chatActivityMessage)
         if (isEnableAutoScroll) {
             messageView.scrollToEnd()
         }

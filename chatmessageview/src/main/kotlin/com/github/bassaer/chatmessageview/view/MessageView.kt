@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ListView
 import com.github.bassaer.chatmessageview.model.ChatActivityMessage
 import com.github.bassaer.chatmessageview.model.Message
+import com.github.bassaer.chatmessageview.model.SortableMessage
 import com.github.bassaer.chatmessageview.models.Attribute
 import com.github.bassaer.chatmessageview.util.MessageDateComparator
 import com.github.bassaer.chatmessageview.util.TimeUtils
@@ -26,7 +27,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
     /**
      * Only messages
      */
-    val messageList = ArrayList<Message>()
+    val messageList = ArrayList<SortableMessage>()
 
     private lateinit var messageAdapter: MessageAdapter
 
@@ -101,9 +102,9 @@ class MessageView : ListView, View.OnFocusChangeListener {
     /**
      * Add message to chat list and message list.
      * Set date text before set message if sent at the different day.
-     * @param message new message
+     * @param SortableMessage new message
      */
-    private fun addMessage(message: Message) {
+    private fun addMessage(message: SortableMessage) {
         messageList.add(message)
         if (messageList.size == 1) {
             chatList.add(message.dateSeparateText)
@@ -134,7 +135,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
         refresh()
     }
 
-    private fun insertDateSeparator(list: List<Message>): List<Any> {
+    private fun insertDateSeparator(list: List<SortableMessage>): List<Any> {
         val result = ArrayList<Any>()
         if (list.isEmpty()) {
             return result
@@ -158,7 +159,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
     /**
      * Sort messages
      */
-    private fun sortMessages(list: List<Message>?) {
+    private fun sortMessages(list: List<SortableMessage>?) {
         val dateComparator = MessageDateComparator()
         if (list != null) {
             Collections.sort(list, dateComparator)
@@ -168,8 +169,9 @@ class MessageView : ListView, View.OnFocusChangeListener {
     /**
      * Adds an activity message. E.g: "John has joined the chat"
      */
-    fun addChatActivityMessage(activityMessage: ChatActivityMessage) {
-        chatList.add(activityMessage)
+    fun setChatActivityMessage(activityMessage: ChatActivityMessage) {
+        addMessage(activityMessage)
+        refresh()
         messageAdapter.notifyDataSetChanged()
     }
 

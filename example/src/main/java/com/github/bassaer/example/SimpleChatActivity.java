@@ -59,7 +59,7 @@ public class SimpleChatActivity extends Activity {
 
 
         ChatActivityMessage activityMessage = new ChatActivityMessage.Builder().setMessage("Michael has left the chat").build();
-        messageView.addChatActivityMessage(activityMessage);
+        messageView.setChatActivityMessage(activityMessage);
 
     }
 }
