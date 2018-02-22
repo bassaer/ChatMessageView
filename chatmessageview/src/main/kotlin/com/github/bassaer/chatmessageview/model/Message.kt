@@ -200,11 +200,6 @@ class Message {
             return this
         }
 
-        fun setStatusColorizerEnabled(enabled: Boolean): Builder {
-            message.statusColorizeEnabled = enabled
-            return this
-        }
-
         fun setStatusIconFormatter(formatter: IMessageStatusIconFormatter): Builder {
             message.statusIconFormatter = formatter
             return this
