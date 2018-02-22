@@ -112,6 +112,7 @@ public class MessengerActivity extends Activity {
         mChatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
             @Override
             public void onClick(Message message) {
+                mChatView.updateMessageStatus(message, MyMessageStatusFormatter.STATUS_SEEN);
                 Toast.makeText(
                         MessengerActivity.this,
                         "click : " + message.getUser().getName() + " - " + message.getText(),
@@ -170,10 +171,6 @@ public class MessengerActivity extends Activity {
                         .setStatusStyle(Message.Companion.getSTATUS_ICON())
                         .setStatus(MyMessageStatusFormatter.STATUS_DELIVERED)
                         .build();
-
-                //Set random status(Delivering, delivered, seen or fail)
-                int messageStatus = new Random().nextInt(4);
-                message.setStatus(messageStatus);
 
                 //Set to chat view
                 mChatView.send(message);
