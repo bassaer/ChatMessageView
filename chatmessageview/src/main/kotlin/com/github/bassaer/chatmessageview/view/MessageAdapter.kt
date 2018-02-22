@@ -165,7 +165,9 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                 layoutInflater.inflate(R.layout.message_status_icon, messageViewHolder.statusContainer).let {
                     messageViewHolder.statusIcon = it.findViewById(R.id.status_icon_image_view)
                     messageViewHolder.statusIcon?.setImageDrawable(message.statusIcon)
-                    setColorDrawable(statusColor, messageViewHolder.statusIcon?.drawable)
+                    
+                    if(message.statusColorizeEnabled)
+                        setColorDrawable(statusColor, messageViewHolder.statusIcon?.drawable)
                 }
 
             } else if (message.statusStyle == Message.STATUS_TEXT || message.statusStyle == Message.STATUS_TEXT_RIGHT_ONLY) {

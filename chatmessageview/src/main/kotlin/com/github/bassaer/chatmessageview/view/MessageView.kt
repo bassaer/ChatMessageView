@@ -98,6 +98,19 @@ class MessageView : ListView, View.OnFocusChangeListener {
     }
 
     /**
+    * Dynamically update message status and refesh, updatiung the status icon
+    * @param message message to update
+    * @param status new status to be applied
+    */
+    fun updateMessageStatus(message: Message, status: Int)
+    {
+        val indexOfMessage = messageList.indexOf(message)
+        val messageToUpdate = messageList[indexOfMessage]
+        messageToUpdate.status = status
+        messageAdapter.notifyDataSetChanged()
+    }
+
+    /**
      * Add message to chat list and message list.
      * Set date text before set message if sent at the different day.
      * @param message new message
