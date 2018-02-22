@@ -98,7 +98,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
     }
 
     /**
-    * Dynamically update message status and refesh, updatiung the status icon
+    * Dynamically update message status and refresh, updating the status icon
     * @param message message to update
     * @param status new status to be applied
     */
