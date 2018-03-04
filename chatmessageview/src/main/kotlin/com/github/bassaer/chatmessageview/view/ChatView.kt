@@ -69,7 +69,6 @@ class ChatView : LinearLayout {
         //if touched empty space
         chatContainer.setOnClickListener { hideKeyboard() }
 
-
         messageView.setOnKeyboardAppearListener(object : MessageView.OnKeyboardAppearListener {
             override fun onKeyboardAppeared(hasChanged: Boolean) {
                 //Appeared keyboard
@@ -224,6 +223,14 @@ class ChatView : LinearLayout {
 
     fun setMessageStatusTextColor(color: Int) {
         messageView.setMessageStatusColor(color)
+    }
+
+    fun setMessageStatusColor(color: Int){
+        messageView.setMessageStatusColor(color)
+    }
+
+    fun updateMessageStatus(message: Message, status: Int) {
+        messageView.updateMessageStatus(message, status)
     }
 
     fun setOnBubbleClickListener(listener: Message.OnBubbleClickListener) {

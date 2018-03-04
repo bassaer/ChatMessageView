@@ -42,13 +42,13 @@ public class SimpleChatActivity extends Activity {
         for (int i = 0; i < 10; i++) {
             Message message1 = new Message.Builder()
                     .setUser(me)
-                    .setMessageText(me.getName() + " " + i)
-                    .setRightMessage(true)
+                    .setText(me.getName() + " " + i)
+                    .setRight(true)
                     .build();
             Message message2 = new Message.Builder()
                     .setUser(you)
-                    .setMessageText(you.getName() + " " + i)
-                    .setRightMessage(false)
+                    .setText(you.getName() + " " + i)
+                    .setRight(false)
                     .build();
             messages.add(message1);
             messages.add(message2);

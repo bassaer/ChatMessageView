@@ -131,7 +131,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                 messageViewHolder = it.tag as MessageViewHolder
             } ?: run {
                 view = layoutInflater
-                        .inflate(if (message.isRightMessage) R.layout.message_view_right else R.layout.message_view_left,
+                        .inflate(if (message.isRight) R.layout.message_view_right else R.layout.message_view_left,
                                 null)
                 messageViewHolder = MessageViewHolder()
                 messageViewHolder.iconContainer = view?.findViewById(R.id.userIconContainer)
@@ -150,7 +150,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
             if (user.getName() != null && message.usernameVisibility) {
                 layoutInflater.inflate(
-                        if (message.isRightMessage) R.layout.user_name_right else R.layout.user_name_left,
+                        if (message.isRight) R.layout.user_name_right else R.layout.user_name_left,
                         messageViewHolder.usernameContainer).let {
                     messageViewHolder.username = it.findViewById(R.id.message_user_name)
                     messageViewHolder.username?.text = user.getName()
@@ -162,7 +162,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
             // if false, icon is not shown.
             if (!message.isIconHided) {
-                layoutInflater.inflate(if (message.isRightMessage) R.layout.user_icon_right else R.layout.user_icon_left,
+                layoutInflater.inflate(if (message.isRight) R.layout.user_icon_right else R.layout.user_icon_left,
                         messageViewHolder.iconContainer).let {
                     messageViewHolder.icon = it.findViewById(R.id.user_icon)
                 }
@@ -181,7 +181,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
 
             //Show message status
-            if (message.messageStatusType == Message.MESSAGE_STATUS_ICON || message.messageStatusType == Message.MESSAGE_STATUS_ICON_RIGHT_ONLY) {
+            if (message.statusStyle == Message.STATUS_ICON || message.statusStyle == Message.STATUS_ICON_RIGHT_ONLY) {
                 //Show message status icon
                 layoutInflater.inflate(R.layout.message_status_icon, messageViewHolder.statusContainer).let {
                     messageViewHolder.statusIcon = it.findViewById(R.id.status_icon_image_view)
@@ -189,7 +189,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                     setColorDrawable(statusColor, messageViewHolder.statusIcon?.drawable)
                 }
 
-            } else if (message.messageStatusType == Message.MESSAGE_STATUS_TEXT || message.messageStatusType == Message.MESSAGE_STATUS_TEXT_RIGHT_ONLY) {
+            } else if (message.statusStyle == Message.STATUS_TEXT || message.statusStyle == Message.STATUS_TEXT_RIGHT_ONLY) {
                 //Show message status text
                 layoutInflater.inflate(R.layout.message_status_text, messageViewHolder.statusContainer).let {
                     messageViewHolder.statusText = it.findViewById(R.id.status_text_view)
@@ -203,7 +203,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                 Message.Type.PICTURE -> {
                     //Set picture
                     layoutInflater.inflate(
-                            if (message.isRightMessage) R.layout.message_picture_right else R.layout.message_picture_left,
+                            if (message.isRight) R.layout.message_picture_right else R.layout.message_picture_left,
                             messageViewHolder.mainMessageContainer).let {
                         messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
                         messageViewHolder.messagePicture?.setImageBitmap(message.picture)
@@ -213,34 +213,34 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                 Message.Type.LINK -> {
                     //Set text
                     layoutInflater.inflate(
-                            if (message.isRightMessage) R.layout.message_link_right else R.layout.message_link_left,
+                            if (message.isRight) R.layout.message_link_right else R.layout.message_link_left,
                             messageViewHolder.mainMessageContainer).let {
                         messageViewHolder.messageLink = it.findViewById(R.id.message_link)
-                        messageViewHolder.messageLink?.text = message.messageText
+                        messageViewHolder.messageLink?.text = message.text
                         //Set bubble color
                         setColorDrawable(
-                                if (message.isRightMessage) rightBubbleColor else leftBubbleColor,
+                                if (message.isRight) rightBubbleColor else leftBubbleColor,
                                 messageViewHolder.messageLink?.background
                         )
                         //Set message text color
                         messageViewHolder.messageLink?.setTextColor(
-                                if (message.isRightMessage) rightMessageTextColor else leftMessageTextColor
+                                if (message.isRight) rightMessageTextColor else leftMessageTextColor
                         )
                     }
 
                 }
                 else -> {
                     layoutInflater.inflate(
-                            if (message.isRightMessage) R.layout.message_text_right else R.layout.message_text_left,
+                            if (message.isRight) R.layout.message_text_right else R.layout.message_text_left,
                             messageViewHolder.mainMessageContainer).let {
                         messageViewHolder.messageText = it.findViewById(R.id.message_text)
-                        messageViewHolder.messageText?.text = message.messageText
+                        messageViewHolder.messageText?.text = message.text
                         setColorDrawable(
-                                if (message.isRightMessage) rightBubbleColor else leftBubbleColor,
+                                if (message.isRight) rightBubbleColor else leftBubbleColor,
                                 messageViewHolder.messageText?.background
                         )
                         messageViewHolder.messageText?.setTextColor(
-                                if (message.isRightMessage) rightMessageTextColor else leftMessageTextColor
+                                if (message.isRight) rightMessageTextColor else leftMessageTextColor
                         )
                     }
                 }

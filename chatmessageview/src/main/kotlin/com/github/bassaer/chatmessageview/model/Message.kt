@@ -33,12 +33,12 @@ class Message : SortableMessage() {
     /**
      * Whether the message is shown right side or not.
      */
-    var isRightMessage: Boolean = false
+    var isRight: Boolean = false
 
     /**
      * Message content text
      */
-    var messageText: String? = null
+    var text: String? = null
 
     /**
      * Whether cell of list view is date separator text or not.
@@ -59,12 +59,19 @@ class Message : SortableMessage() {
     /**
      * Message status type such as icon, text, or none.
      */
-    var messageStatusType = MESSAGE_STATUS_NONE
+    var statusStyle = STATUS_NONE
 
     /**
      * Message status icon formatter
      */
     var statusIconFormatter: IMessageStatusIconFormatter? = null
+
+    /**
+     *  Status Colorizer Enabled
+     *  Can be used to disable the status icon colorizer so status icon keeps original color.
+     *  Use when updating status icon to another drawable and you don't want it's color to be altered
+     */
+    var statusColorizeEnabled: Boolean = true
 
     /**
      * Message status text formatter
@@ -82,13 +89,13 @@ class Message : SortableMessage() {
     var type: Type? = null
 
     val timeText: String
-        get() = mSendTimeFormatter!!.getFormattedTimeText(createdAt!!)
+        get() = mSendTimeFormatter!!.getFormattedTimeText(sendTime!!)
 
     val statusIcon: Drawable
-        get() = statusIconFormatter!!.getStatusIcon(status, isRightMessage)
+        get() = statusIconFormatter!!.getStatusIcon(status, isRight)
 
     val statusText: String
-        get() = statusTextFormatter!!.getStatusText(status, isRightMessage)
+        get() = statusTextFormatter!!.getStatusText(status, isRight)
 
     /**
      * Message Types
@@ -105,7 +112,7 @@ class Message : SortableMessage() {
      * Constructor
      */
     init {
-        createdAt = Calendar.getInstance()
+        sendTime = Calendar.getInstance()
         mSendTimeFormatter = DefaultTimeFormatter()
         mDateFormatter = DateFormatter()
         mSendTimeFormatter = DefaultTimeFormatter()
@@ -139,18 +146,18 @@ class Message : SortableMessage() {
         }
 
 
-        fun setRightMessage(isRight: Boolean): Builder {
-            message.isRightMessage = isRight
+        fun setRight(isRight: Boolean): Builder {
+            message.isRight = isRight
             return this
         }
 
-        fun setMessageText(messageText: String): Builder {
-            message.messageText = messageText
+        fun setText(text: String): Builder {
+            message.text = text
             return this
         }
 
-        fun setCreatedAt(calendar: Calendar): Builder {
-            message.createdAt = calendar
+        fun setSendTime(calendar: Calendar): Builder {
+            message.sendTime = calendar
             return this
         }
 
@@ -174,8 +181,8 @@ class Message : SortableMessage() {
             return this
         }
 
-        fun setMessageStatusType(messageStatusType: Int): Builder {
-            message.messageStatusType = messageStatusType
+        fun setStatusStyle(statusStyle: Int): Builder {
+            message.statusStyle = statusStyle
             return this
         }
 
@@ -246,37 +253,37 @@ class Message : SortableMessage() {
         /**
          * Message status is not shown.
          */
-        val MESSAGE_STATUS_NONE = 0
+        val STATUS_NONE = 0
 
         /**
          * Show message status icon.
          */
-        val MESSAGE_STATUS_ICON = 1
+        val STATUS_ICON = 1
 
         /**
          * Show message status text.
          * ex. seen, fail, delivered
          */
-        val MESSAGE_STATUS_TEXT = 2
+        val STATUS_TEXT = 2
 
         /**
          * Show message status icon only right message
          */
-        val MESSAGE_STATUS_ICON_RIGHT_ONLY = 3
+        val STATUS_ICON_RIGHT_ONLY = 3
 
         /**
          * Show message status icon only left message
          */
-        val MESSAGE_STATUS_ICON_LEFT_ONLY = 4
+        val STATUS_ICON_LEFT_ONLY = 4
 
         /**
          * Show message status text only right message
          */
-        val MESSAGE_STATUS_TEXT_RIGHT_ONLY = 5
+        val STATUS_TEXT_RIGHT_ONLY = 5
 
         /**
          * Show message status text only left message
          */
-        val MESSAGE_STATUS_TEXT_LEFT_ONLY = 6
+        val STATUS_TEXT_LEFT_ONLY = 6
     }
 }

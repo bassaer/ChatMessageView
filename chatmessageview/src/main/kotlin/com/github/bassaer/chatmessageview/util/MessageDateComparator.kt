@@ -9,7 +9,7 @@ class MessageDateComparator : Comparator<SortableMessage> {
         if (first.createdAt.before(second.createdAt)) {
             return -1
         }
-        return if (first.createdAt.after(second.createdAt)) {
+        return if (first.sendTime.after(second.sendTime)) {
             1
         } else 0
     }

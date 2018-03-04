@@ -62,7 +62,6 @@ public class MessageList {
     }
 
     private SaveMessage convertMessage(SortableMessage sortableMessage) {
-
         if (sortableMessage instanceof ChatActivityMessage) {
             return new SaveMessage(sortableMessage.getCreatedAt());
         } else if (sortableMessage instanceof Message) {
@@ -96,9 +95,9 @@ public class MessageList {
 
         Message message = new Message.Builder()
                 .setUser(user)
-                .setMessageText(saveMessage.getContent())
-                .setRightMessage(saveMessage.isRightMessage())
-                .setCreatedAt(saveMessage.getCreatedAt())
+                .setText(saveMessage.getContent())
+                .setRight(saveMessage.isRightMessage())
+                .setSendTime(saveMessage.getCreatedAt())
                 .setType(saveMessage.getType())
                 .build();
 

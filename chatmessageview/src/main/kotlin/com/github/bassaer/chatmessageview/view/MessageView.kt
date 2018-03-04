@@ -100,6 +100,19 @@ class MessageView : ListView, View.OnFocusChangeListener {
     }
 
     /**
+    * Dynamically update message status and refresh, updating the status icon
+    * @param message message to update
+    * @param status new status to be applied
+    */
+    fun updateMessageStatus(message: Message, status: Int)
+    {
+        val indexOfMessage = messageList.indexOf(message)
+        val messageToUpdate = messageList[indexOfMessage]
+        messageToUpdate.status = status
+        messageAdapter.notifyDataSetChanged()
+    }
+
+    /**
      * Add message to chat list and message list.
      * Set date text before set message if sent at the different day.
      * @param SortableMessage new message
@@ -112,7 +125,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
             return
         }
         val prevMessage = messageList[messageList.size - 2]
-        if (!TimeUtils.isSameDay(prevMessage.createdAt, message.createdAt)) {
+        if (!TimeUtils.isSameDay(prevMessage.sendTime, message.sendTime)) {
             chatList.add(message.dateSeparateText)
         }
         chatList.add(message)
@@ -148,7 +161,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
         for (i in 1 until list.size) {
             val prevMessage = list[i - 1]
             val currMessage = list[i]
-            if (!TimeUtils.isSameDay(prevMessage.createdAt, currMessage.createdAt)) {
+            if (!TimeUtils.isSameDay(prevMessage.sendTime, currMessage.sendTime)) {
                 result.add(currMessage.dateSeparateText)
             }
             result.add(currMessage)
