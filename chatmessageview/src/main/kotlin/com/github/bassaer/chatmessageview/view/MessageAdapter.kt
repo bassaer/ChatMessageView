@@ -44,6 +44,8 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     private var leftBubbleColor: Int = 0
     private var rightBubbleColor: Int = 0
     private var statusColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
+
+
     /**
      * Default message item margin top
      */
@@ -89,6 +91,10 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
             dateViewHolder.dateLabelText?.text = item
             dateViewHolder.dateLabelText?.setTextColor(dateLabelColor)
             dateViewHolder.dateLabelText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.dateSeparatorFontSize)
+
+            attribute.dateSeparatorFont?.let {
+                dateViewHolder.dateLabelText?.typeface = it
+            }
 
         } else {
             //Item is a message
@@ -137,6 +143,13 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                     messageViewHolder.username?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.usernameFontSize)
                 }
 
+            }
+
+            messageViewHolder.username?.let {
+                val field = it
+                attribute.usernameFont?.let {
+                    field.typeface = it
+                }
             }
 
             // if false, icon is not shown.
@@ -257,7 +270,15 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
             messageViewHolder.messageText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.messageFontSize)
             messageViewHolder.messageText?.maxWidth = attribute.messageMaxWidth
+            attribute.messageFont?.let {
+                messageViewHolder.messageText?.typeface = it
+            }
+
             messageViewHolder.timeText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.timeLabelFontSize)
+            messageViewHolder.timeText?.visibility = if (!message.isTimestampHided) View.VISIBLE else View.INVISIBLE
+            attribute.timeFont?.let {
+                messageViewHolder.timeText?.typeface = it
+            }
         }
 
         return view!!

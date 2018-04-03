@@ -2,7 +2,9 @@ package com.github.bassaer.chatmessageview.model
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.os.Build
 import com.github.bassaer.chatmessageview.util.*
+import java.sql.Timestamp
 import java.util.*
 
 /**
@@ -28,6 +30,12 @@ class Message {
      * If true, there is no icon space.
      */
     var isIconHided = false
+        private set
+
+    /**
+     * If true, hide timestamps
+     */
+    var isTimestampHided = false
         private set
 
     /**
@@ -159,6 +167,10 @@ class Message {
             return this
         }
 
+        fun hideTimestamp(hide: Boolean): Builder {
+            message.hideTimestamp(hide)
+            return this
+        }
 
         fun setRight(isRight: Boolean): Builder {
             message.isRight = isRight
@@ -223,11 +235,14 @@ class Message {
         fun build(): Message {
             return message
         }
-
     }
 
     fun hideIcon(hideIcon: Boolean) {
         isIconHided = hideIcon
+    }
+
+    fun hideTimestamp(hideTimestamp: Boolean) {
+        isTimestampHided = hideTimestamp
     }
 
     /**

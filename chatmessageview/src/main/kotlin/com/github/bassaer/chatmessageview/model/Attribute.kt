@@ -1,8 +1,10 @@
 package com.github.bassaer.chatmessageview.models
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import com.github.bassaer.chatmessageview.R
+import java.lang.reflect.Type
 
 /**
  * View attribute
@@ -15,6 +17,11 @@ class Attribute(context: Context, attrs: AttributeSet?) {
     var messageMaxWidth: Int
     var dateSeparatorFontSize: Float
     var isOptionButtonEnable: Boolean
+
+    var dateSeparatorFont: Typeface? = null
+    var messageFont: Typeface? = null
+    var usernameFont: Typeface? = null
+    var timeFont: Typeface? = null
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView)
