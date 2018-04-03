@@ -69,6 +69,11 @@ class MessageView : ListView, View.OnFocusChangeListener {
         init()
     }
 
+    fun init(list:List<Message>, attribute: Attribute) {
+        this.attribute = attribute
+        init(list)
+    }
+
     /**
      * Initialize list
      */
