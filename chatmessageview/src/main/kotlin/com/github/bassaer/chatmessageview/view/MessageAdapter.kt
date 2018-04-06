@@ -212,10 +212,6 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                         message.placeholder.let {
                             messageViewHolder.messagePicture?.setImageBitmap(it)
                         }
-
-                        message.picture.let {
-                            messageViewHolder.messagePicture?.setImageBitmap(it)
-                        }
                     }
                 }
                 Message.Type.LINK -> {
