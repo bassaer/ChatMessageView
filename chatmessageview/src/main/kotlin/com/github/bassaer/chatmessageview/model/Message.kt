@@ -127,7 +127,8 @@ class Message {
         TEXT,
         PICTURE,
         MAP,
-        LINK
+        LINK,
+        MEDIA_URL
     }
 
     /**

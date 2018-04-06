@@ -1,6 +1,7 @@
 package com.github.bassaer.chatmessageview.view
 
 import android.content.Context
+import android.media.Image
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
@@ -38,8 +39,17 @@ class MessageView : ListView, View.OnFocusChangeListener {
 
     private var attribute: Attribute
 
+    /**
+     * Handle image URLs
+     */
+    private var imageURLHandler: ImageURLHandler? = null
+
     interface OnKeyboardAppearListener {
         fun onKeyboardAppeared(hasChanged: Boolean)
+    }
+
+    interface ImageURLHandler {
+        fun handleUrl(url:String)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
@@ -98,6 +108,12 @@ class MessageView : ListView, View.OnFocusChangeListener {
      */
     fun setMessage(message: Message) {
         addMessage(message)
+        refresh()
+        messageAdapter.notifyDataSetChanged()
+    }
+
+    fun setMessageAtIndex(message: Message, index: Int) {
+        chatList[index] = message
         refresh()
         messageAdapter.notifyDataSetChanged()
     }

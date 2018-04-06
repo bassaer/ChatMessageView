@@ -23,6 +23,8 @@
     <dimen name="width_normal">200dp</dimen>
     <dimen name="width_small">100dp</dimen>
 
+    <dimen name="width_placeholder">50dp</dimen>
+
     <!-- Layout height -->
     <dimen name="line_height">1dp</dimen>
 

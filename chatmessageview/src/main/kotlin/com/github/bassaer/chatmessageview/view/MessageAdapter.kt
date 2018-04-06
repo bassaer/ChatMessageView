@@ -202,6 +202,15 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                     }
 
                 }
+                Message.Type.MEDIA_URL -> {
+                    //Handle media url
+                    layoutInflater.inflate(
+                            if (message.isRight) R.layout.message_media_right else R.layout.message_media_left,
+                            messageViewHolder.mainMessageContainer).let {
+                        messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
+                        messageViewHolder.messagePicture?.setImageBitmap(message.picture)
+                    }
+                }
                 Message.Type.LINK -> {
                     //Set text
                     layoutInflater.inflate(
