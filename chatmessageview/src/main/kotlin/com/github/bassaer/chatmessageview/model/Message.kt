@@ -103,6 +103,11 @@ class Message {
     var picture: Bitmap? = null
 
     /**
+     * PLACEHOLDER for media message
+     */
+    var placeholder: Bitmap? = null
+
+    /**
      * Message type
      */
     var type: Type? = null

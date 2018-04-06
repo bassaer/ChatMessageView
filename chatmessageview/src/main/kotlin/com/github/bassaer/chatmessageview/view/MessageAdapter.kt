@@ -208,7 +208,14 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                             if (message.isRight) R.layout.message_media_right else R.layout.message_media_left,
                             messageViewHolder.mainMessageContainer).let {
                         messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
-                        messageViewHolder.messagePicture?.setImageBitmap(message.picture)
+
+                        message.placeholder.let {
+                            messageViewHolder.messagePicture?.setImageBitmap(it)
+                        }
+
+                        message.picture.let {
+                            messageViewHolder.messagePicture?.setImageBitmap(it)
+                        }
                     }
                 }
                 Message.Type.LINK -> {
