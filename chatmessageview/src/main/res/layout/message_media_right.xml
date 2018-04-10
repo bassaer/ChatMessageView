@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainMessageContainer"
     android:layout_width="@dimen/width_placeholder"
     android:layout_height="@dimen/width_placeholder"
     android:background="@android:color/transparent">
+
     <com.github.bassaer.chatmessageview.view.RoundImageView
         android:id="@+id/message_picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/error"
         android:scaleType="fitCenter"
-        android:src="@drawable/face_1"
-        android:contentDescription="@string/error"/>
+        android:src="@drawable/face_1" />
 </FrameLayout>
