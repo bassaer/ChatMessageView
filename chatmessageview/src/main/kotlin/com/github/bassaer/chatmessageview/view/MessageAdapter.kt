@@ -212,7 +212,10 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                             if (message.isRight) R.layout.message_media_right else R.layout.message_media_left,
                             messageViewHolder.mainMessageContainer).let {
                         messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
-
+                        setColorDrawable(
+                                if (message.isRight) rightBubbleColor else leftBubbleColor,
+                                messageViewHolder.messageText?.background
+                        )
                         message.placeholder.let {
                             messageViewHolder.messagePicture?.scaleType = ImageView.ScaleType.CENTER_INSIDE
                             messageViewHolder.messagePicture?.setImageBitmap(it)
