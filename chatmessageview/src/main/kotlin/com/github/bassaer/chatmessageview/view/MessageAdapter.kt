@@ -199,6 +199,8 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                             messageViewHolder.mainMessageContainer).let {
                         messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
                         messageViewHolder.messagePicture?.setImageBitmap(message.picture)
+
+                        messageViewHolder.messagePicture?.scaleType = ImageView.ScaleType.FIT_CENTER
                     }
 
                 }
@@ -210,6 +212,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                         messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
 
                         message.placeholder.let {
+                            messageViewHolder.messagePicture?.scaleType = ImageView.ScaleType.CENTER_INSIDE
                             messageViewHolder.messagePicture?.setImageBitmap(it)
                         }
                     }
