@@ -206,7 +206,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                     }
 
                 }
-                Message.Type.MEDIA_URL -> {
+                Message.Type.MEDIA -> {
                     //Handle media url
                     layoutInflater.inflate(
                             if (message.isRight) R.layout.message_media_right else R.layout.message_media_left,
@@ -297,6 +297,9 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                 messageViewHolder.timeText?.typeface = it
             }
 
+            /**
+             * Handle loading outside of Adapter
+             */
             cellListener.let {
                 it?.onCellLoaded(position)
             }

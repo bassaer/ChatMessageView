@@ -39,7 +39,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
     private var refreshInterval: Long = 60000
 
     private var attribute: Attribute
-    
+
     /**
      * Handle image URLs
      */

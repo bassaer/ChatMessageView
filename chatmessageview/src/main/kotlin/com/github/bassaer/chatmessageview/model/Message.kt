@@ -2,9 +2,7 @@ package com.github.bassaer.chatmessageview.model
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.os.Build
 import com.github.bassaer.chatmessageview.util.*
-import java.sql.Timestamp
 import java.util.*
 
 /**
@@ -108,6 +106,11 @@ class Message {
     var placeholder: Bitmap? = null
 
     /**
+     * Media URL
+     */
+    var mediaURL: String? = null
+
+    /**
      * Message type
      */
     var type: Type? = null
@@ -133,7 +136,7 @@ class Message {
         PICTURE,
         MAP,
         LINK,
-        MEDIA_URL
+        MEDIA
     }
 
     /**
@@ -235,6 +238,11 @@ class Message {
 
         fun setPicture(picture: Bitmap): Builder {
             message.picture = picture
+            return this
+        }
+
+        fun setMediaUrl(url: String): Builder {
+            message.mediaURL = url
             return this
         }
 
