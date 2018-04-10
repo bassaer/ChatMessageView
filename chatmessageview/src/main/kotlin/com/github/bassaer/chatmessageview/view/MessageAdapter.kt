@@ -301,7 +301,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
              * Handle loading outside of Adapter
              */
             cellListener.let {
-                it?.onCellLoaded(position)
+                it?.onCellLoaded(position, message)
             }
         }
 
