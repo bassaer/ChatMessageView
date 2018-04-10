@@ -18,6 +18,7 @@ import android.widget.TextView
 import com.github.bassaer.chatmessageview.R
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
+import com.github.bassaer.chatmessageview.util.IMessageCellListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.date_cell.view.*
 import java.util.*
@@ -45,6 +46,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     private var rightBubbleColor: Int = 0
     private var statusColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
 
+    private var cellListener: IMessageCellListener? = null
 
     /**
      * Default message item margin top
@@ -294,6 +296,10 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
             attribute.timeFont?.let {
                 messageViewHolder.timeText?.typeface = it
             }
+
+            cellListener.let {
+                it?.onCellLoaded(position)
+            }
         }
 
         return view!!
@@ -388,6 +394,10 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     fun setAttribute(attribute: Attribute) {
         this.attribute = attribute
         notifyDataSetChanged()
+    }
+
+    fun setCellListener(listener: IMessageCellListener) {
+        this.cellListener = listener
     }
 
     internal inner class MessageViewHolder {

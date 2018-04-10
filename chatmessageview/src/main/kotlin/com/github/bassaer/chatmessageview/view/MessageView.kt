@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ListView
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
+import com.github.bassaer.chatmessageview.util.IMessageCellListener
 import com.github.bassaer.chatmessageview.util.MessageDateComparator
 import com.github.bassaer.chatmessageview.util.TimeUtils
 import java.util.*
@@ -38,7 +39,7 @@ class MessageView : ListView, View.OnFocusChangeListener {
     private var refreshInterval: Long = 60000
 
     private var attribute: Attribute
-
+    
     /**
      * Handle image URLs
      */
@@ -305,6 +306,10 @@ class MessageView : ListView, View.OnFocusChangeListener {
     fun setDateSeparatorFontSize(size: Float) {
         attribute.dateSeparatorFontSize = size
         setAttribute()
+    }
+
+    fun setCellListener(listener: IMessageCellListener) {
+        messageAdapter.setCellListener(listener)
     }
 
     private fun setAttribute() {
