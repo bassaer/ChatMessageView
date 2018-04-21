@@ -9,7 +9,7 @@ import java.util.*
  * Message object
  * Created by nakayama on 2016/08/08.
  */
-class Message {
+class Message : SortableMessage() {
 
     /**
      * Sender information
@@ -47,11 +47,6 @@ class Message {
     var text: String? = null
 
     /**
-     * The time message that was created
-     */
-    var sendTime = Calendar.getInstance()
-
-    /**
      * Whether cell of list view is date separator text or not.
      */
     var isDateCell: Boolean = false
@@ -60,12 +55,6 @@ class Message {
      * TEXT format of the send time that is next to the message
      */
     private var mSendTimeFormatter: ITimeFormatter? = null
-
-    /**
-     * Date separator text format.
-     * This text is shown if the before or after message was sent different day
-     */
-    private var mDateFormatter: ITimeFormatter? = null
 
     /**
      * Message status
@@ -117,9 +106,6 @@ class Message {
 
     val timeText: String
         get() = mSendTimeFormatter!!.getFormattedTimeText(sendTime!!)
-
-    val dateSeparateText: String
-        get() = mDateFormatter!!.getFormattedTimeText(sendTime!!)
 
     val statusIcon: Drawable
         get() = statusIconFormatter!!.getStatusIcon(status, isRight)

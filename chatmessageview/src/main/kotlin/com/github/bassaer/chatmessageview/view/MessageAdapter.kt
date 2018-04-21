@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.github.bassaer.chatmessageview.R
+import com.github.bassaer.chatmessageview.model.ChatActivityMessage
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
 import com.github.bassaer.chatmessageview.util.IMessageCellListener
@@ -40,6 +41,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     private var usernameTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var sendTimeTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var dateLabelColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
+    private var activityMessageTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var rightMessageTextColor = Color.WHITE
     private var leftMessageTextColor = Color.BLACK
     private var leftBubbleColor: Int = 0
@@ -60,6 +62,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     init {
         viewTypes.add(String::class.java)
         viewTypes.add(Message::class.java)
+        viewTypes.add(ChatActivityMessage::class.java)
         leftBubbleColor = ContextCompat.getColor(context, R.color.default_left_bubble_color)
         rightBubbleColor = ContextCompat.getColor(context, R.color.default_right_bubble_color)
     }
@@ -240,7 +243,8 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                         )
                     }
 
-                } else -> {
+                }
+                else -> {
                     layoutInflater.inflate(
                             if (message.isRight) R.layout.message_text_right else R.layout.message_text_left,
                             messageViewHolder.mainMessageContainer).let {
@@ -374,6 +378,11 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
         notifyDataSetChanged()
     }
 
+    fun setActivityMessageColor(activityMessageColor: Int) {
+        this.activityMessageTextColor = activityMessageColor
+        notifyDataSetChanged()
+    }
+
     fun setRightMessageTextColor(rightMessageTextColor: Int) {
         this.rightMessageTextColor = rightMessageTextColor
         notifyDataSetChanged()
@@ -424,6 +433,10 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
     internal inner class DateViewHolder {
         var dateLabelText: TextView? = null
+    }
+
+    internal inner class ChatActivityMessageViewHolder {
+        var activityMessageLabelText: TextView? = null
     }
 
 

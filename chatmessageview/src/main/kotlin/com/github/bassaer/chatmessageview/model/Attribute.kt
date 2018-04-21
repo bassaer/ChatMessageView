@@ -17,6 +17,7 @@ class Attribute(context: Context, attrs: AttributeSet?) {
     var messageMaxWidth: Int
     var dateSeparatorFontSize: Float
     var isOptionButtonEnable: Boolean
+    var chatActivityMessageFontSize: Float
 
     var dateSeparatorFont: Typeface? = null
     var messageFont: Typeface? = null
@@ -25,6 +26,7 @@ class Attribute(context: Context, attrs: AttributeSet?) {
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView)
+
         this.messageFontSize = typedArray.getDimension(
                 R.styleable.MessageView_message_font_size,
                 context.resources.getDimension(R.dimen.font_normal)
@@ -49,6 +51,11 @@ class Attribute(context: Context, attrs: AttributeSet?) {
                 R.styleable.MessageView_option_button_enable,
                 false
         )
+
+        this.chatActivityMessageFontSize = typedArray.getDimension(R.styleable.MessageView_chat_activity_message_font_size,
+                context.resources.getDimension(R.dimen.font_small)
+        )
+
         typedArray.recycle()
     }
 }
