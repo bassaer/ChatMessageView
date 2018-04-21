@@ -31,6 +31,12 @@ class Message : SortableMessage() {
         private set
 
     /**
+     * If true, hide timestamps
+     */
+    var isTimestampHided = false
+        private set
+
+    /**
      * Whether the message is shown right side or not.
      */
     var isRight: Boolean = false
@@ -84,6 +90,16 @@ class Message : SortableMessage() {
     var picture: Bitmap? = null
 
     /**
+     * PLACEHOLDER for media message
+     */
+    var placeholder: Bitmap? = null
+
+    /**
+     * Media URL
+     */
+    var mediaURL: String? = null
+
+    /**
      * Message type
      */
     var type: Type? = null
@@ -105,7 +121,8 @@ class Message : SortableMessage() {
         TEXT,
         PICTURE,
         MAP,
-        LINK
+        LINK,
+        MEDIA
     }
 
     /**
@@ -145,6 +162,10 @@ class Message : SortableMessage() {
             return this
         }
 
+        fun hideTimestamp(hide: Boolean): Builder {
+            message.hideTimestamp(hide)
+            return this
+        }
 
         fun setRight(isRight: Boolean): Builder {
             message.isRight = isRight
@@ -206,14 +227,22 @@ class Message : SortableMessage() {
             return this
         }
 
+        fun setMediaUrl(url: String): Builder {
+            message.mediaURL = url
+            return this
+        }
+
         fun build(): Message {
             return message
         }
-
     }
 
     fun hideIcon(hideIcon: Boolean) {
         isIconHided = hideIcon
+    }
+
+    fun hideTimestamp(hideTimestamp: Boolean) {
+        isTimestampHided = hideTimestamp
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.github.bassaer.chatmessageview.view
 
 import android.content.Context
+import android.media.Image
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
@@ -9,6 +10,7 @@ import com.github.bassaer.chatmessageview.model.ChatActivityMessage
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.model.SortableMessage
 import com.github.bassaer.chatmessageview.models.Attribute
+import com.github.bassaer.chatmessageview.util.IMessageCellListener
 import com.github.bassaer.chatmessageview.util.MessageDateComparator
 import com.github.bassaer.chatmessageview.util.TimeUtils
 import java.util.*
@@ -40,8 +42,17 @@ class MessageView : ListView, View.OnFocusChangeListener {
 
     private var attribute: Attribute
 
+    /**
+     * Handle image URLs
+     */
+    private var imageURLHandler: ImageURLHandler? = null
+
     interface OnKeyboardAppearListener {
         fun onKeyboardAppeared(hasChanged: Boolean)
+    }
+
+    interface ImageURLHandler {
+        fun handleUrl(url:String)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
@@ -71,6 +82,11 @@ class MessageView : ListView, View.OnFocusChangeListener {
         init()
     }
 
+    fun init(list:List<Message>, attribute: Attribute) {
+        this.attribute = attribute
+        init(list)
+    }
+
     /**
      * Initialize list
      */
@@ -95,6 +111,12 @@ class MessageView : ListView, View.OnFocusChangeListener {
      */
     fun setMessage(message: Message) {
         addMessage(message)
+        refresh()
+        messageAdapter.notifyDataSetChanged()
+    }
+
+    fun setMessageAtIndex(message: Message, index: Int) {
+        chatList[index] = message
         refresh()
         messageAdapter.notifyDataSetChanged()
     }
@@ -295,6 +317,10 @@ class MessageView : ListView, View.OnFocusChangeListener {
     fun setDateSeparatorFontSize(size: Float) {
         attribute.dateSeparatorFontSize = size
         setAttribute()
+    }
+
+    fun setCellListener(listener: IMessageCellListener) {
+        messageAdapter.setCellListener(listener)
     }
 
     private fun setAttribute() {
