@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import com.github.bassaer.chatmessageview.R
+import com.github.bassaer.chatmessageview.model.ChatActivityMessage
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
 import kotlinx.android.synthetic.main.chat_view.view.*
@@ -126,6 +127,17 @@ class ChatView : LinearLayout {
      */
     fun receive(message: Message) {
         messageView.setMessage(message)
+        if (isEnableAutoScroll) {
+            messageView.scrollToEnd()
+        }
+    }
+
+    /**
+     * Set message to be shown centered in the chat view.
+     * @param chatActivityMessage Message to be shown
+     */
+    fun showChatActivityMessage(chatActivityMessage: ChatActivityMessage) {
+        messageView.setChatActivityMessage(chatActivityMessage)
         if (isEnableAutoScroll) {
             messageView.scrollToEnd()
         }
