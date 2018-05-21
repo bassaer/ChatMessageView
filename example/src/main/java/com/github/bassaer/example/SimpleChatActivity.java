@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
-import com.github.bassaer.chatmessageview.model.ChatActivityMessage;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.view.MessageView;
 
@@ -56,10 +55,6 @@ public class SimpleChatActivity extends Activity {
 
         MessageView messageView = findViewById(R.id.message_view);
         messageView.init(messages);
-
-
-        ChatActivityMessage activityMessage = new ChatActivityMessage.Builder().setMessage("Michael has left the chat").build();
-        messageView.setChatActivityMessage(activityMessage);
 
     }
 }
