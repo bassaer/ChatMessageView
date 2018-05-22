@@ -10,7 +10,7 @@ def libVersion = properties.getProperty('version')
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 15

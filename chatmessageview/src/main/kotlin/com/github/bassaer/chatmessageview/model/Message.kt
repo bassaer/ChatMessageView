@@ -9,7 +9,7 @@ import java.util.*
  * Message object
  * Created by nakayama on 2016/08/08.
  */
-class Message : SortableMessage() {
+class Message {
 
     /**
      * Sender information
@@ -31,12 +31,6 @@ class Message : SortableMessage() {
         private set
 
     /**
-     * If true, hide timestamps
-     */
-    var isTimestampHided = false
-        private set
-
-    /**
      * Whether the message is shown right side or not.
      */
     var isRight: Boolean = false
@@ -47,6 +41,11 @@ class Message : SortableMessage() {
     var text: String? = null
 
     /**
+     * The time message that was created
+     */
+    var sendTime = Calendar.getInstance()
+
+    /**
      * Whether cell of list view is date separator text or not.
      */
     var isDateCell: Boolean = false
@@ -55,6 +54,12 @@ class Message : SortableMessage() {
      * TEXT format of the send time that is next to the message
      */
     private var mSendTimeFormatter: ITimeFormatter? = null
+
+    /**
+     * Date separator text format.
+     * This text is shown if the before or after message was sent different day
+     */
+    private var mDateFormatter: ITimeFormatter? = null
 
     /**
      * Message status
@@ -90,22 +95,15 @@ class Message : SortableMessage() {
     var picture: Bitmap? = null
 
     /**
-     * PLACEHOLDER for media message
-     */
-    var placeholder: Bitmap? = null
-
-    /**
-     * Media URL
-     */
-    var mediaURL: String? = null
-
-    /**
      * Message type
      */
     var type: Type? = null
 
     val timeText: String
         get() = mSendTimeFormatter!!.getFormattedTimeText(sendTime!!)
+
+    val dateSeparateText: String
+        get() = mDateFormatter!!.getFormattedTimeText(sendTime!!)
 
     val statusIcon: Drawable
         get() = statusIconFormatter!!.getStatusIcon(status, isRight)
@@ -121,8 +119,7 @@ class Message : SortableMessage() {
         TEXT,
         PICTURE,
         MAP,
-        LINK,
-        MEDIA
+        LINK
     }
 
     /**
@@ -162,10 +159,6 @@ class Message : SortableMessage() {
             return this
         }
 
-        fun hideTimestamp(hide: Boolean): Builder {
-            message.hideTimestamp(hide)
-            return this
-        }
 
         fun setRight(isRight: Boolean): Builder {
             message.isRight = isRight
@@ -227,22 +220,14 @@ class Message : SortableMessage() {
             return this
         }
 
-        fun setMediaUrl(url: String): Builder {
-            message.mediaURL = url
-            return this
-        }
-
         fun build(): Message {
             return message
         }
+
     }
 
     fun hideIcon(hideIcon: Boolean) {
         isIconHided = hideIcon
-    }
-
-    fun hideTimestamp(hideTimestamp: Boolean) {
-        isTimestampHided = hideTimestamp
     }
 
     /**

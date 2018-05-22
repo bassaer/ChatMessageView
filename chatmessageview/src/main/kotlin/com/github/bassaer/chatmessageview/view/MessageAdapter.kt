@@ -16,10 +16,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.github.bassaer.chatmessageview.R
-import com.github.bassaer.chatmessageview.model.ChatActivityMessage
 import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
-import com.github.bassaer.chatmessageview.util.IMessageCellListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.date_cell.view.*
 import java.util.*
@@ -41,15 +39,11 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     private var usernameTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var sendTimeTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var dateLabelColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
-    private var activityMessageTextColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
     private var rightMessageTextColor = Color.WHITE
     private var leftMessageTextColor = Color.BLACK
     private var leftBubbleColor: Int = 0
     private var rightBubbleColor: Int = 0
     private var statusColor = ContextCompat.getColor(getContext(), R.color.blueGray500)
-
-    private var cellListener: IMessageCellListener? = null
-
     /**
      * Default message item margin top
      */
@@ -62,7 +56,6 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
     init {
         viewTypes.add(String::class.java)
         viewTypes.add(Message::class.java)
-        viewTypes.add(ChatActivityMessage::class.java)
         leftBubbleColor = ContextCompat.getColor(context, R.color.default_left_bubble_color)
         rightBubbleColor = ContextCompat.getColor(context, R.color.default_right_bubble_color)
     }
@@ -96,10 +89,6 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
             dateViewHolder.dateLabelText?.text = item
             dateViewHolder.dateLabelText?.setTextColor(dateLabelColor)
             dateViewHolder.dateLabelText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.dateSeparatorFontSize)
-
-            attribute.dateSeparatorFont?.let {
-                dateViewHolder.dateLabelText?.typeface = it
-            }
 
         } else {
             //Item is a message
@@ -150,13 +139,6 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
             }
 
-            messageViewHolder.username?.let {
-                val field = it
-                attribute.usernameFont?.let {
-                    field.typeface = it
-                }
-            }
-
             // if false, icon is not shown.
             if (!message.isIconHided) {
                 layoutInflater.inflate(if (message.isRight) R.layout.user_icon_right else R.layout.user_icon_left,
@@ -204,26 +186,8 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                             messageViewHolder.mainMessageContainer).let {
                         messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
                         messageViewHolder.messagePicture?.setImageBitmap(message.picture)
-
-                        messageViewHolder.messagePicture?.scaleType = ImageView.ScaleType.FIT_CENTER
                     }
 
-                }
-                Message.Type.MEDIA -> {
-                    //Handle media url
-                    layoutInflater.inflate(
-                            if (message.isRight) R.layout.message_media_right else R.layout.message_media_left,
-                            messageViewHolder.mainMessageContainer).let {
-                        messageViewHolder.messagePicture = it.findViewById(R.id.message_picture)
-                        setColorDrawable(
-                                if (message.isRight) rightBubbleColor else leftBubbleColor,
-                                messageViewHolder.messageText?.background
-                        )
-                        message.placeholder.let {
-                            messageViewHolder.messagePicture?.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                            messageViewHolder.messagePicture?.setImageBitmap(it)
-                        }
-                    }
                 }
                 Message.Type.LINK -> {
                     //Set text
@@ -243,8 +207,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                         )
                     }
 
-                }
-                else -> {
+                } else -> {
                     layoutInflater.inflate(
                             if (message.isRight) R.layout.message_text_right else R.layout.message_text_left,
                             messageViewHolder.mainMessageContainer).let {
@@ -294,22 +257,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
             messageViewHolder.messageText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.messageFontSize)
             messageViewHolder.messageText?.maxWidth = attribute.messageMaxWidth
-            attribute.messageFont?.let {
-                messageViewHolder.messageText?.typeface = it
-            }
-
             messageViewHolder.timeText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, attribute.timeLabelFontSize)
-            messageViewHolder.timeText?.visibility = if (!message.isTimestampHided) View.VISIBLE else View.INVISIBLE
-            attribute.timeFont?.let {
-                messageViewHolder.timeText?.typeface = it
-            }
-
-            /**
-             * Handle loading outside of Adapter
-             */
-            cellListener.let {
-                it?.onCellLoaded(position, message)
-            }
         }
 
         return view!!
@@ -378,11 +326,6 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
         notifyDataSetChanged()
     }
 
-    fun setActivityMessageColor(activityMessageColor: Int) {
-        this.activityMessageTextColor = activityMessageColor
-        notifyDataSetChanged()
-    }
-
     fun setRightMessageTextColor(rightMessageTextColor: Int) {
         this.rightMessageTextColor = rightMessageTextColor
         notifyDataSetChanged()
@@ -411,10 +354,6 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
         notifyDataSetChanged()
     }
 
-    fun setCellListener(listener: IMessageCellListener) {
-        this.cellListener = listener
-    }
-
     internal inner class MessageViewHolder {
         var icon: CircleImageView? = null
         var iconContainer: FrameLayout? = null
@@ -433,10 +372,6 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
 
     internal inner class DateViewHolder {
         var dateLabelText: TextView? = null
-    }
-
-    internal inner class ChatActivityMessageViewHolder {
-        var activityMessageLabelText: TextView? = null
     }
 
 

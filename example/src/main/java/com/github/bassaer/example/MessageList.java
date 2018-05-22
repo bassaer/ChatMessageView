@@ -3,12 +3,9 @@ package com.github.bassaer.example;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.util.Log;
 
-import com.github.bassaer.chatmessageview.model.ChatActivityMessage;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.model.IChatUser;
-import com.github.bassaer.chatmessageview.model.SortableMessage;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -35,8 +32,8 @@ public class MessageList {
         return messages;
     }
 
-    public void setMessages(List<SortableMessage> messages) {
-        for (SortableMessage message : messages) {
+    public void setMessages(List<Message> messages) {
+        for (Message message : messages) {
             mMessages.add(convertMessage(message));
         }
     }
@@ -61,33 +58,24 @@ public class MessageList {
         return mMessages.size();
     }
 
-    private SaveMessage convertMessage(SortableMessage sortableMessage) {
-        if (sortableMessage instanceof ChatActivityMessage) {
-            return new SaveMessage(sortableMessage.getCreatedAt());
-        } else if (sortableMessage instanceof Message) {
+    private SaveMessage convertMessage(Message message) {
+        SaveMessage saveMessage = new SaveMessage(
+                Integer.valueOf(message.getUser().getId()),
+                message.getUser().getName(),
+                message.getText(),
+                message.getSendTime(),
+                message.isRight());
 
-            Message message = (Message) sortableMessage;
+        saveMessage.setType(message.getType());
 
-            SaveMessage saveMessage = new SaveMessage(
-                    Integer.valueOf(message.getUser().getId()),
-                    message.getUser().getName(),
-                    message.getMessageText(),
-                    message.getCreatedAt(),
-                    message.isRightMessage());
-
-            saveMessage.setType(message.getType());
-
-            if (message.getType() == Message.Type.PICTURE
-                    && message.getPicture() != null) {
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                message.getPicture().compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                saveMessage.setPictureString(Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT));
-            }
-
-            return saveMessage;
+        if (message.getType() == Message.Type.PICTURE
+                && message.getPicture() != null) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            message.getPicture().compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            saveMessage.setPictureString(Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT));
         }
 
-        return null;
+        return saveMessage;
     }
 
     private Message convertMessage(SaveMessage saveMessage) {
@@ -123,14 +111,6 @@ public class MessageList {
             mContent = content;
             mCreatedAt = createdAt;
             mRightMessage = isRightMessage;
-        }
-
-        public SaveMessage(Calendar createdAt) {
-            mId = Integer.MIN_VALUE;
-            mUsername = "";
-            mContent = "";
-            mCreatedAt = createdAt;
-            mRightMessage = false;
         }
 
         public int getId() {
