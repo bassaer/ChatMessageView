@@ -121,18 +121,6 @@ public class MessengerActivity extends Activity {
             }
         });
 
-        mChatView.setOnBubbleLongClickListener(new Message.OnBubbleLongClickListener() {
-            @Override
-            public void onLongClick(Message message) {
-                Toast.makeText(
-                        MessengerActivity.this,
-                        "Removed this message \n" + message.getText(),
-                        Toast.LENGTH_SHORT
-                ).show();
-                mChatView.getMessageView().remove(message);
-            }
-        });
-
         mChatView.setOnIconClickListener(new Message.OnIconClickListener() {
             @Override
             public void onIconClick(Message message) {
@@ -149,9 +137,10 @@ public class MessengerActivity extends Activity {
             public void onIconLongClick(Message message) {
                 Toast.makeText(
                         MessengerActivity.this,
-                        "Long click : icon " + message.getUser().getName(),
+                        "Removed this message \n" + message.getText(),
                         Toast.LENGTH_SHORT
                 ).show();
+                mChatView.getMessageView().remove(message);
             }
         });
 
