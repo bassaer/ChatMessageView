@@ -13,6 +13,7 @@
         app:date_separator_font_size="16sp"
         app:time_label_font_size="16sp"
         app:message_max_width="200dp"
-        app:option_button_enable="true"/>
+        app:option_button_enable="true"
+        app:text_selectable="true"/>
 
 </LinearLayout>
