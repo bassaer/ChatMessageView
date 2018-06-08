@@ -212,6 +212,7 @@ class MessageAdapter(context: Context, resource: Int, private val objects: List<
                             if (message.isRight) R.layout.message_text_right else R.layout.message_text_left,
                             messageViewHolder.mainMessageContainer).let {
                         messageViewHolder.messageText = it.findViewById(R.id.message_text)
+                        messageViewHolder.messageText?.setTextIsSelectable(attribute.isTextSelectable)
                         messageViewHolder.messageText?.text = message.text
                         setColorDrawable(
                                 if (message.isRight) rightBubbleColor else leftBubbleColor,

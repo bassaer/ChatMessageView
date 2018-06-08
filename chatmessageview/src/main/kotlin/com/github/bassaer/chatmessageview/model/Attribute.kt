@@ -15,6 +15,7 @@ class Attribute(context: Context, attrs: AttributeSet?) {
     var messageMaxWidth: Int
     var dateSeparatorFontSize: Float
     var isOptionButtonEnable: Boolean
+    var isTextSelectable: Boolean
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MessageView)
@@ -40,6 +41,10 @@ class Attribute(context: Context, attrs: AttributeSet?) {
         )
         this.isOptionButtonEnable = typedArray.getBoolean(
                 R.styleable.MessageView_option_button_enable,
+                false
+        )
+        this.isTextSelectable = typedArray.getBoolean(
+                R.styleable.MessageView_text_selectable,
                 false
         )
         typedArray.recycle()
