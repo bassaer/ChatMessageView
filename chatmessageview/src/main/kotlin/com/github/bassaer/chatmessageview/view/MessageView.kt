@@ -9,6 +9,7 @@ import com.github.bassaer.chatmessageview.model.Message
 import com.github.bassaer.chatmessageview.models.Attribute
 import com.github.bassaer.chatmessageview.util.MessageDateComparator
 import com.github.bassaer.chatmessageview.util.TimeUtils
+import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -78,11 +79,12 @@ class MessageView : ListView, View.OnFocusChangeListener {
 
         adapter = messageAdapter
 
+        val weakMessageAdapter: WeakReference<MessageAdapter> = WeakReference(messageAdapter)
         val handler = Handler()
         val refreshTimer = Timer(true)
         refreshTimer.schedule(object : TimerTask() {
             override fun run() {
-                handler.post { messageAdapter.notifyDataSetChanged() }
+                handler.post { weakMessageAdapter.get()?.notifyDataSetChanged() }
             }
         }, 1000, refreshInterval)
     }
