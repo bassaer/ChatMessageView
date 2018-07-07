@@ -27,9 +27,8 @@ This library aims to provide a chat UI view for Android.
 
 ```
 dependencies {
-    compile 'com.github.bassaer:chatmessageview:1.10.0'
+    compile 'com.github.bassaer:chatmessageview:1.11.0'
 }
-
 ```
 
 ## Usage
@@ -121,8 +120,8 @@ public class MessengerActivity extends Activity {
                 //new message
                 Message message = new Message.Builder()
                         .setUser(me)
-                        .setRightMessage(true)
-                        .setMessageText(mChatView.getInputText())
+                        .setRight(true)
+                        .setText(mChatView.getInputText())
                         .hideIcon(true)
                         .build();
                 //Set to chat view
@@ -133,8 +132,8 @@ public class MessengerActivity extends Activity {
                 //Receive message
                 final Message receivedMessage = new Message.Builder()
                         .setUser(you)
-                        .setRightMessage(false)
-                        .setMessageText(ChatBot.talk(me.getName(), message.getMessageText()))
+                        .setRight(false)
+                        .setText(ChatBot.talk(me.getName(), message.getText()))
                         .build();
 
                 // This is a demo bot
