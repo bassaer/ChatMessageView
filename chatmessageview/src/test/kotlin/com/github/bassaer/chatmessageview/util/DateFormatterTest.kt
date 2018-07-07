@@ -14,8 +14,8 @@ internal class DateFormatterTest {
     fun getFormattedTimeText() {
         val formatter = DateFormatter()
         val calendar = Calendar.getInstance()
-        calendar.set(2017, 10, 11)
-        assertEquals(formatter.getFormattedTimeText(calendar), "Nov. 11, 2017")
+        calendar.set(2017, 10, 12)
+        assertEquals(formatter.getFormattedTimeText(calendar), "Nov. 12, 2017")
     }
 
 }

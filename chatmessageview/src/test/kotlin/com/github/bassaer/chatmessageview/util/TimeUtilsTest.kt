@@ -13,9 +13,9 @@ internal class TimeUtilsTest {
     @Test
     fun calendarToString() {
         val calendar = Calendar.getInstance()
-        calendar.set(2017, 10, 11, 22,33)
+        calendar.set(2017, 9,10, 22, 33,44)
         assertEquals(TimeUtils.calendarToString(calendar, null), "22:33")
-        assertEquals(TimeUtils.calendarToString(calendar, "MMM. dd, yyyy HH:mm"), "Nov. 11, 2017 22:33")
+        assertEquals(TimeUtils.calendarToString(calendar, "MM/dd/yyyy HH:mm"), "10/10/2017 22:33")
     }
 
     @Test

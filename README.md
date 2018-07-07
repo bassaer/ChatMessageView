@@ -21,15 +21,17 @@ This library aims to provide a chat UI view for Android.
 - Easy to use for bot app
 
 ## Gradle
-
-[![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView)
 [ ![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
+
+| branch| status |
+----|----
+| master | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
+| develop | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView/tree/develop.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
 
 ```
 dependencies {
     compile 'com.github.bassaer:chatmessageview:1.11.0'
 }
-
 ```
 
 ## Usage
@@ -121,8 +123,8 @@ public class MessengerActivity extends Activity {
                 //new message
                 Message message = new Message.Builder()
                         .setUser(me)
-                        .setRightMessage(true)
-                        .setMessageText(mChatView.getInputText())
+                        .setRight(true)
+                        .setText(mChatView.getInputText())
                         .hideIcon(true)
                         .build();
                 //Set to chat view
@@ -133,8 +135,8 @@ public class MessengerActivity extends Activity {
                 //Receive message
                 final Message receivedMessage = new Message.Builder()
                         .setUser(you)
-                        .setRightMessage(false)
-                        .setMessageText(ChatBot.talk(me.getName(), message.getMessageText()))
+                        .setRight(false)
+                        .setText(ChatBot.talk(me.getName(), message.getText()))
                         .build();
 
                 // This is a demo bot
