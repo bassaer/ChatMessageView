@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="KotlinCommonCompilerArguments">
+    <option name="errors">
+      <ArgumentParseErrors />
+    </option>
+    <option name="freeArgs">
+      <list>
+        <option value="chatmessageview_debug" />
+        <option value="example_debug" />
+        <option value="chatmessageview_debug" />
+        <option value="example_debug" />
+        <option value="chatmessageview_debug" />
+        <option value="example_debug" />
+        <option value="chatmessageview_debug" />
+        <option value="example_debug" />
+      </list>
+    </option>
+  </component>
+</project>
