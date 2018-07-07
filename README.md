@@ -21,9 +21,12 @@ This library aims to provide a chat UI view for Android.
 - Easy to use for bot app
 
 ## Gradle
-
-[![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView)
 [ ![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
+
+| branch| status |
+----|----
+| master | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
+| develop | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView/tree/develop.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
 
 ```
 dependencies {
