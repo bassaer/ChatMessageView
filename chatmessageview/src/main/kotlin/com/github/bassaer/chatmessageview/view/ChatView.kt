@@ -173,7 +173,7 @@ class ChatView : LinearLayout {
 
     private fun getColoredDrawable(color: Int, iconId: Int): Drawable {
         val colorStateList = ColorStateList.valueOf(color)
-        val icon = ContextCompat.getDrawable(context, iconId)
+        val icon = ContextCompat.getDrawable(context, iconId)!!
         val wrappedDrawable = DrawableCompat.wrap(icon)
         DrawableCompat.setTintList(wrappedDrawable, colorStateList)
         return wrappedDrawable
