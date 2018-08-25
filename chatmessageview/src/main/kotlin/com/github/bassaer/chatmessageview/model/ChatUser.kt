@@ -17,7 +17,7 @@ class ChatUser(internal var id: Int?, internal var name: String, internal var ic
         return this.icon
     }
 
-    override fun setIcon(icon: Bitmap) {
-        this.icon = icon
+    override fun setIcon(bmp: Bitmap) {
+        this.icon = bmp
     }
 }
