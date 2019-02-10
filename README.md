@@ -28,7 +28,7 @@ This library aims to provide a chat UI view for Android.
 | master | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
 | develop | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView/tree/develop.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
 
-```groovy
+```gradle
 dependencies {
     compile 'com.github.bassaer:chatmessageview:1.11.2'
 }
