@@ -28,7 +28,7 @@ This library aims to provide a chat UI view for Android.
 | master | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
 | develop | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView/tree/develop.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
 
-```
+```groovy
 dependencies {
     compile 'com.github.bassaer:chatmessageview:1.11.2'
 }
@@ -41,7 +41,7 @@ dependencies {
 
 Only MessageView
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
@@ -58,7 +58,7 @@ Only MessageView
 
 ChatView has MessageView and text box.
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
@@ -75,7 +75,7 @@ ChatView has MessageView and text box.
 
 Sample code
 
-```
+```java
 public class MessengerActivity extends Activity {
 
     private ChatView mChatView;
