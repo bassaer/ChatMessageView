@@ -8,6 +8,7 @@ import android.support.test.espresso.DataInteraction
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.IdlingRegistry
 import android.support.test.espresso.action.ViewActions.*
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withId
@@ -76,14 +77,14 @@ class MessengerActivityTest {
         val replyingUser = mUsers!![1]
         val waitingTime: Long = 3000
         val idlingResource = ElapsedTimeIdlingResource(waitingTime)
-        Espresso.registerIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().register(idlingResource)
         onRow(1).onChildView(withId(R.id.message_user_name)).check(matches(withText(sendingUser.getName())))
         onRow(1).onChildView(withId(R.id.message_text)).check(matches(withText(message)))
         onRow(2).onChildView(withId(R.id.user_icon)).check(matches(withDrawable(R.drawable.face_1)))
         onRow(2).onChildView(withId(R.id.message_user_name)).check(matches(withText(replyingUser.getName())))
         onRow(2).onChildView(withId(R.id.message_text)).check(matches(withText(containsString(sendingUser.getName()))))
         onRow(2).onChildView(withId(R.id.message_text)).check(matches(withText(containsString(message))))
-        Espresso.unregisterIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().unregister(idlingResource)
     }
 
     @Test
@@ -112,14 +113,14 @@ class MessengerActivityTest {
 
         val waitingTime: Long = 3000
         val idlingResource = ElapsedTimeIdlingResource(waitingTime)
-        Espresso.registerIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().register(idlingResource)
         // Remove reply for message1
         onRow(2).onChildView(withId(R.id.user_icon)).perform(longClick())
         // Remove reply for message2
         onRow(3).onChildView(withId(R.id.user_icon)).perform(longClick())
         // message3 should be shown at 3rd message
         onRow(3).onChildView(withId(R.id.message_text)).check(matches(withText(messages[2])))
-        Espresso.unregisterIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().unregister(idlingResource)
     }
 
     @Test
@@ -131,12 +132,12 @@ class MessengerActivityTest {
 
         val waitingTime: Long = 3000
         val idlingResource = ElapsedTimeIdlingResource(waitingTime)
-        Espresso.registerIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().register(idlingResource)
         onView(withId(R.id.optionButton)).perform(click())
         // Remove all messages
         onView(withText(R.string.clear_messages)).perform(click())
         onView(withId(R.id.messageView)).check(matches(MessageListMatcher.withListSize(0)))
-        Espresso.unregisterIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().unregister(idlingResource)
     }
 
 
