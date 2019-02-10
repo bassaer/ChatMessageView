@@ -1,31 +1,34 @@
 package com.github.bassaer.example
 
-
 import android.content.Context
 import android.content.Intent
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.DataInteraction
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.Espresso.onData
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.IdlingRegistry
-import android.support.test.espresso.action.ViewActions.*
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+
+import androidx.test.espresso.DataInteraction
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.ActivityTestRule
+
 import com.github.bassaer.chatmessageview.util.TimeUtils
 import com.github.bassaer.example.matcher.ImageViewDrawableMatcher.withDrawable
 import com.github.bassaer.example.matcher.MessageListMatcher
 import com.github.bassaer.example.util.ElapsedTimeIdlingResource
+
 import org.hamcrest.Matchers.anything
 import org.hamcrest.Matchers.containsString
+
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 import java.util.*
 
 /**
@@ -43,7 +46,7 @@ class MessengerActivityTest {
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        mContext = InstrumentationRegistry.getTargetContext()
+        mContext = InstrumentationRegistry.getInstrumentation().targetContext
         AppData.reset(mContext)
         mActivityRule.launchActivity(Intent())
         mUsers = mActivityRule.activity.users

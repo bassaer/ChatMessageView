@@ -1,6 +1,5 @@
 package com.github.bassaer.chatmessageview.model
 
-
 import android.graphics.Bitmap
 
 class ChatUser(internal var id: Int?, internal var name: String, internal var icon: Bitmap) : IChatUser {
