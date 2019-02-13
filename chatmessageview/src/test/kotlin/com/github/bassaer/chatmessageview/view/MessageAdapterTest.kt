@@ -1,29 +1,28 @@
 package com.github.bassaer.chatmessageview.view
 
-
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.TextView
-import com.github.bassaer.chatmessageview.BuildConfig
+
 import com.github.bassaer.chatmessageview.R
+import com.github.bassaer.chatmessageview.model.Attribute
 import com.github.bassaer.chatmessageview.model.ChatUser
 import com.github.bassaer.chatmessageview.model.Message
-import com.github.bassaer.chatmessageview.models.Attribute
-import junit.framework.Assert.assertEquals
+
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.Config
 
 /**
  * MessageAdapter Unit Test
  * Created by nakayama on 2018/01/03.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class)
 internal class MessageAdapterTest {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: ArrayList<Any>

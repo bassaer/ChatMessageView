@@ -1,14 +1,17 @@
 package com.github.bassaer.example
 
 import android.content.Intent
-import android.support.test.espresso.DataInteraction
-import android.support.test.espresso.Espresso.onData
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+
+import androidx.test.espresso.DataInteraction
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.ActivityTestRule
+
 import org.hamcrest.Matchers.anything
+
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -2,7 +2,9 @@ package com.github.bassaer.chatmessageview.model
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+
 import com.github.bassaer.chatmessageview.util.*
+
 import java.util.*
 
 /**
