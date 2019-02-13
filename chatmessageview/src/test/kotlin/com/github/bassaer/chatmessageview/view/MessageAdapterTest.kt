@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.TextView
-
+import androidx.test.core.app.ApplicationProvider
 import com.github.bassaer.chatmessageview.R
 import com.github.bassaer.chatmessageview.model.Attribute
 import com.github.bassaer.chatmessageview.model.ChatUser
@@ -16,7 +16,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 
 /**
  * MessageAdapter Unit Test
@@ -30,7 +29,7 @@ internal class MessageAdapterTest {
 
     @Before
     fun setUp() {
-        context = RuntimeEnvironment.application
+        context = ApplicationProvider.getApplicationContext()
         messageList = ArrayList()
         val senderIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_account_circle)
         val receiverIcon = BitmapFactory.decodeResource(context.resources, R.drawable.ic_action_user)

@@ -19,7 +19,7 @@ object TimeUtils {
      */
     @SuppressLint("SimpleDateFormat")
     fun calendarToString(calendar: Calendar, format: String?): String {
-        val sdf = SimpleDateFormat( format ?: "HH:mm")
+        val sdf = SimpleDateFormat( format ?: "HH:mm", Locale.ENGLISH)
         return sdf.format(calendar.time)
     }
 
