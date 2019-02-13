@@ -18,7 +18,7 @@ jobs:
       - run:
           name: update android sdk
           command: |
-              yes | sdkmanager "platforms;android-28"
+              yes | sdkmanager --licenses || exit 0
               echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository,android-28
               echo y | android update sdk --no-ui --all --filter build-tools-28.0.3
       - run:
