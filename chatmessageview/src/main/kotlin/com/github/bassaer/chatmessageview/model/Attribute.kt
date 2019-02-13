@@ -1,7 +1,8 @@
-package com.github.bassaer.chatmessageview.models
+package com.github.bassaer.chatmessageview.model
 
 import android.content.Context
 import android.util.AttributeSet
+
 import com.github.bassaer.chatmessageview.R
 
 /**

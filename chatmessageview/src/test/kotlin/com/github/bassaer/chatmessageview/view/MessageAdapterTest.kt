@@ -1,19 +1,20 @@
 package com.github.bassaer.chatmessageview.view
 
-
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.TextView
 import androidx.test.core.app.ApplicationProvider
 import com.github.bassaer.chatmessageview.R
+import com.github.bassaer.chatmessageview.model.Attribute
 import com.github.bassaer.chatmessageview.model.ChatUser
 import com.github.bassaer.chatmessageview.model.Message
-import com.github.bassaer.chatmessageview.models.Attribute
-import junit.framework.Assert.assertEquals
+
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+
 import org.robolectric.RobolectricTestRunner
 
 /**

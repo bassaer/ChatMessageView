@@ -3,11 +3,12 @@ package com.github.bassaer.example;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.github.bassaer.chatmessageview.util.IMessageStatusIconFormatter;
 import com.github.bassaer.chatmessageview.util.IMessageStatusTextFormatter;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 /**
  * Message status format sample

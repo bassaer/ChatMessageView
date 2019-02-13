@@ -1,6 +1,5 @@
 package com.github.bassaer.example;
 
-
 import android.graphics.Bitmap;
 
 import com.github.bassaer.chatmessageview.model.IChatUser;

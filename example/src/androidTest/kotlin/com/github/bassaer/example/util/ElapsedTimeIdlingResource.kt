@@ -1,6 +1,6 @@
 package com.github.bassaer.example.util
 
-import android.support.test.espresso.IdlingResource
+import androidx.test.espresso.IdlingResource
 
 /**
  * Implement to wait for a specific amount of time

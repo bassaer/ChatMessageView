@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -15,13 +13,19 @@ import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import com.github.bassaer.chatmessageview.R
-import com.github.bassaer.chatmessageview.model.Message
-import com.github.bassaer.chatmessageview.models.Attribute
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.date_cell.view.*
-import java.util.*
 
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+
+import com.github.bassaer.chatmessageview.R
+import com.github.bassaer.chatmessageview.model.Attribute
+import com.github.bassaer.chatmessageview.model.Message
+
+import de.hdodenhof.circleimageview.CircleImageView
+
+import kotlinx.android.synthetic.main.date_cell.view.*
+
+import java.util.*
 
 /**
  * Custom list adapter for the chat timeline
