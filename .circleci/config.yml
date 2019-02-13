@@ -6,7 +6,7 @@ jobs:
         - master
         - develop
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: circleci/android:api-28
     environment:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
@@ -19,8 +19,8 @@ jobs:
           name: update android sdk
           command: |
               yes | sdkmanager "platforms;android-28"
-              echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository,android-26
-              echo y | android update sdk --no-ui --all --filter build-tools-26.0.0
+              echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository,android-28
+              echo y | android update sdk --no-ui --all --filter build-tools-28.0.3
       - run:
           name: gradle dependencies
           command: ./gradlew androidDependencies
