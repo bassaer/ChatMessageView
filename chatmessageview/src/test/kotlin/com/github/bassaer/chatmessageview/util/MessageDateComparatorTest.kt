@@ -1,9 +1,10 @@
 package com.github.bassaer.chatmessageview.util
 
-
 import com.github.bassaer.chatmessageview.model.Message
+
 import org.junit.Assert.assertEquals
 import org.junit.Test
+
 import java.util.*
 
 /**

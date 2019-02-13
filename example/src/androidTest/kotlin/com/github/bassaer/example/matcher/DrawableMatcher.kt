@@ -1,9 +1,11 @@
 package com.github.bassaer.example.matcher
 
 import android.graphics.drawable.BitmapDrawable
-import android.support.v4.content.res.ResourcesCompat
 import android.view.View
 import android.widget.ImageView
+
+import androidx.core.content.res.ResourcesCompat
+
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 

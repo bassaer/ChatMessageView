@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v4.widget.SwipeRefreshLayout
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -14,9 +11,15 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.LinearLayout
+
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
 import com.github.bassaer.chatmessageview.R
+import com.github.bassaer.chatmessageview.model.Attribute
 import com.github.bassaer.chatmessageview.model.Message
-import com.github.bassaer.chatmessageview.models.Attribute
+
 import kotlinx.android.synthetic.main.chat_view.view.*
 import kotlinx.android.synthetic.main.option_button.view.*
 
@@ -173,7 +176,7 @@ class ChatView : LinearLayout {
 
     private fun getColoredDrawable(color: Int, iconId: Int): Drawable {
         val colorStateList = ColorStateList.valueOf(color)
-        val icon = ContextCompat.getDrawable(context, iconId)
+        val icon = ContextCompat.getDrawable(context, iconId)!!
         val wrappedDrawable = DrawableCompat.wrap(icon)
         DrawableCompat.setTintList(wrappedDrawable, colorStateList)
         return wrappedDrawable

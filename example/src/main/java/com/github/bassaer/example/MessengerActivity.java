@@ -12,8 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.annotation.VisibleForTesting;
-import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.View;
@@ -29,6 +27,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContextCompat;
 
 /**
  * Simple chat example activity

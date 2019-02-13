@@ -9,12 +9,12 @@ properties.load(project.rootProject.file('version.properties').newDataInputStrea
 def libVersion = properties.getProperty('version')
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName libVersion
     }
@@ -109,13 +109,15 @@ install {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.core:core:1.0.1"
+    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
     testImplementation 'junit:junit:4.12'
-    implementation "com.android.support:appcompat-v7:26.1.0"
-    implementation 'de.hdodenhof:circleimageview:2.1.0'
-    implementation "com.android.support:support-v4:26.1.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    testImplementation "org.robolectric:robolectric:3.6.1"
-    testImplementation "org.mockito:mockito-core:2.13.0"
+    testImplementation "org.robolectric:robolectric:4.1"
+    testImplementation "org.mockito:mockito-core:2.24.0"
 }
 
 
