@@ -40,16 +40,17 @@ class MessengerActivityTest {
     private var mContext: Context? = null
     private var mUsers: List<User>? = null
 
-    @get:Rule
-    private var mActivityRule = ActivityTestRule(MessengerActivity::class.java, true, false)
+    @Rule
+    @JvmField
+    var activityTestRule = ActivityTestRule(MessengerActivity::class.java, true, false)
 
     @Before
     @Throws(Exception::class)
     fun setUp() {
         mContext = InstrumentationRegistry.getInstrumentation().targetContext
         AppData.reset(mContext)
-        mActivityRule.launchActivity(Intent())
-        mUsers = mActivityRule.activity.users
+        activityTestRule.launchActivity(Intent())
+        mUsers = activityTestRule.activity.users
     }
 
     @After
@@ -92,7 +93,7 @@ class MessengerActivityTest {
 
     @Test
     fun checkSendingMessageInSequence() {
-        mActivityRule.activity.setReplyDelay(0)
+        activityTestRule.activity.setReplyDelay(0)
         val numOfMessages = 5
         for (i in 0 until numOfMessages) {
             inputText(i.toString())
