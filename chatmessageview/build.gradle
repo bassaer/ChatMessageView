@@ -114,7 +114,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation "com.android.support:support-v4:28.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation "org.robolectric:robolectric:3.6.1"
+    testImplementation "org.robolectric:robolectric:4.1"
     testImplementation "org.mockito:mockito-core:2.13.0"
 }
 
