@@ -60,6 +60,7 @@ captures/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 .idea/assetWizardSettings.xml
+.idea/codeStyles/*
 
 projectFilesBackup/
 
