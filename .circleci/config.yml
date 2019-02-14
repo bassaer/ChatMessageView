@@ -6,7 +6,7 @@ jobs:
         - master
         - develop
     docker:
-      - image: circleci/android:api-28
+      - image: circleci/android:api-26-alpha
     environment:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
@@ -19,8 +19,8 @@ jobs:
           name: update android sdk
           command: |
               yes | sdkmanager --licenses || exit 0
-              echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository,android-28
-              echo y | android update sdk --no-ui --all --filter build-tools-28.0.3
+              echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository,android-26
+              echo y | android update sdk --no-ui --all --filter build-tools-26.0.0
       - run:
           name: gradle dependencies
           command: ./gradlew androidDependencies
@@ -37,7 +37,7 @@ jobs:
           command: sdkmanager --list --verbose | grep system-images
       - run:
           name: Setup Emulator
-          command: sdkmanager "system-images;android-25;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-25;default;armeabi-v7a"
+          command: sdkmanager "system-images;android-19;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-19;default;armeabi-v7a"
       - run:
           name: Launch Emulator
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on
