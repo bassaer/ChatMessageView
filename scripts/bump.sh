@@ -25,7 +25,8 @@ git config --global user.name "TravisCI"
 git config --global user.email "app.nakayama@gmail.com"
 
 git clone "git@github.com:$TRAVIS_REPO_SLUG.git"
-cd git-test
+cd $(basename $(git rev-parse --show-toplevel))
+
 sed -i "/compile/s/[0-9]*\.[0-9]*\.[0-9]*/$version/" README.md
 git add README.md
 git commit -m "bump version [ci skip]"
