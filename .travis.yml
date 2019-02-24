@@ -29,7 +29,7 @@ before_install:
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - QEMU_AUDIO_DRV=none emulator -avd test -no-audio -no-window &
-  - android-wait-for-emulator
+  - android-wait-for-emulator | grep -v 'Waiting for emulator to start'
   - adb shell input keyevent 82 &
 script:
   - ./gradlew clean lint test :example:connectedAndroidTest
