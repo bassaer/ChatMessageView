@@ -1,6 +1,5 @@
 package com.github.bassaer.chatmessageview.model
 
-
 import android.graphics.Bitmap
 
 class ChatUser(internal var id: Int?, internal var name: String, internal var icon: Bitmap) : IChatUser {
@@ -17,7 +16,7 @@ class ChatUser(internal var id: Int?, internal var name: String, internal var ic
         return this.icon
     }
 
-    override fun setIcon(icon: Bitmap) {
-        this.icon = icon
+    override fun setIcon(bmp: Bitmap) {
+        this.icon = bmp
     }
 }

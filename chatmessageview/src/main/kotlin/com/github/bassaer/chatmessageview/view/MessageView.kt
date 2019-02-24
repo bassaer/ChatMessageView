@@ -5,12 +5,15 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ListView
+
+import com.github.bassaer.chatmessageview.model.Attribute
 import com.github.bassaer.chatmessageview.model.Message
-import com.github.bassaer.chatmessageview.models.Attribute
 import com.github.bassaer.chatmessageview.util.MessageDateComparator
 import com.github.bassaer.chatmessageview.util.TimeUtils
+
 import java.lang.ref.WeakReference
 import java.util.*
+
 import kotlin.collections.ArrayList
 
 /**

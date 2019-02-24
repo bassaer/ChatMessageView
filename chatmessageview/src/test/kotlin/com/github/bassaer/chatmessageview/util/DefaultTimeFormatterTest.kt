@@ -1,7 +1,8 @@
 package com.github.bassaer.chatmessageview.util
 
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
+
 import java.util.*
 
 /**

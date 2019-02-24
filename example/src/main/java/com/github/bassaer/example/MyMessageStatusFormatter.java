@@ -3,21 +3,22 @@ package com.github.bassaer.example;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.github.bassaer.chatmessageview.util.IMessageStatusIconFormatter;
 import com.github.bassaer.chatmessageview.util.IMessageStatusTextFormatter;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 /**
  * Message status format sample
  * Created by nakayama on 2017/02/16.
  */
 public class MyMessageStatusFormatter implements IMessageStatusIconFormatter, IMessageStatusTextFormatter {
-    public static final int STATUS_DELIVERING = 0;
-    public static final int STATUS_DELIVERED = 1;
-    public static final int STATUS_SEEN = 2;
-    public static final int STATUS_ERROR = 3;
+    private static final int STATUS_DELIVERING = 0;
+    static final int STATUS_DELIVERED = 1;
+    static final int STATUS_SEEN = 2;
+    private static final int STATUS_ERROR = 3;
     private Drawable mDeliveringIcon;
     private Drawable mDeliveredIcon;
     private Drawable mSeenIcon;
@@ -27,7 +28,7 @@ public class MyMessageStatusFormatter implements IMessageStatusIconFormatter, IM
     private String mSeenText;
     private String mErrorText;
 
-    public MyMessageStatusFormatter(Context context) {
+    MyMessageStatusFormatter(Context context) {
         //Init icons
         mDeliveringIcon = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.ic_mail_outline));
         mDeliveredIcon = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.ic_done));

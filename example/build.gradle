@@ -4,16 +4,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "com.github.bassaer.example"
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         DdmPreferences.setTimeOut(60000)
     }
     buildTypes {
@@ -24,6 +23,7 @@ android {
     }
     lintOptions {
         abortOnError false
+        disable 'GoogleAppIndexingWarning'
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -34,16 +34,18 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
     implementation project(':chatmessageview')
-    implementation 'com.android.support:appcompat-v7:26+'
-    implementation 'com.google.code.gson:gson:2.3.1'
-    androidTestImplementation 'junit:junit:4.12'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "androidx.appcompat:appcompat:$androidXAppcompatVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidXEspressoCoreVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$androidXEspressoIdlingResourceVersion"
+    androidTestImplementation "androidx.test:rules:$androidXTestRulesVersion"
+    androidTestImplementation "androidx.test:runner:$androidXTestRunnerVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidXTestExtJunitVersion"
 }
+
 repositories {
     mavenCentral()
 }

@@ -1,12 +1,12 @@
 # ChatMessageView
 
-[![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView)
+[![Build Status](https://travis-ci.org/bassaer/ChatMessageView.svg?branch=master)](https://travis-ci.org/bassaer/ChatMessageView)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ChatMessageView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5032)
 [![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/bassaer/ChatMessageView/blob/master/LICENSE)
 
-This library aims to provide a chat UI view for Android.  
+This library aims to provide a chat UI view for Android.
 
 <img src="https://github.com/bassaer/ChatMessageView/blob/master/images/screens.png" height="285dp">
 
@@ -23,14 +23,9 @@ This library aims to provide a chat UI view for Android.
 ## Gradle
 [ ![Download](https://api.bintray.com/packages/tnakayama/ChatMessageView/chatmessageview/images/download.svg) ](https://bintray.com/tnakayama/ChatMessageView/chatmessageview/_latestVersion)
 
-| branch| status |
-----|----
-| master | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
-| develop | [![CircleCI](https://circleci.com/gh/bassaer/ChatMessageView/tree/develop.svg?style=svg)](https://circleci.com/gh/bassaer/ChatMessageView) |
-
-```
+```gradle
 dependencies {
-    compile 'com.github.bassaer:chatmessageview:1.11.2'
+    compile 'com.github.bassaer:chatmessageview:1.11.3'
 }
 ```
 
@@ -41,7 +36,7 @@ dependencies {
 
 Only MessageView
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
@@ -58,7 +53,7 @@ Only MessageView
 
 ChatView has MessageView and text box.
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
@@ -75,7 +70,7 @@ ChatView has MessageView and text box.
 
 Sample code
 
-```
+```java
 public class MessengerActivity extends Activity {
 
     private ChatView mChatView;
@@ -158,28 +153,4 @@ public class MessengerActivity extends Activity {
 ```
 
 ## License
-
-```
-MIT License
-
-Copyright (c) 2016 Tsubasa Nakayama
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-```
+[Apache-2.0](https://github.com/bassaer/ChatMessageView/blob/master/LICENSE)

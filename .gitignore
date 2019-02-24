@@ -38,16 +38,29 @@ captures/
 
 # Intellij
 *.iml
+
+.idea/caches/
+.idea/libraries/
+.idea/shelf/
 .idea/workspace.xml
 .idea/tasks.xml
-.idea/libraries
-.idea/vcs.xml
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/encodings.xml
 .idea/misc.xml
 .idea/modules.xml
-.idea/markdown-navigator/
-.idea/markdown-navigator.xml
-.idea/codeStyleSettings.xml
-.idea/markdown-exported-files.xml
+.idea/scopes/scope_settings.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/datasources.xml
+.idea/dataSources.ids
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+.idea/assetWizardSettings.xml
+.idea/codeStyles/*
 
 projectFilesBackup/
 

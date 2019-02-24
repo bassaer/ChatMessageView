@@ -1,0 +1,42 @@
+language: android
+env:
+  global:
+    - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
+    - ADB_INSTALL_TIMEOUT=10
+    - secure: "RdQNUckTM43ea1vGjp5umCeL0RMNglTdeB2CQ8iNsATBAMTppvUKS0j7EAaYidO4lfTrLvsMyO/ujbMkBgFmPXCYJUkDi0OUiCkdXQzVYoMrrfY4PIw2LKcm9YhCZ5NJpAdXV56CyiYX67ZzlsR2Jm1y1toEnfSK1u1tQkZxq4qdm+KPIoYhIbSu0RChZs4aBB4Eyt7/Juix094G+mUeRqrmt3FkCwhA450euNTy5NtLCkJe/SLPtKK4lzcc15VoFrMNZ55FJ2qjekiucyrl+6fjbxHP8dFQ8Wa54/iJJKcyH0BLevpA0kYyTzNoD6YBspo3lIGrI+szL6rQSruYqPu49xpjhVb0nTner8Usybj81ILQzkwZ/leEFCZRxlEzHtqYRfmqi4QzxmBtTVF47HK29CQDOhghC1SolOzepulFDAnK6g07dLvhdPt+P0jQba694h8onCLbiamLPtz1+75ZJaG+RNOo+hP8hJ80Wkww95Aa3KR3Gnh4Kapqnf7TF7A/MJPCqktYadZuCpVAX10VWjwyB0B0lcTEsP8S1pl+w1J//nOIjBpb7o3szFnoV3CZzAkHoKAX1ah5uNDYxWPBI/ViVJgzKHdQss/gICwMu4uAkseXsswTvOVdlAqB5laG2rL6ZuqiyZGCFTTtzsggPwFfs2tY+WR0gABbgPE="
+    - secure: "OdKFtIaKIlwb5kl5JjasYciuj14+z2qPbCsHPRWdm/QB40tQZnIEWfwrypW3HHxfxzlAJxnKGuv66Y90FLBEL5WvG8r9gxPYcheMNv+AzpXhB4Pzbg8T2k5pJAI4OBTi+yMQkLMnz1Q8YOe7boiNcSC5oCdlQCLADOmu/Wxl9GVpDgEUZX/+4jLQvn/yo58Xxk2ANA56HNt6/ww+yNVdELe9X3bazW9pl7nvBLP5KcyibGYw1pMe3N3W74r6xw21x8ifYUTeeEz1WKwCammJluRXkR7al1o0EZwuS1hA7AbeJAsY5XwNJEUDMYQgrSXif6ie3h9zJYIFi0b8o3f/7KkPXoxCtWvR9s24fmsjlc+ogDw2/0CfGBe6gBlIqItJ6W83+Synk8k2xrkp3brf7nl0e9Flg8ZHL4fFDAexUhwkOGApN0IA8Y2uZCMK2FSB8dkO2hR4goF8sOec1JmkX0KVf+m+Gm7RYXrR1cOoRSKxdjwyc1Py+b069nqANmHSHudw/54L7fiO8AVe9goXCYP3+u74kfgErgBICFZMS8DxIYZa3TZYkJfV1GEMgt1DiOPwhprQmjeoXxCzdln8u6mMYBqvY486f2w2MDenH2AsJMbR77K/TGZGuzhK7ZPKXEiahvYbPI1LyDRhwcDdfR8ZDod4nvx39uPVmIqJHMA="
+android:
+  components:
+    - build-tools-28.0.3
+    - android-28
+    - android-22
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-28
+    - sys-img-armeabi-v7a-android-22
+  licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+branches:
+  only:
+    - master
+before_install:
+  - yes | sdkmanager "platforms;android-28"
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+before_script:
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - QEMU_AUDIO_DRV=none emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+script:
+  - ./gradlew clean lint test :example:connectedAndroidTest
+deploy:
+  provider: script
+  script: scripts/deploy.sh
+  skip_cleanup: true
+after_deploy:
+  - set -e
+  - scripts/bump.sh

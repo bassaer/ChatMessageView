@@ -1,7 +1,8 @@
 package com.github.bassaer.chatmessageview.util
 
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
+
 import java.util.*
 
 /**
@@ -15,7 +16,7 @@ internal class DateFormatterTest {
         val formatter = DateFormatter()
         val calendar = Calendar.getInstance()
         calendar.set(2017, 10, 12)
-        assertEquals(formatter.getFormattedTimeText(calendar), "Nov. 12, 2017")
+        assertEquals("Nov. 12, 2017", formatter.getFormattedTimeText(calendar))
     }
 
 }

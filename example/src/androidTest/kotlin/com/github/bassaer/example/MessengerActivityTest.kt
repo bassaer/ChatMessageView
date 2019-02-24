@@ -1,30 +1,34 @@
 package com.github.bassaer.example
 
-
 import android.content.Context
 import android.content.Intent
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.DataInteraction
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.Espresso.onData
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.*
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+
+import androidx.test.espresso.DataInteraction
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.ActivityTestRule
+
 import com.github.bassaer.chatmessageview.util.TimeUtils
 import com.github.bassaer.example.matcher.ImageViewDrawableMatcher.withDrawable
 import com.github.bassaer.example.matcher.MessageListMatcher
 import com.github.bassaer.example.util.ElapsedTimeIdlingResource
+
 import org.hamcrest.Matchers.anything
 import org.hamcrest.Matchers.containsString
+
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 import java.util.*
 
 /**
@@ -36,16 +40,17 @@ class MessengerActivityTest {
     private var mContext: Context? = null
     private var mUsers: List<User>? = null
 
-    @get:Rule
-    private var mActivityRule = ActivityTestRule(MessengerActivity::class.java, true, false)
+    @Rule
+    @JvmField
+    var activityTestRule = ActivityTestRule(MessengerActivity::class.java, true, false)
 
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        mContext = InstrumentationRegistry.getTargetContext()
+        mContext = InstrumentationRegistry.getInstrumentation().targetContext
         AppData.reset(mContext)
-        mActivityRule.launchActivity(Intent())
-        mUsers = mActivityRule.activity.users
+        activityTestRule.launchActivity(Intent())
+        mUsers = activityTestRule.activity.users
     }
 
     @After
@@ -76,19 +81,19 @@ class MessengerActivityTest {
         val replyingUser = mUsers!![1]
         val waitingTime: Long = 3000
         val idlingResource = ElapsedTimeIdlingResource(waitingTime)
-        Espresso.registerIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().register(idlingResource)
         onRow(1).onChildView(withId(R.id.message_user_name)).check(matches(withText(sendingUser.getName())))
         onRow(1).onChildView(withId(R.id.message_text)).check(matches(withText(message)))
         onRow(2).onChildView(withId(R.id.user_icon)).check(matches(withDrawable(R.drawable.face_1)))
         onRow(2).onChildView(withId(R.id.message_user_name)).check(matches(withText(replyingUser.getName())))
         onRow(2).onChildView(withId(R.id.message_text)).check(matches(withText(containsString(sendingUser.getName()))))
         onRow(2).onChildView(withId(R.id.message_text)).check(matches(withText(containsString(message))))
-        Espresso.unregisterIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().unregister(idlingResource)
     }
 
     @Test
     fun checkSendingMessageInSequence() {
-        mActivityRule.activity.setReplyDelay(0)
+        activityTestRule.activity.setReplyDelay(0)
         val numOfMessages = 5
         for (i in 0 until numOfMessages) {
             inputText(i.toString())
@@ -112,14 +117,14 @@ class MessengerActivityTest {
 
         val waitingTime: Long = 3000
         val idlingResource = ElapsedTimeIdlingResource(waitingTime)
-        Espresso.registerIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().register(idlingResource)
         // Remove reply for message1
         onRow(2).onChildView(withId(R.id.user_icon)).perform(longClick())
         // Remove reply for message2
         onRow(3).onChildView(withId(R.id.user_icon)).perform(longClick())
         // message3 should be shown at 3rd message
         onRow(3).onChildView(withId(R.id.message_text)).check(matches(withText(messages[2])))
-        Espresso.unregisterIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().unregister(idlingResource)
     }
 
     @Test
@@ -131,12 +136,12 @@ class MessengerActivityTest {
 
         val waitingTime: Long = 3000
         val idlingResource = ElapsedTimeIdlingResource(waitingTime)
-        Espresso.registerIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().register(idlingResource)
         onView(withId(R.id.optionButton)).perform(click())
         // Remove all messages
         onView(withText(R.string.clear_messages)).perform(click())
         onView(withId(R.id.messageView)).check(matches(MessageListMatcher.withListSize(0)))
-        Espresso.unregisterIdlingResources(idlingResource)
+        IdlingRegistry.getInstance().unregister(idlingResource)
     }
 
 
