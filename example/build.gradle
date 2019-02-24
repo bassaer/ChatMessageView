@@ -4,15 +4,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "com.github.bassaer.example"
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         DdmPreferences.setTimeOut(60000)
     }
@@ -36,15 +35,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':chatmessageview')
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    androidTestImplementation 'junit:junit:4.12'
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:3.1.1"
-    androidTestImplementation "androidx.test:rules:1.1.1"
-    androidTestImplementation "androidx.test:runner:1.1.1"
-    androidTestImplementation "androidx.test.ext:junit:1.1.0"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "androidx.appcompat:appcompat:$androidXAppcompatVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidXEspressoCoreVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$androidXEspressoIdlingResourceVersion"
+    androidTestImplementation "androidx.test:rules:$androidXTestRulesVersion"
+    androidTestImplementation "androidx.test:runner:$androidXTestRunnerVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidXTestExtJunitVersion"
 }
 
 repositories {

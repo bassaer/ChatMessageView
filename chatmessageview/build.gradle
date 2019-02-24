@@ -1,21 +1,17 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('version.properties').newDataInputStream())
-
-def libVersion = properties.getProperty('version')
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: "maven"
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
-
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName libVersion
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
     }
     buildTypes {
         release {
@@ -38,39 +34,27 @@ android {
     }
 }
 
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
 group = 'com.github.bassaer'
-version = libVersion
+version = rootProject.ext.versionName
 
 def siteUrl = 'https://github.com/bassaer/ChatMessageView'
 def gitUrl = 'https://github.com/bassaer/ChatMessageView.git'
-
-def localProperties = project.rootProject.file('local.properties')
+def issueUrl = 'https://github.com/bassaer/ChatMessageView/issues'
 
 bintray {
-    if (localProperties.exists()) {
-        properties.load(localProperties.newDataInputStream())
-        user = properties.getProperty('bintray_user')
-        key = properties.getProperty('bintray_api_key')
-    } else {
-        //Circle CI ENV
-        user = System.getenv('BINTRAY_USER')
-        key = System.getenv('BINTRAY_API_KEY')
-    }
-
+    user = 'bassaer'
+    key = System.getenv('BINTRAY_API_KEY') // Travis ENV
+    publish = true
     configurations = ['archives']
-
     pkg {
         repo = 'ChatMessageView'
         name = project.name
         userOrg = 'tnakayama'
         desc = 'Chat UI Library for Android'
         websiteUrl = siteUrl
-        issueTrackerUrl = 'https://github.com/bassaer/ChatMessageView/issues'
+        issueTrackerUrl = issueUrl
         vcsUrl = gitUrl
-        licenses = ['MIT']
+        licenses = ['Apache-2.0']
         labels = ['android']
         publicDownloadNumbers = true
     }
@@ -85,8 +69,8 @@ install {
                 url = siteUrl
                 licenses {
                     license {
-                        name 'The MIT License (MIT)'
-                        url 'https://opensource.org/licenses/mit-license.php'
+                        name 'Apache-2.0'
+                        url 'https://www.apache.org/licenses/LICENSE-2.0'
                     }
                 }
                 developers {
@@ -108,18 +92,16 @@ install {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "androidx.core:core:1.0.1"
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "de.hdodenhof:circleimageview:3.0.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation "junit:junit:4.12"
-    testImplementation "org.robolectric:robolectric:4.1"
-    testImplementation "androidx.test:core:1.1.0"
-    testImplementation "org.mockito:mockito-core:2.24.0"
+    implementation "androidx.core:core:$androidXCoreVersion"
+    implementation "androidx.appcompat:appcompat:$androidXAppcompatVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "de.hdodenhof:circleimageview:$circleimageviewVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "androidx.test:core:$androidXTestCoreVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoCoreVersion"
 }
-
-
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -149,18 +131,17 @@ task findConventions doLast {
 
 def repo = new File(rootDir, "repository")
 
-apply plugin: "maven"
-
 uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = libVersion
+            pom.version = rootProject.ext.versionName
             pom.groupId = 'com.github.bassaer'
             pom.artifactId = 'chatmessageview'
         }
     }
 }
+
 repositories {
     mavenCentral()
     google()
