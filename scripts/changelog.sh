@@ -42,7 +42,7 @@ if [ $dflg -eq 1 ]; then
         ORS = "\\n";
     }
     tolower($0) ~ /ver.* /,/NF/ {
-        if ($0 ~ /^ver.*/) {
+        if (tolower($0) ~ /^ver.*/) {
             next
         }
         if (NF==0) {
