@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# temporary skip
-exit 0
-
 set -e
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
