@@ -2,6 +2,9 @@
 
 set -e
 
+# temporary skip
+exit 0
+
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     echo "pull request build."
     exit 0
