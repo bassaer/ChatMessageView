@@ -1,5 +1,9 @@
 # CHANGELOG
 
+Ver 2.1.0
+- dependency update
+- remove android-maven-gradle-plugin
+
 Ver 2.0.1
 - fix scritps
 

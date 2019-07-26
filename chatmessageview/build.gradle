@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: "maven"
 
@@ -57,36 +56,6 @@ bintray {
         licenses = ['Apache-2.0']
         labels = ['android']
         publicDownloadNumbers = true
-    }
-}
-
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name = project.name
-                url = siteUrl
-                licenses {
-                    license {
-                        name 'Apache-2.0'
-                        url 'https://www.apache.org/licenses/LICENSE-2.0'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'bassaer'
-                        name 'Tsubasa Nakayama'
-                        email 'app.nakayama@gmail.com'
-                    }
-                }
-                scm {
-                    connection = gitUrl
-                    developerConnection = gitUrl
-                    url siteUrl
-                }
-            }
-        }
     }
 }
 
